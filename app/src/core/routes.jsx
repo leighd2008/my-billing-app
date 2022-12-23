@@ -27,6 +27,15 @@ const ContextMenu = loadable(() =>
 const Image = loadable(() =>
   import(/* webpackChunkName: "ContextMenuChunk" */ "Pages/image/image")
 );
+const Home = loadable(() =>
+  import(/* webpackChunkName: "ContextMenuChunk" */ "Pages/home/home")
+);
+const Clients = loadable(() =>
+  import(/* webpackChunkName: "ContextMenuChunk" */ "Pages/clients/clients")
+);
+const Invoice = loadable(() =>
+  import(/* webpackChunkName: "ContextMenuChunk" */ "Pages/invoice/invoice")
+);
 
 class AppRoutes extends React.Component {
   render() {    
@@ -39,6 +48,9 @@ class AppRoutes extends React.Component {
         <Route path={ROUTES.UNDOREDO} element={<UndoRedo />}></Route>
         <Route path={ROUTES.CONTEXTMENU} element={<ContextMenu />}></Route>
         <Route path={ROUTES.IMAGE} element={<Image />}></Route>
+        <Route path={ROUTES.HOME} element={<Home />}></Route>
+        <Route path={ROUTES.CLIENTS} element={<Clients />}></Route>
+        <Route path={ROUTES.INVOICE} element={<Invoice />}></Route>
       </Routes>
     );
   }
