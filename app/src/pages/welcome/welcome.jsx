@@ -28,7 +28,9 @@ class Welcome extends React.Component {
               <Link to={ROUTES.LOCALIZATION}>Changing locales.</Link> <br />
               <Link to={ROUTES.UNDOREDO}>Undo/redoing actions.</Link> <br />
               <Link to={ROUTES.CONTEXTMENU}>Custom context menu.</Link> <br />
-              <Link to={ROUTES.IMAGE}>Sample image loaded.</Link> <br />
+              <Link to={ROUTES.HOME}>Billing App Home Page</Link> <br />
+              <Link to={ROUTES.CLIENTS}>Billing App Clients Page</Link> <br />
+              <Link to={ROUTES.INVOICE}>Billing App Invoice page</Link> <br />
             </div>
           </div>
         </section>

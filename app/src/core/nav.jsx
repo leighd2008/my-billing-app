@@ -230,11 +230,6 @@ class Nav extends React.Component {
                 </a>
                 <a
                   className="navbar-item"
-                  onClick={() => this.navigate(ROUTES.IMAGE)}>
-                  Sample image loaded
-                </a>
-                <a
-                  className="navbar-item"
                   onClick={() => this.navigate(ROUTES.HOME)}>
                   My billing app
                 </a>
