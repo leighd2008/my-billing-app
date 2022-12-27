@@ -40,7 +40,6 @@ class AppRoutes extends React.Component {
         <Route path={ROUTES.LOCALIZATION} element={<Localization />}></Route>
         <Route path={ROUTES.UNDOREDO} element={<UndoRedo />}></Route>
         <Route path={ROUTES.CONTEXTMENU} element={<ContextMenu />}></Route>
-        <Route path={ROUTES.IMAGE} element={<Image />}></Route>
         <Route path={ROUTES.HOME} element={<Home />}></Route>
         <Route path={ROUTES.CLIENTS} element={<Clients />}></Route>
         <Route path={ROUTES.INVOICE} element={<Invoice />}></Route>
