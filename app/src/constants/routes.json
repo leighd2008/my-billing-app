@@ -1,5 +1,4 @@
 {
-  "WELCOME": "/welcome",
   "MOTD": "/motd",
   "UNDOREDO": "/undoredo",
   "CONTEXTMENU": "/contextmenu",
