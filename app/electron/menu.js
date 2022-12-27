@@ -179,11 +179,6 @@ const MenuBuilder = function(mainWindow, appName) {
           }
         ]
       },
-      // language menu
-      {
-        label: i18nextMainBackend.t("Language"),
-        submenu: whitelist.buildSubmenu(i18nBackend.changeLanguageRequest, i18nextMainBackend)
-      },
       // { role: "windowMenu" }
       {
         label: i18nextMainBackend.t("Window"),
