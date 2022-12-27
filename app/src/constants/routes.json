@@ -1,6 +1,5 @@
 {
   "WELCOME": "/welcome",
-  "ABOUT": "/about",
   "MOTD": "/motd",
   "LOCALIZATION": "/localization",
   "UNDOREDO": "/undoredo",
