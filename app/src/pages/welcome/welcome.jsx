@@ -25,7 +25,6 @@ class Welcome extends React.Component {
             <h2 className="title is-2">Samples</h2>
             <div>
               <Link to={ROUTES.MOTD}>Using the Electron store.</Link> <br />
-              <Link to={ROUTES.LOCALIZATION}>Changing locales.</Link> <br />
               <Link to={ROUTES.UNDOREDO}>Undo/redoing actions.</Link> <br />
               <Link to={ROUTES.CONTEXTMENU}>Custom context menu.</Link> <br />
               <Link to={ROUTES.HOME}>Billing App Home Page</Link> <br />

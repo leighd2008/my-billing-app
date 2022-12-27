@@ -10,11 +10,6 @@ const Welcome = loadable(() =>
 const Motd = loadable(() =>
   import(/* webpackChunkName: "MotdChunk" */ "Pages/motd/motd")
 );
-const Localization = loadable(() =>
-  import(
-    /* webpackChunkName: "LocalizationChunk" */ "Pages/localization/localization"
-  )
-);
 const UndoRedo = loadable(() =>
   import(/* webpackChunkName: "UndoRedoChunk" */ "Pages/undoredo/undoredo")
 );
@@ -37,7 +32,6 @@ class AppRoutes extends React.Component {
       <Routes>
         <Route path={ROUTES.WELCOME} element={<Welcome />}></Route>
         <Route path={ROUTES.MOTD} element={<Motd />}></Route>
-        <Route path={ROUTES.LOCALIZATION} element={<Localization />}></Route>
         <Route path={ROUTES.UNDOREDO} element={<UndoRedo />}></Route>
         <Route path={ROUTES.CONTEXTMENU} element={<ContextMenu />}></Route>
         <Route path={ROUTES.HOME} element={<Home />}></Route>

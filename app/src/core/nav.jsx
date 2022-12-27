@@ -77,11 +77,6 @@ class Nav extends React.Component {
                 </a>
                 <a
                   className="navbar-item"
-                  onClick={() => this.navigate(ROUTES.LOCALIZATION)}>
-                  Changing locales
-                </a>
-                <a
-                  className="navbar-item"
                   onClick={() => this.navigate(ROUTES.UNDOREDO)}>
                   Undo/redoing actions
                 </a>

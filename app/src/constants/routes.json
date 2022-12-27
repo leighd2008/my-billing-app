@@ -1,7 +1,6 @@
 {
   "WELCOME": "/welcome",
   "MOTD": "/motd",
-  "LOCALIZATION": "/localization",
   "UNDOREDO": "/undoredo",
   "CONTEXTMENU": "/contextmenu",
   "HOME": "/",
