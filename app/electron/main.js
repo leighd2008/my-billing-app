@@ -11,7 +11,7 @@ const {
   REDUX_DEVTOOLS,
   REACT_DEVELOPER_TOOLS
 } = require("electron-devtools-installer");
-// const SecureElectronLicenseKeys = require("secure-electron-license-keys");
+
 const Protocol = require("./protocol");
 const MenuBuilder = require("./menu");
 const i18nextBackend = require("i18next-electron-fs-backend");
@@ -95,12 +95,6 @@ async function createWindow() {
       label: "Soft alert"
     }]
   });
-
-  // // Setup bindings for offline license verification
-  // SecureElectronLicenseKeys.mainBindings(ipcMain, win, fs, crypto, {
-  //   root: process.cwd(),
-  //   version: app.getVersion()
-  // });
 
   // Load app
   if (isDev) {
