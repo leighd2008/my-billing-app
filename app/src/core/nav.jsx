@@ -78,11 +78,6 @@ class Nav extends React.Component {
             </a>
             <a
               className="navbar-item"
-              onClick={() => this.navigate(ROUTES.CONTEXTMENU)}>
-              Custom context menu
-            </a>
-            <a
-              className="navbar-item"
               onClick={() => this.navigate(ROUTES.CLIENTS)}>
               Client list
             </a>

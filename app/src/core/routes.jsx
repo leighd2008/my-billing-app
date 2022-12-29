@@ -10,9 +10,6 @@ const Motd = loadable(() =>
 const UndoRedo = loadable(() =>
   import(/* webpackChunkName: "UndoRedoChunk" */ "Pages/undoredo/undoredo")
 );
-const ContextMenu = loadable(() =>
-  import(/* webpackChunkName: "ContextMenuChunk" */ "Pages/contextmenu/contextmenu")
-);
 const Home = loadable(() =>
   import(/* webpackChunkName: "ContextMenuChunk" */ "Pages/home/home")
 );
@@ -29,7 +26,6 @@ class AppRoutes extends React.Component {
       <Routes>
         <Route path={ROUTES.MOTD} element={<Motd />}></Route>
         <Route path={ROUTES.UNDOREDO} element={<UndoRedo />}></Route>
-        <Route path={ROUTES.CONTEXTMENU} element={<ContextMenu />}></Route>
         <Route path={ROUTES.HOME} element={<Home />}></Route>
         <Route path={ROUTES.CLIENTS} element={<Clients />}></Route>
         <Route path={ROUTES.INVOICE} element={<Invoice />}></Route>
