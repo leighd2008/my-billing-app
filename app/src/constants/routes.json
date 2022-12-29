@@ -1,6 +1,5 @@
 {
   "MOTD": "/motd",
-  "UNDOREDO": "/undoredo",
   "HOME": "/",
   "CLIENTS": "/clients",
   "INVOICE": "/invoice"
