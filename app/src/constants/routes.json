@@ -1,5 +1,4 @@
 {
-  "MOTD": "/motd",
   "HOME": "/",
   "CLIENTS": "/clients",
   "INVOICE": "/invoice"

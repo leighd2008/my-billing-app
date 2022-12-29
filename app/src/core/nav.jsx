@@ -68,11 +68,6 @@ class Nav extends React.Component {
             </a>
             <a
               className="navbar-item"
-              onClick={() => this.navigate(ROUTES.MOTD)}>
-              Using the Electron store
-            </a>
-            <a
-              className="navbar-item"
               onClick={() => this.navigate(ROUTES.CLIENTS)}>
               Client list
             </a>

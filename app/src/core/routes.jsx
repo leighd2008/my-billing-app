@@ -4,9 +4,6 @@ import ROUTES from "Constants/routes";
 import loadable from "@loadable/component";
 
 // Load bundles asynchronously so that the initial render happens faster
-const Motd = loadable(() =>
-  import(/* webpackChunkName: "MotdChunk" */ "Pages/motd/motd")
-);
 const Home = loadable(() =>
   import(/* webpackChunkName: "ContextMenuChunk" */ "Pages/home/home")
 );
@@ -21,7 +18,6 @@ class AppRoutes extends React.Component {
   render() {    
     return (
       <Routes>
-        <Route path={ROUTES.MOTD} element={<Motd />}></Route>
         <Route path={ROUTES.HOME} element={<Home />}></Route>
         <Route path={ROUTES.CLIENTS} element={<Clients />}></Route>
         <Route path={ROUTES.INVOICE} element={<Invoice />}></Route>
