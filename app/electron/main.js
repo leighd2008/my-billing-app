@@ -54,7 +54,7 @@ async function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
     width: 800,
-    height: 600,
+    height: 1000,
     title: "Application is currently initializing...",
     webPreferences: {
       devTools: isDev,
@@ -99,7 +99,7 @@ async function createWindow() {
   }
 
   win.webContents.on("did-finish-load", () => {
-    win.setTitle(`Getting started with secure-electron-template (v${app.getVersion()})`);
+    win.setTitle(` The Billing App (v${app.getVersion()})`);
   });
 
   // Only do these things when in development

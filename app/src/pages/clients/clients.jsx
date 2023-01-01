@@ -1,4 +1,7 @@
 import React /*{useState, useEffect}*/ from 'react';
+import TrustInGod from "Images/Trust_In_God.jpg";
+
+
 // import {loadSavedData, saveDataInStorage} from "../renderer"
 // import ClientList from "./ClientList";
 import { Link } from "react-router-dom";
@@ -59,21 +62,30 @@ const Clients = () => {
 //   }
   
   return (
-    <div>
-      <h1>Manage client information</h1>
-      <div>
-        <Link to="/">Go back to home</Link>
-        <br />
-        <Link to="/invoice">Go to invoice page</Link>
-      </div>
-      {/* <button type='submit' onClick={handleSubmit}>Add Client</button>
-      <input type="text" onChange={handleChange} value={val} />
-      {clientsToTrack.length ? (
-        <ClientList clientsToTrack={clientsToTrack} />
-      ) : (
-        <p>Add a client to get started</p>
-      )} */}
-    </div>
+    <React.Fragment>
+      <section className="section">
+        <div className="container">
+          <section className="hero is-danger">
+            <div className="hero-body">
+              <p className="title">Manage client information</p>
+              {/* <div>
+                <Link to="/">Go back to home</Link>
+                <br />
+                <Link to="/invoice">Go to invoice page</Link>
+              </div> */}
+              <img src={TrustInGod} alt="Trust in God" />
+              {/* <button type='submit' onClick={handleSubmit}>Add Client</button>
+              <input type="text" onChange={handleChange} value={val} />
+              {clientsToTrack.length ? (
+                <ClientList clientsToTrack={clientsToTrack} />
+              ) : (
+                <p>Add a client to get started</p>
+              )} */}
+            </div>
+          </section>
+        </div>
+      </section>
+    </React.Fragment>
   );
 };
 

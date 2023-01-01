@@ -1,6 +1,6 @@
 {
-  "name": "secure-electron-template",
-  "version": "22.0.0",
+  "name": "the-billing-app",
+  "version": "1.0.0",
   "description": "The best way to build Electron apps with security in mind.",
   "private": true,
   "main": "app/electron/main.js",
@@ -15,13 +15,13 @@
     "pack": "electron-builder --dir",
     "dist": "npm run test && npm run prod-build && electron-builder",
     "dist-mac": "npm run test && npm run prod-build && electron-builder --mac",
-    "dist-linux": "npm run test && npm run prod-build && electron-builder --linux",
+    "dist-linux": "npm run prod-build && electron-builder --linux",
     "dist-windows": "npm run prod-build && electron-builder --windows",
     "dist-all": "npm run test && npm run prod-build && electron-builder --mac --linux --windows",
     "test": "mocha"
   },
   "build": {
-    "productName": "YourProductName",
+    "productName": "The Billing App",
     "appId": "com.yourcompany|electron.yourproductname",
     "directories": {
       "buildResources": "resources"

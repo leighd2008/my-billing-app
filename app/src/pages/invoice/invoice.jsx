@@ -5,15 +5,21 @@ import Sisters from "Images/Sisters.jpg";
 export default class Invoice extends React.Component {
   render() {
     return (
-      <div>
-        <h1>Generate an invoice</h1>
-        <Link to="/">Go back to home</Link>
-        <br />
-        <Link to="/clients">Go to client page</Link>
-        <div>
-          <img src={Sisters} alt="Sisters" />
+    <React.Fragment>
+      <section className="section">
+        <div className="container">
+          <section className="hero is-danger">
+            <div className="hero-body">
+              <p className="title">Generate an invoice</p>
+              {/* <Link to="/">Go back to home</Link>
+              <br />
+              <Link to="/clients">Go to client page</Link> */}
+              <img src={Sisters} alt="Sisters" />
+            </div>
+          </section>
         </div>
-      </div>
+      </section>
+    </React.Fragment>
     );
   }
 }
