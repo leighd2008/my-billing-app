@@ -76,6 +76,11 @@ class Nav extends React.Component {
               onClick={() => this.navigate(ROUTES.INVOICE)}>
               Invoice
             </a>
+            <a
+              className="navbar-item"
+              onClick={() => this.navigate(ROUTES.ADD_NEW_CLIENT)}>
+              Add New Client
+            </a>
           </div>
         </div>
       </nav>

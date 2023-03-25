@@ -1,5 +1,6 @@
 {
   "HOME": "/",
   "CLIENTS": "/clients",
-  "INVOICE": "/invoice"
+  "INVOICE": "/invoice",
+  "ADD_NEW_CLIENT": "/addNewClient"
 }

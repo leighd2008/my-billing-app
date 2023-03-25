@@ -1,4 +1,5 @@
 import React /*{useState, useEffect}*/ from 'react';
+import { useForm } from "react-hook-form"
 import TrustInGod from "Images/Trust_In_God.jpg";
 
 
@@ -68,11 +69,11 @@ const Clients = () => {
           <section className="hero is-danger">
             <div className="hero-body">
               <p className="title">Manage client information</p>
-              {/* <div>
+              <div>
                 <Link to="/">Go back to home</Link>
                 <br />
                 <Link to="/invoice">Go to invoice page</Link>
-              </div> */}
+              </div>
               <img src={TrustInGod} alt="Trust in God" />
               {/* <button type='submit' onClick={handleSubmit}>Add Client</button>
               <input type="text" onChange={handleChange} value={val} />
@@ -90,3 +91,6 @@ const Clients = () => {
 };
 
 export default Clients;
+
+// HOW TO USE FIREBASE V 9
+// https://travis.media/how-to-use-firebase-with-react/

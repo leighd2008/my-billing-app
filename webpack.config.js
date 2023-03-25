@@ -49,14 +49,15 @@ module.exports = {
       },
       // loads .css files
       {
-        test: /\.css$/,
+        test: [/\.s[ac]ss$/i, /\.css$/i],
         include: [
           path.resolve(__dirname, "app/src"),
           path.resolve(__dirname, "node_modules/"),
         ],
         use: [
           MiniCssExtractPlugin.loader,
-          "css-loader"
+          "css-loader",
+          "sass-loader"
         ],
         resolve: {
           extensions: [".css"]
