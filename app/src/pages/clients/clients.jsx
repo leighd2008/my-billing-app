@@ -1,5 +1,7 @@
-import React /*{useState, useEffect}*/ from 'react';
+import React, {useState, useEffect} from 'react';
 import { useForm } from "react-hook-form"
+
+import { fetchClients } from '../../redux/components/Client/client.api';
 import TrustInGod from "Images/Trust_In_God.jpg";
 
 
@@ -10,6 +12,13 @@ import { Link } from "react-router-dom";
 // const { HANDLE_FETCH_DATA, HANDLE_SAVE_DATA} = require("../utils/constants");
 
 const Clients = () => {
+  
+  useEffect(() => {
+    fetchClients().then(clients => {
+      debugger
+    });
+  }, [])
+  
 //   const [val, setVal] = useState([]);
 //   const [clientsToTrack, setClients] = useState([]);
   
@@ -91,6 +100,5 @@ const Clients = () => {
 };
 
 export default Clients;
-
 // HOW TO USE FIREBASE V 9
 // https://travis.media/how-to-use-firebase-with-react/
