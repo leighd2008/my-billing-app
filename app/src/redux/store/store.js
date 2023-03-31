@@ -12,7 +12,7 @@ import {
   createReduxHistoryContext
 } from "redux-first-history";
 // import homeReducer from "../components/home/homeSlice";
-import clientsReducer from '../../../features/clients/clientsSlice'
+import clientsReducer from '../../features/clients/clientsSlice'
 
 const {
   routerMiddleware,
