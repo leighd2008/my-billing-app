@@ -11,10 +11,7 @@ import {
 import {
   createReduxHistoryContext
 } from "redux-first-history";
-import undoable from "easy-redux-undo";
 import homeReducer from "../components/home/homeSlice";
-import counterReducer from "../components/counter/counterSlice";
-import complexReducer from "../components/complex/complexSlice";
 
 const {
   routerMiddleware,
@@ -28,12 +25,6 @@ export const store = configureStore({
   reducer: combineReducers({
     router: routerReducer,
     home: homeReducer,
-    undoable: undoable(
-      combineReducers({
-        counter: counterReducer,
-        complex: complexReducer
-      })
-    )
   }),
   middleware: [...getDefaultMiddleware({
     serializableCheck: false

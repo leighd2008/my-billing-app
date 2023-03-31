@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { createClient } from '../../redux/components/Client/client.actions'
+import { createClient } from '../../redux/components/Clients/clients.actions'
 
 export default function addNewClientForm () {
   const { register, handleSubmit } = useForm();

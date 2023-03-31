@@ -11,7 +11,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "app/dist"), // Where all the output files get dropped after webpack is done with them
     filename: "bundle.js", // The name of the webpack bundle that's generated
-    devtool: 'eval-source-map'
+    // devtool: 'eval-source-map'
   },
   resolve: {
     fallback: {

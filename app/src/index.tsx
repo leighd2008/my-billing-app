@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { createRoot } from "react-dom/client";
-import Root from "Core/root";
-import { store, history } from "Redux/store/store";
+import Root from "./core/root";
+import { store, history } from "./redux/store/store";
 import "bulma/css/bulma.css";
 
 const container = document.getElementById("target");

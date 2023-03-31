@@ -11,9 +11,6 @@ export default class Invoice extends React.Component {
           <section className="hero is-danger">
             <div className="hero-body">
               <p className="title">Generate an invoice</p>
-              {/* <Link to="/">Go back to home</Link>
-              <br />
-              <Link to="/clients">Go to client page</Link> */}
               <img src={Sisters} alt="Sisters" />
             </div>
           </section>
