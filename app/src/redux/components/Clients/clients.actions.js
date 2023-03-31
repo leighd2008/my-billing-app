@@ -6,7 +6,6 @@ export const fetchClients = () => async (dispatch, getState) => {
 }
 
 export const createClient = (formData) => dispatch => {
-  debugger
   return api
     .createClient(formData)
     .then(_ => dispatch({type: 'CLIENT_CREATE_SUCCESS'}))

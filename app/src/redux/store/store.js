@@ -11,7 +11,8 @@ import {
 import {
   createReduxHistoryContext
 } from "redux-first-history";
-import homeReducer from "../components/home/homeSlice";
+// import homeReducer from "../components/home/homeSlice";
+import clientsReducer from '../../features/clients/clientsSlice'
 
 const {
   routerMiddleware,
@@ -24,7 +25,8 @@ const {
 export const store = configureStore({
   reducer: combineReducers({
     router: routerReducer,
-    home: homeReducer,
+    // home: homeReducer,
+    clients: clientsReducer
   }),
   middleware: [...getDefaultMiddleware({
     serializableCheck: false
