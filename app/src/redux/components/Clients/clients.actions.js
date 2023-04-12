@@ -3,6 +3,7 @@ import db from '../../../db/firestore'
 
 export const fetchClients = () => async (dispatch, getState) => {
   const clients = await api.fetchClients();
+  return clients
 }
 
 export const createClient = (formData) => dispatch => {

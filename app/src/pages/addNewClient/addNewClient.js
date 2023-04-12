@@ -1,14 +1,23 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { createClient } from '../../redux/components/Clients/clients.actions'
+import { nanoid } from "@reduxjs/toolkit";
+// import { createClient } from '../../redux/components/Clients/clients.actions'
+import { clientAdded } from "../../features/clients/clientsSlice";
 
 export default function addNewClientForm () {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
     
   const onSubmit = data => {
-    dispatch(createClient(data));
+    // dispatch(createClient(data));
+    dispatch(
+      clientAdded({
+        id: nanoid(),
+        ...data
+      })
+    )
+    console.log({data})
   }
 
   return (
@@ -20,21 +29,21 @@ export default function addNewClientForm () {
             <div className="form-group">
               <label htmlFor="first name">First Name</label>
               <input
-                {...register('first name')}
+                {...register('firstName')}
                 type="text"
                 className="form-control"
-                id="first name"
-                name="first name"
+                id="firstName"
+                name="firstName"
                 />
             </div>
             <div className="form-group">
               <label htmlFor="last name" >Last Name</label>
               <input
-                {...register('last name')}
+                {...register('lastName')}
                 type="text"
                 className="form-control"
-                id="last name"
-                name="last name"
+                id="lastName"
+                name="lastName"
                 />
             </div>
             <div className="form-group">
@@ -70,11 +79,11 @@ export default function addNewClientForm () {
             <div className="form-group">
               <label htmlFor="zip code" >Zip Code</label>
               <input
-                {...register('zip code')}
+                {...register('zip')}
                 type="text"
                 className="form-control"
-                id="zip code"
-                name="zip code"
+                id="zip"
+                name="zip"
                 />
             </div>
             <button type="submit" className="btn btn-outline-primary">Add Client</button>

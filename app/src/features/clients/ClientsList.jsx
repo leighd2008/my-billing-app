@@ -1,15 +1,43 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+
+import { fetchClients } from '../../redux/components/Clients/clients.actions'
 
 export const ClientsList = () => {
+  const dispatch = useDispatch();
   const clients = useSelector(state => state.clients)
+  // debugger
+  
+  useEffect(() => {
+    dispatch(fetchClients())
+  }, [dispatch])
   
   return (
     <React.Fragment >
-      <h2>Clients</h2>
-      {clients.map((client, i) => (
-        <h3 key={i}>{client.name}</h3>
-      ))}
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip Code</th>
+          </tr>
+        </thead>
+        <tbody>
+          {clients.map((client, i) => {
+            return (
+              <tr key={i+1}>
+                <td>{`${client.firstName} ${client.lastName}`}</td>
+                <td>{client.address}</td>
+                <td>{client.city}</td>
+                <td>{client.state}</td>
+                <td>{client.zip}</td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
     </React.Fragment>
   )
 }

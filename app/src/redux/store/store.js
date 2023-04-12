@@ -1,16 +1,7 @@
-import {
-  combineReducers
-} from "redux";
-import {
-  configureStore,
-  getDefaultMiddleware
-} from "@reduxjs/toolkit";
-import {
-  createHashHistory
-} from "history";
-import {
-  createReduxHistoryContext
-} from "redux-first-history";
+import { combineReducers } from "redux";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { createHashHistory } from "history";
+import { createReduxHistoryContext } from "redux-first-history";
 // import homeReducer from "../components/home/homeSlice";
 import clientsReducer from '../../features/clients/clientsSlice'
 
