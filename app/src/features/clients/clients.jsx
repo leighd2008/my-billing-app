@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { ClientsList } from '../../features/clients/ClientsList';
+import { ClientsList } from './ClientsList';
 
 import TrustInGod from "Images/Trust_In_God.jpg";
 

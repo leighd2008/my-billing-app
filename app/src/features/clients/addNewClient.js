@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
 // import { createClient } from '../../redux/components/Clients/clients.actions'
-import { clientAdded } from "../../features/clients/clientsSlice";
+import { clientAdded } from "./clientsSlice";
 
 export default function addNewClientForm () {
   const { register, handleSubmit } = useForm();
