@@ -11,7 +11,8 @@
                     "Pages": "./app/src/pages",
                     "Redux": "./app/src/redux",
                     "I18n": "./app/localization",
-                    "Images": "./resources/images"
+                    "Images": "./resources/images",
+                    "Features": "./app/src/features/"
                 }
             },
             "@babel/plugin-syntax-dynamic-import"

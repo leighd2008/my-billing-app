@@ -8,13 +8,13 @@ const Home = loadable(() =>
   import(/* webpackChunkName: "ContextMenuChunk" */ "Pages/home/home")
 );
 const Clients = loadable(() =>
-  import(/* webpackChunkName: "ContextMenuChunk" */ "Pages/clients/clients")
+  import(/* webpackChunkName: "ContextMenuChunk" */ "Features/clients/clients")
 );
 const Invoice = loadable(() =>
   import(/* webpackChunkName: "ContextMenuChunk" */ "Pages/invoice/invoice")
 );
 const AddNewClient = loadable(() =>
-  import(/* webpackChunkName: "ContextMenuChunk" */ "Pages/addNewClient/addNewClient")
+  import(/* webpackChunkName: "ContextMenuChunk" */ "Features/clients/addNewClient")
 );
 class AppRoutes extends React.Component {
   render() {    
