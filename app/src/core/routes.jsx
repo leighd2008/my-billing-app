@@ -16,6 +16,10 @@ const Invoice = loadable(() =>
 const AddNewClient = loadable(() =>
   import(/* webpackChunkName: "ContextMenuChunk" */ "Features/clients/addNewClient")
 );
+import { ClientPage } from "../features/clients/clientPage";
+// const ClientPage = loadable(() =>
+//   import(/* webpackChunkName: "ContextMenuChunk" */ "Features/clients/clientPage")
+// );
 class AppRoutes extends React.Component {
   render() {    
     return (
@@ -24,6 +28,7 @@ class AppRoutes extends React.Component {
         <Route path={ROUTES.CLIENTS} element={<Clients />}></Route>
         <Route path={ROUTES.INVOICE} element={<Invoice />}></Route>
         <Route path={ROUTES.ADD_NEW_CLIENT} element={<AddNewClient />}></Route>
+        <Route exact path="clients/:clientId" element={<ClientPage />}></Route>
         
       </Routes>
     );

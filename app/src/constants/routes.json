@@ -2,5 +2,6 @@
   "HOME": "/",
   "CLIENTS": "/clients",
   "INVOICE": "/invoice",
-  "ADD_NEW_CLIENT": "/addNewClient"
+  "ADD_NEW_CLIENT": "/addNewClient",
+  "CLIENT_PAGE": "/clients/:clientId"
 }
