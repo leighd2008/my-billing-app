@@ -43,6 +43,12 @@ body {
   height: -webkit-fill-available;
 }
 
+table {
+  width: 600px;
+}
+
+
+
 .centered-view {
   display: flex;
   justify-content: center;
@@ -83,7 +89,8 @@ body {
     .subheader {
       color: #5a5c69;
     }
-
+    
+    
     label {
       font-size: 12px;
       margin-bottom: 5px;
