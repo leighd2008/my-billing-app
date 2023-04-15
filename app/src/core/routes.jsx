@@ -17,6 +17,7 @@ const AddNewClient = loadable(() =>
   import(/* webpackChunkName: "ContextMenuChunk" */ "Features/clients/addNewClient")
 );
 import { ClientPage } from "../features/clients/clientPage";
+import { EditClientForm } from "../features/clients/editClientForm";
 // const ClientPage = loadable(() =>
 //   import(/* webpackChunkName: "ContextMenuChunk" */ "Features/clients/clientPage")
 // );
@@ -29,7 +30,7 @@ class AppRoutes extends React.Component {
         <Route path={ROUTES.INVOICE} element={<Invoice />}></Route>
         <Route path={ROUTES.ADD_NEW_CLIENT} element={<AddNewClient />}></Route>
         <Route exact path="clients/:clientId" element={<ClientPage />}></Route>
-        
+        <Route exact path="editClient/:clientId" element={<EditClientForm />}></Route>
       </Routes>
     );
   }

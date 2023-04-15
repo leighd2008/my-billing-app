@@ -1,39 +1,63 @@
-import React from "react";
+import React, { useState} from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { nanoid } from "@reduxjs/toolkit";
-// import { createClient } from '../../redux/components/Clients/clients.actions'
-import { clientAdded } from "./clientsSlice";
+import { useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router'
 
-export default function addNewClientForm () {
+
+import { clientUpdated } from "./clientsSlice";
+
+export const EditClientForm = () => {
+  const { clientId } = useParams();
+  
+  const client = useSelector(state =>
+      state.clients.find(client => client.id === clientId)
+    )
+    
+  const [firstName, setFirstName] = useState(client.firstName)
+  const [lastName, setLastName] = useState(client.lastName)
+  const [address, setAddress] = useState(client.address)
+  const [city, setCity] = useState(client.city)
+  const [usState, setUSState] = useState(client.usState)
+  const [zip, setZip] = useState(client.zip)
+  
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
+  const onFirstNameChanged = e => setFirstName(e.target.value)
+  const onLastNameChanged = e => setLastName(e.target.value)
+  const onAddressChanged = e => setAddress(e.target.value)
+  const onCityChanged = e => setCity(e.target.value)
+  const onUSStateChanged = e => setUSState(e.target.value)
+  const onZipChanged = e => setZip(e.target.value)
     
-  const onSubmit = data => {
-    // dispatch(createClient(data));
-    dispatch(
-      clientAdded({
-        id: nanoid(),
+  const onSubmit = (data) => {
+    dispatch(clientUpdated({ 
+        id: clientId,
         ...data
       })
     )
-    console.log({data})
+    console.log(data)
+    navigate(`/clients/${client.id}`)
   }
 
   return (
     <div className="centered-view">
       <div className="centered-container">
         <form onSubmit={handleSubmit(onSubmit)} className="centered-container-form">
-          <div className="header">Add New Client</div>
+          <div className="header">Edit Client</div>
           <div className="form-container">
             <div className="form-group">
-              <label htmlFor="first name">First Name</label>
+              <label htmlFor="firstName">First Name</label>
               <input
                 {...register('firstName')}
                 type="text"
                 className="form-control"
                 id="firstName"
                 name="firstName"
+                value={firstName}
+                onChange={onFirstNameChanged}
                 />
             </div>
             <div className="form-group">
@@ -44,6 +68,8 @@ export default function addNewClientForm () {
                 className="form-control"
                 id="lastName"
                 name="lastName"
+                value={lastName}
+                onChange={onLastNameChanged}
                 />
             </div>
             <div className="form-group">
@@ -54,6 +80,8 @@ export default function addNewClientForm () {
                 className="form-control"
                 id="address"
                 name="address"
+                value={address}
+                onChange={onAddressChanged}
                 />
             </div>
             <div className="form-group">
@@ -64,16 +92,20 @@ export default function addNewClientForm () {
                 className="form-control"
                 id="city"
                 name="city"
+                value={city}
+                onChange={onCityChanged}
                 />
             </div>
             <div className="form-group">
-              <label htmlFor="state" >State</label>
+              <label htmlFor="usState" >State</label>
               <input
-                {...register('state')}
+                {...register('usState')}
                 type="text"
                 className="form-control"
-                id="state"
-                name="state"
+                id="usState"
+                name="usState"
+                value={usState}
+                onChange={onUSStateChanged}
                 />
             </div>
             <div className="form-group">
@@ -84,9 +116,11 @@ export default function addNewClientForm () {
                 className="form-control"
                 id="zip"
                 name="zip"
+                value={zip}
+                onChange={onZipChanged}
                 />
             </div>
-            <button type="submit" className="btn btn-outline-primary">Add Client</button>
+            <button type="submit" className="btn btn-outline-primary">Edit Client</button>
           </div>
         </form>
       </div>

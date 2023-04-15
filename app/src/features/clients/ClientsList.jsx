@@ -27,12 +27,13 @@ export const ClientsList = () => {
         </thead>
         <tbody>
           {clients.map((client, i) => {
+            console.log(client)
             return (
               <tr key={i+1}>
                 <td>{`${client.firstName} ${client.lastName}`}</td>
                 <td>{client.address}</td>
                 <td>{client.city}</td>
-                <td>{client.state}</td>
+                <td>{client.usState}</td>
                 <td>{client.zip}</td>
                 <td><button onClick={() => navigate(`/clients/${client.id}`)}>View Client</button></td>
               </tr>

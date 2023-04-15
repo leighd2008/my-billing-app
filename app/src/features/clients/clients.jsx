@@ -1,11 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom'
+
 
 import { ClientsList } from './ClientsList';
 
 import TrustInGod from "Images/Trust_In_God.jpg";
 
 const Clients = () => {
+  const navigate = useNavigate()
   
   return (
     <React.Fragment>
@@ -18,7 +21,7 @@ const Clients = () => {
               <div>
                 <ClientsList />
               </div>
-              <button type='submit' onClick={() => {}}>Add Client</button>
+              <button type='submit' onClick={() => {navigate(`/addNewClient`)}}>Add Client</button>
             </div>
           </section>
         </div>
