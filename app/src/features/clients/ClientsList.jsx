@@ -35,7 +35,7 @@ export const ClientsList = () => {
                 <td>{client.city}</td>
                 <td>{client.usState}</td>
                 <td>{client.zip}</td>
-                <td><button onClick={() => navigate(`/clients/${client.id}`)}>View Client</button></td>
+                <td><button onClick={() => navigate(`/clients/${client.id}`)}>View</button></td>
               </tr>
             )
           })}

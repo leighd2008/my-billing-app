@@ -21,75 +21,79 @@ export default function addNewClientForm () {
   }
 
   return (
-    <div className="centered-view">
-      <div className="centered-container">
-        <form onSubmit={handleSubmit(onSubmit)} className="centered-container-form">
-          <div className="header">Add New Client</div>
-          <div className="form-container">
-            <div className="form-group">
-              <label htmlFor="firstName">First Name</label>
-              <input
-                {...register('firstName')}
-                type="text"
-                className="form-control"
-                id="firstName"
-                name="firstName"
-                />
-            </div>
-            <div className="form-group">
-              <label htmlFor="last name" >Last Name</label>
-              <input
-                {...register('lastName')}
-                type="text"
-                className="form-control"
-                id="lastName"
-                name="lastName"
-                />
-            </div>
-            <div className="form-group">
-              <label htmlFor="address" >Street Address</label>
-              <input
-                {...register('address')}
-                type="text"
-                className="form-control"
-                id="address"
-                name="address"
-                />
-            </div>
-            <div className="form-group">
-              <label htmlFor="city" >City</label>
-              <input
-                {...register('city')}
-                type="text"
-                className="form-control"
-                id="city"
-                name="city"
-                />
-            </div>
-            <div className="form-group">
-              <label htmlFor="usState" >State</label>
-              <input
-                {...register('usState')}
-                type="text"
-                className="form-control"
-                id="usState"
-                name="usState"
-                />
-            </div>
-            <div className="form-group">
-              <label htmlFor="zip code" >Zip Code</label>
-              <input
-                {...register('zip')}
-                type="text"
-                className="form-control"
-                id="zip"
-                name="zip"
-                />
-            </div>
-            <button type="submit" className="btn btn-outline-primary">Add Client</button>
+    <section className="section">
+      <div className="container">
+        <section className="hero is-danger">
+          <div className="hero-body">
+            <form onSubmit={handleSubmit(onSubmit)} className="centered-container-form">
+              <div className="header">New Client Information</div>
+              <div className="form-container">
+                <div className="form-group">
+                  <label htmlFor="firstName">First Name</label>
+                  <input
+                    {...register('firstName')}
+                    type="text"
+                    className="form-control"
+                    id="firstName"
+                    name="firstName"
+                    />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="last name" >Last Name</label>
+                  <input
+                    {...register('lastName')}
+                    type="text"
+                    className="form-control"
+                    id="lastName"
+                    name="lastName"
+                    />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="address" >Street Address</label>
+                  <input
+                    {...register('address')}
+                    type="text"
+                    className="form-control"
+                    id="address"
+                    name="address"
+                    />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="city" >City</label>
+                  <input
+                    {...register('city')}
+                    type="text"
+                    className="form-control"
+                    id="city"
+                    name="city"
+                    />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="usState" >State</label>
+                  <input
+                    {...register('usState')}
+                    type="text"
+                    className="form-control"
+                    id="usState"
+                    name="usState"
+                    />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="zip code" >Zip Code</label>
+                  <input
+                    {...register('zip')}
+                    type="text"
+                    className="form-control"
+                    id="zip"
+                    name="zip"
+                    />
+                </div>
+                <button type="submit" className="btn btn-secondary">Add Client</button>
+              </div>
+            </form>
           </div>
-        </form>
+        </section>
       </div>
-    </div>
+    </section>
   )
 }

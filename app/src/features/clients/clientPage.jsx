@@ -28,10 +28,19 @@ export const ClientPage = () => {
   
   return (
     <React.Fragment >
-      <div>
-        <h2>{`${client.firstName} ${client.lastName}`}</h2>
-        <button onClick={() => navigate(`/editClient/${client.id}`)}>Edit Client</button>
-      </div>
+      <section className="section">
+        <div className="container">
+          <section className="hero is-danger">
+            <div className="hero-body">
+              <h2>{`${client.firstName} ${client.lastName}`}</h2>
+              <p>{`${client.address}`}</p>
+              <p>{`${client.city}, ${client.usState} ${client.zip}`}</p>
+              <button onClick={() => navigate(`/editClient/${client.id}`)}>Edit Info</button>
+              <p>Balance: {client.balance ? `${client.balance}` : '0'}</p>
+            </div>
+          </section>
+        </div>
+      </section>
     </React.Fragment>
   )
 }
