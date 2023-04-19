@@ -12,15 +12,11 @@ export default function addNewClientForm () {
   const dispatch = useDispatch();
   const navigate = useNavigate();
     
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     // dispatch(createClient(data));
-    dispatch(
-      clientAdded({
-        id: nanoid(),
-        ...data
-      })
+    console.log(data)
+    dispatch(clientAdded({...data})
     )
-    console.log({data})
     navigate('/clients')
   }
 
