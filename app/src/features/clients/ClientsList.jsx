@@ -13,6 +13,11 @@ export const ClientsList = () => {
     dispatch(fetchClients())
   }, [dispatch])
   
+  const orderedClients = clients.slice().sort((a, b) =>
+    a.lastName.localeCompare(b.lastName))
+    
+  console.log(orderedClients)
+  
   return (
     <React.Fragment >
       <table>
@@ -26,7 +31,7 @@ export const ClientsList = () => {
           </tr>
         </thead>
         <tbody>
-          {clients.map((client, i) => {
+          {orderedClients.map((client, i) => {
             console.log(client)
             return (
               <tr key={i+1}>
