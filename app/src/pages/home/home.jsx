@@ -9,18 +9,18 @@ import Construction_OHIO from "Images/Construction_OHIO.jpg"
 
 const Home = () => {
   const [userId, setUserId] = useState('')
-  const [clientId, setClientId] = useState('')
+  // const [clientId, setClientId] = useState('')
   
   const navigate = useNavigate()
   
   const users = useSelector(state => state.users)
-  const clients = useSelector(state => state.clients)
+  // const clients = useSelector(state => state.clients)
   
   const onUserChanged = e => setUserId(e.target.value)
-  const onClientChanged = e => {
-    setClientId(e.target.value)
-    navigate(`/clients/${e.target.value}`)
-  }
+  // const onClientChanged = e => {
+  //   setClientId(e.target.value)
+  //   navigate(`/clients/${e.target.value}`)
+  // }
   
   const userOptions = users.map(user => (
     <option key={user.id} value={user.id}>
@@ -28,11 +28,11 @@ const Home = () => {
     </option>
   ))
   
-  const clientOptions = clients.map(client => (
-    <option key={client.id} value={client.id}>
-      {client.firstName} {client.lastName}
-    </option>
-  ))
+  // const clientOptions = clients.map(client => (
+  //   <option key={client.id} value={client.id}>
+  //     {client.firstName} {client.lastName}
+  //   </option>
+  // ))
   
   return (
     <React.Fragment>
@@ -48,10 +48,10 @@ const Home = () => {
                 <img src={Construction_OHIO} alt="Construction_OHIO"></img>
                 <User userId={userId} />
                 <br />
-                <select id="clients" value={clientId} onChange={onClientChanged} >
+                {/* <select id="clients" value={clientId} onChange={onClientChanged} >
                   <option value="">Client List</option>
                   {clientOptions}
-                </select>
+                </select> */}
               </div>
             </section>
           </div>

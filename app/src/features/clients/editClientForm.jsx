@@ -5,14 +5,12 @@ import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router'
 
 
-import { clientUpdated } from "./clientsSlice";
+import { clientUpdated, selectClientById } from "./clientsSlice";
 
 export const EditClientForm = () => {
   const { clientId } = useParams();
   
-  const client = useSelector(state =>
-      state.clients.find(client => client.id === clientId)
-    )
+  const client = useSelector(state => selectClientById(state, postId))
     
   const [firstName, setFirstName] = useState(client.firstName)
   const [lastName, setLastName] = useState(client.lastName)

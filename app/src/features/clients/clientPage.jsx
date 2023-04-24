@@ -3,15 +3,14 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router'
 import { useNavigate } from 'react-router-dom'
 
-// import { fetchClients } from '../../redux/components/Clients/clients.actions'
+import { selectClientById } from './clientsSlice'
 
 export const ClientPage = () => {
   const { clientId } = useParams();
   const navigate = useNavigate();
   
-  const client = useSelector(state => 
-    state.clients.find(client => client.id === clientId)
-    )
+  const client = useSelector(state => selectClientById(state, clientId))
+    
   // debugger
   
   // useEffect(() => {

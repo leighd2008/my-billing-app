@@ -1,4 +1,4 @@
-import * as api from './clients.api';
+import * as api from '../../../features/clients/clients.api';
 import db from '../../../db/firestore'
 
 export const fetchClients = () => async (dispatch, getState) => {

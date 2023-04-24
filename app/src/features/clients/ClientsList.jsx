@@ -2,16 +2,20 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import { fetchClients } from '../../redux/components/Clients/clients.actions'
+import { selectAllClients, fetchClients } from './clientsSlice'
 
 export const ClientsList = () => {
   const dispatch = useDispatch();
-  const clients = useSelector(state => state.clients)
+  const clients = useSelector(selectAllClients)
   const navigate = useNavigate()
   
+  const clientsStatus = useSelector(state => state.clients.status)
+  
   useEffect(() => {
-    dispatch(fetchClients())
-  }, [dispatch])
+    if (clientsStatus === 'idle'){
+      dispatch(fetchClients())
+    }
+  }, [ dispatch])
   
   const orderedClients = clients.slice().sort((a, b) =>
     a.lastName.localeCompare(b.lastName))
