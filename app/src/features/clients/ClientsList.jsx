@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { Spinner } from '../../components/Spinner'
 
 import { selectAllClients, fetchClients } from './clientsSlice'
+import { divide } from 'lodash'
 
 export const ClientsList = () => {
   const dispatch = useDispatch();
@@ -10,20 +12,10 @@ export const ClientsList = () => {
   const navigate = useNavigate()
   
   const clientsStatus = useSelector(state => state.clients.status)
+  const error = useSelector(state => state.clients.error)
   
-  useEffect(() => {
-    if (clientsStatus === 'idle'){
-      dispatch(fetchClients())
-    }
-  }, [ dispatch])
-  
-  const orderedClients = clients.slice().sort((a, b) =>
-    a.lastName.localeCompare(b.lastName))
-    
-  console.log(orderedClients)
-  
-  return (
-    <React.Fragment >
+  const ClientInfo = ({ orderedClients }) => {
+    return (
       <table>
         <thead>
           <tr>
@@ -50,6 +42,33 @@ export const ClientsList = () => {
           })}
         </tbody>
       </table>
+    )
+  }
+  
+  useEffect(() => {
+    if (clientsStatus === 'idle'){
+      dispatch(fetchClients())
+    }
+  }, [clientsStatus, dispatch])
+  
+  let content
+  
+  if (clientsStatus === 'loading') {
+    content = <Spinner text='loading...' />
+  } else if (clientsStatus === 'succeeded') {
+    
+    const orderedClients = clients.slice().sort((a, b) =>
+      a.lastName.localeCompare(b.lastName))
+    console.log(orderedClients)
+    
+    content = (<ClientInfo orderedClients={orderedClients} />)
+  } else if (clientsStatus === 'failed') {
+    content = <div>{error}</div>
+  }
+    
+  return (
+    <React.Fragment >
+      {content}
     </React.Fragment>
   )
 }
