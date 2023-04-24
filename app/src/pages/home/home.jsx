@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 
+import { selectAllUsers, fetchUsers } from "../../features/users/usersSlice";
 import { User } from "../../features/users/User";
 
 import Construction_OHIO from "Images/Construction_OHIO.jpg"
@@ -9,18 +10,12 @@ import Construction_OHIO from "Images/Construction_OHIO.jpg"
 
 const Home = () => {
   const [userId, setUserId] = useState('')
-  // const [clientId, setClientId] = useState('')
-  
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   
-  const users = useSelector(state => state.users)
-  // const clients = useSelector(state => state.clients)
+  const users = useSelector(selectAllUsers)
   
   const onUserChanged = e => setUserId(e.target.value)
-  // const onClientChanged = e => {
-  //   setClientId(e.target.value)
-  //   navigate(`/clients/${e.target.value}`)
-  // }
   
   const userOptions = users.map(user => (
     <option key={user.id} value={user.id}>
@@ -28,11 +23,10 @@ const Home = () => {
     </option>
   ))
   
-  // const clientOptions = clients.map(client => (
-  //   <option key={client.id} value={client.id}>
-  //     {client.firstName} {client.lastName}
-  //   </option>
-  // ))
+  useEffect(() => {
+    debugger
+    dispatch(fetchUsers())
+  }, [dispatch])
   
   return (
     <React.Fragment>
@@ -47,11 +41,6 @@ const Home = () => {
                 <p className="title">Go Bucks!</p>
                 <img src={Construction_OHIO} alt="Construction_OHIO"></img>
                 <User userId={userId} />
-                <br />
-                {/* <select id="clients" value={clientId} onChange={onClientChanged} >
-                  <option value="">Client List</option>
-                  {clientOptions}
-                </select> */}
               </div>
             </section>
           </div>

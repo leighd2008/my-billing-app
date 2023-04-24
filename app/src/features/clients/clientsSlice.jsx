@@ -6,13 +6,10 @@ const initialState = {
   clients: [],
   status: 'idle',
   error: null
-  // {id: '1', firstName: 'John', lastName: 'Smith', address: '123 This road', city: 'nowhere', usState: 'anywhere', zip: '12345', balance: '$50'},
-  // {id: '2', firstName: 'Jane', lastName: 'Doe', address: '456 That road', city: 'somewhere', usState: 'anyplace', zip: '67891'}
 }
 
 export const fetchClients = createAsyncThunk('clients/fetchClients', async() => {
     const clients = await api.fetchClients();
-    console.log(clients)
     return clients
 })
 

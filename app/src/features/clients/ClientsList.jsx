@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 import { Spinner } from '../../components/Spinner'
 
 import { selectAllClients, fetchClients } from './clientsSlice'
-import { divide } from 'lodash'
 
 export const ClientsList = () => {
   const dispatch = useDispatch();
