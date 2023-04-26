@@ -27,7 +27,6 @@ export const ClientsList = () => {
         </thead>
         <tbody>
           {orderedClients.map((client, i) => {
-            console.log(client)
             return (
               <tr key={i+1}>
                 <td>{`${client.firstName} ${client.lastName}`}</td>
@@ -58,7 +57,6 @@ export const ClientsList = () => {
     
     const orderedClients = clients.slice().sort((a, b) =>
       a.lastName.localeCompare(b.lastName))
-    console.log(orderedClients)
     
     content = (<ClientInfo orderedClients={orderedClients} />)
   } else if (clientsStatus === 'failed') {

@@ -10,12 +10,6 @@ export const ClientPage = () => {
   const navigate = useNavigate();
   
   const client = useSelector(state => selectClientById(state, clientId))
-    
-  // debugger
-  
-  // useEffect(() => {
-  //   dispatch(fetchClients())
-  // }, [dispatch])
   
   if (!client) {
     return (

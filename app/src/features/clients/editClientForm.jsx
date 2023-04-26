@@ -36,7 +36,6 @@ export const EditClientForm = () => {
         ...data
       })
     )
-    console.log(data)
     navigate(`/clients/${client.id}`)
   }
 
