@@ -21,9 +21,10 @@ export const store = configureStore({
     clients: clientsReducer,
     users: usersReducer
   }),
-  middleware: [...getDefaultMiddleware({
-    serializableCheck: false
-  }), routerMiddleware]
+  middleware: (getDefaultMiddleware => getDefaultMiddleware().concat(routerMiddleware))
+  // [...getDefaultMiddleware({
+  //   serializableCheck: false
+  // }), routerMiddleware]
 });
 
 export const history = createReduxHistory(store);
