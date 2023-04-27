@@ -1,23 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom'
 
-import { nanoid } from "@reduxjs/toolkit";
-// import { createClient } from '../../redux/components/Clients/clients.actions'
-import { clientAdded } from "./clientsSlice";
+import { createClient } from "./clientsSlice";
 
 export default function addNewClientForm () {
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [addNewClientStatus, setAddNewClientStatus] = useState('idle')
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+  const onFirstNameChanged = e => setFirstName(e.target.value)
+  const onLastNameChanged = e => setLastName(e.target.value)
+  
+  const canSave = [firstName, lastName].every(Boolean) && addNewClientStatus === 'idle'
     
-  const onSubmit = (data) => {
-    // dispatch(createClient(data));
-    console.log(data)
-    dispatch(clientAdded({...data})
-    )
-    navigate('/clients')
+  const onSubmit = async (data) => {
+    if (canSave) {
+      try {
+        setAddNewClientStatus('pending')
+        await dispatch(createClient(data))
+        navigate('/clients')
+      } catch (err){
+        console.error('Failed to save the client: ', err)
+      } finally {
+        setAddNewClientStatus('idle')
+      }
+    }
   }
 
   return (
@@ -36,6 +48,7 @@ export default function addNewClientForm () {
                     className="form-control"
                     id="firstName"
                     name="firstName"
+                    onChange={onFirstNameChanged}
                     />
                 </div>
                 <div className="form-group">
@@ -46,6 +59,7 @@ export default function addNewClientForm () {
                     className="form-control"
                     id="lastName"
                     name="lastName"
+                    onChange={onLastNameChanged}
                     />
                 </div>
                 <div className="form-group">

@@ -23,7 +23,6 @@ const Home = () => {
   
   useEffect(() => {
     if (userStatus === 'idle') {
-      debugger
       dispatch(fetchUsers())
   }
   }, [userStatus, dispatch])

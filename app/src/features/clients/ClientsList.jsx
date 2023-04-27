@@ -6,6 +6,7 @@ import { Spinner } from '../../components/Spinner'
 import { selectAllClients, fetchClients } from './clientsSlice'
 
 export const ClientsList = () => {
+  // debugger
   const dispatch = useDispatch();
   const clients = useSelector(selectAllClients)
   const navigate = useNavigate()

@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as api from './clients.api';
 
 
@@ -13,23 +13,15 @@ export const fetchClients = createAsyncThunk('clients/fetchClients', async() => 
     return clients
 })
 
+export const createClient = createAsyncThunk('clients/createClient', 
+  async (formData) => {
+    return api.createClient(formData)
+})
+
 const clientsSlice = createSlice({
   name: 'clients',
   initialState,
   reducers: {
-    clientAdded: {
-      reducer(state, action) {
-        state.clients.push(action.payload)
-      },
-      prepare(data) {
-        return {
-          payload: {
-            id: nanoid(),
-            ...data
-          }
-        }
-      }
-    },
     clientUpdated(state, action) {
       const { id, firstName, lastName, address, city, usState, zip} = action.payload
       const existingClient = state.clients.find(client => client.id === id)
@@ -50,16 +42,21 @@ const clientsSlice = createSlice({
       })
       .addCase(fetchClients.fulfilled, (state, action) => {
         state.status = 'succeeded'
-        state.clients = state.clients.concat(action.payload)
+        state.clients = action.payload
       })
       .addCase(fetchClients.rejected, (state, action) =>{
         state.status = 'failed'
         state.error = action.error.message
       })
+    builder.addCase(createClient.fulfilled, (state, action) => {
+      let newClient = action.meta.arg
+      newClient.id = action.payload
+      state.status = 'idle'
+    })
   }
 })
 
-export const { clientAdded, clientUpdated } = clientsSlice.actions
+export const { clientUpdated } = clientsSlice.actions
 
 export default clientsSlice.reducer
 
