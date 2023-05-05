@@ -18,6 +18,12 @@ export const createClient = createAsyncThunk('clients/createClient',
     return api.createClient(formData)
 })
 
+export const editClient = createAsyncThunk('clients/editClient',
+  async (data) => {
+    return api.editClient(data)
+  }
+)
+
 const clientsSlice = createSlice({
   name: 'clients',
   initialState,
@@ -49,8 +55,9 @@ const clientsSlice = createSlice({
         state.error = action.error.message
       })
     builder.addCase(createClient.fulfilled, (state, action) => {
-      let newClient = action.meta.arg
-      newClient.id = action.payload
+      state.status = 'idle'
+    })
+    builder.addCase(editClient.fulfilled, (state, action) => {
       state.status = 'idle'
     })
   }

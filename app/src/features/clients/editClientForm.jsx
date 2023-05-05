@@ -5,12 +5,12 @@ import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router'
 
 
-import { clientUpdated, selectClientById } from "./clientsSlice";
+import { editClient, selectClientById } from "./clientsSlice";
 
 export const EditClientForm = () => {
   const { clientId } = useParams();
   
-  const client = useSelector(state => selectClientById(state, postId))
+  const client = useSelector(state => selectClientById(state, clientId))
     
   const [firstName, setFirstName] = useState(client.firstName)
   const [lastName, setLastName] = useState(client.lastName)
@@ -18,6 +18,7 @@ export const EditClientForm = () => {
   const [city, setCity] = useState(client.city)
   const [usState, setUSState] = useState(client.usState)
   const [zip, setZip] = useState(client.zip)
+  const [id, setId] = useState(client.id)
   
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
@@ -30,13 +31,9 @@ export const EditClientForm = () => {
   const onUSStateChanged = e => setUSState(e.target.value)
   const onZipChanged = e => setZip(e.target.value)
     
-  const onSubmit = (data) => {
-    dispatch(clientUpdated({ 
-        id: clientId,
-        ...data
-      })
-    )
-    navigate(`/clients/${client.id}`)
+  const onSubmit = async (data) => {
+    await dispatch(editClient(data))
+    navigate(`/clients`)
   }
 
   return (
@@ -115,6 +112,17 @@ export const EditClientForm = () => {
                 name="zip"
                 value={zip}
                 onChange={onZipChanged}
+                />
+            </div>
+            <div className="form-group">
+              <label htmlFor="Client Id" >Client Id</label>
+              <input
+                {...register('id')}
+                type="text"
+                className="form-control"
+                id="id"
+                name="id"
+                value={id}
                 />
             </div>
             <button type="submit" className="btn btn-outline-primary">Edit Client</button>
