@@ -3,5 +3,6 @@
   "CLIENTS": "/clients",
   "INVOICE": "/invoice",
   "ADD_NEW_CLIENT": "/addNewClient",
-  "CLIENT_PAGE": "/clients/:clientId"
+  "CLIENT_PAGE": "/clients/:clientId",
+  "BILLING": "/billing"
 }

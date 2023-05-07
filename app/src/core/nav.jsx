@@ -73,6 +73,11 @@ class Nav extends React.Component {
             </a>
             <a
               className="navbar-item"
+              onClick={() => this.navigate(ROUTES.BILLING)}>
+              Billing
+            </a>
+            <a
+              className="navbar-item"
               onClick={() => this.navigate(ROUTES.INVOICE)}>
               Invoice
             </a>
