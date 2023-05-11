@@ -4,5 +4,6 @@
   "INVOICE": "/invoice",
   "ADD_NEW_CLIENT": "/addNewClient",
   "CLIENT_PAGE": "/clients/:clientId",
-  "BILLING": "/billing"
+  "BILLING": "/billing",
+  "PAYMENTS": "/payments"
 }

@@ -7,7 +7,7 @@ import { selectAllClients, fetchClients } from "../clients/clientsSlice";
 import Sisters from "Images/Sisters.jpg";
 
 
-const Billing = () => {
+const Payments = () => {
   const [clientId, setClientId] = useState('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -48,7 +48,7 @@ const Billing = () => {
             <section className="hero is-danger">
               <div className="hero-body">
                 <img src={Sisters} alt="Sisters"></img>
-                <p className="title">Billing</p>
+                <p className="title">Payments</p>
                 <select id="client" value={clientId} onChange={onClientChanged} >
                   <option value="">Clients</option>
                   {content}
@@ -61,4 +61,4 @@ const Billing = () => {
     );
 }
 
-export default Billing;
+export default Payments;

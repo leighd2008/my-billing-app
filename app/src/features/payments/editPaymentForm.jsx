@@ -7,7 +7,7 @@ import { useParams } from 'react-router'
 
 import { editClient, selectClientById } from "../clients/clientsSlice";
 
-export const EditBillingForm = () => {
+export const EditPaymentForm = () => {
   const { clientId } = useParams();
   
   const client = useSelector(state => selectClientById(state, clientId))
