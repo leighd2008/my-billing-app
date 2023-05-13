@@ -24,6 +24,13 @@ export const editClient = createAsyncThunk('clients/editClient',
   }
 )
 
+export const addPayment = createAsyncThunk('clients/addPayment',
+  async (data) => {
+    console.log(data)
+    return api.addPayment(data)
+  }
+)
+
 const clientsSlice = createSlice({
   name: 'clients',
   initialState,

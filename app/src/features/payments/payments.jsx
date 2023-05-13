@@ -19,7 +19,7 @@ const Payments = () => {
   
   const onClientChanged = e => {
     setClientId(e.target.value)
-    navigate(`/editBilling/${e.target.value}`)
+    navigate(`/addPayment/${e.target.value}`)
   }
   
   useEffect(() => {
