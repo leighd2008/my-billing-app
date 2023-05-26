@@ -24,16 +24,16 @@ export const AddPaymentForm = () => {
   const onPaymentDateChanged = e => setPaymentDate(e.target.value)
   const onAmountChanged = e => setAmount(e.target.value)
   let payments = client.payments || {}
+  let pmntId = payments.length || 0
     
   const onSubmit = async (data) => {
-    let pmntId = 0
-    if (payments) {
-      data.pmntId = payments.length
-    } else {
-      data.pmntId = 0
-    }
     let payment = {id: pmntId, date: data.date, amount: data.amount, invoiced: false}
-    data.payments = [...payments, payment]
+    
+    if (payments.length) {
+      data.payments = [...payments, payment]
+    } else {
+      data.payments = [payment]
+    }
     data.id = id
     
     await dispatch(addPayment(data))

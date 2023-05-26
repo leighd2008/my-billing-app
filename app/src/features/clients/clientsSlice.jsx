@@ -26,14 +26,12 @@ export const editClient = createAsyncThunk('clients/editClient',
 
 export const addPayment = createAsyncThunk('clients/addPayment',
   async (data) => {
-    console.log(data)
     return api.addPayment(data)
   }
 )
 
 export const addCharge = createAsyncThunk('clients/addCharge',
   async (data) => {
-    console.log(data)
     return api.addCharge(data)
   }
 )

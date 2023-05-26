@@ -13,7 +13,6 @@ export const fetchClients = () =>
     
 export const createClient = async client =>{ 
   const docRef = await addDoc(collection(db, 'clients'), client)
-  console.log(docRef)
   return docRef.id
 }
 
@@ -23,13 +22,11 @@ export const editClient = async (client) => {
 }
 
 export const addPayment = async(data) => {
-  console.log(data)
   const docRef = doc(db, 'clients', data.id)
   await updateDoc(docRef, {payments: data.payments})
 }
 
 export const addCharge = async(data) => {
-  console.log(data)
   const docRef = doc(db, 'clients', data.id)
-  await updateDoc(docRef, {Charges: data.charges})
+  await updateDoc(docRef, {charges: data.charges})
 }
