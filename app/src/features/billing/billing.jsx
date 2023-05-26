@@ -19,7 +19,7 @@ const Billing = () => {
   
   const onClientChanged = e => {
     setClientId(e.target.value)
-    navigate(`/editBilling/${e.target.value}`)
+    navigate(`/addCharges/${e.target.value}`)
   }
   
   useEffect(() => {
