@@ -14,7 +14,6 @@ export const AddPaymentForm = () => {
     
   const [paymentDate, setPaymentDate] = useState('')
   const [amount, setAmount] = useState('')
-  const [invoiced, setInvoiced] = useState(false)
   const [id, setId] = useState(client.id)
   
   
@@ -33,8 +32,9 @@ export const AddPaymentForm = () => {
     } else {
       data.pmntId = 0
     }
-    let payment = {id: pmntId, date: data.date, amount: data.amount}
+    let payment = {id: pmntId, date: data.date, amount: data.amount, invoiced: false}
     data.payments = [...payments, payment]
+    data.id = id
     
     await dispatch(addPayment(data))
     navigate(`/clients/${clientId}`)
@@ -71,17 +71,6 @@ export const AddPaymentForm = () => {
                   name="amount"
                   value={amount}
                   onChange={onAmountChanged}
-                  />
-              </div>
-              <div className="form-group">
-                <label htmlFor="Client Id" >Client Id</label>
-                <input
-                  {...register('id')}
-                  type="text"
-                  className="form-control"
-                  id="id"
-                  name="id"
-                  value={id}
                   />
               </div>
               <button type="submit" className="btn btn-outline-primary">Add Payment</button>
