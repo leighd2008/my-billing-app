@@ -27,3 +27,9 @@ export const addPayment = async(data) => {
   const docRef = doc(db, 'clients', data.id)
   await updateDoc(docRef, {payments: data.payments})
 }
+
+export const addCharge = async(data) => {
+  console.log(data)
+  const docRef = doc(db, 'clients', data.id)
+  await updateDoc(docRef, {Charges: data.charges})
+}
