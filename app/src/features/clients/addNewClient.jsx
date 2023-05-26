@@ -19,6 +19,8 @@ export default function addNewClientForm () {
   const canSave = [firstName, lastName].every(Boolean) && addNewClientStatus === 'idle'
     
   const onSubmit = async (data) => {
+    data.payments = {}
+    data.charges = {}
     if (canSave) {
       try {
         setAddNewClientStatus('pending')

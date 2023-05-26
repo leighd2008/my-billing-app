@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router'
 
 
-import { addCharges, selectClientById } from "../clients/clientsSlice";
+import { addCharge, selectClientById } from "../clients/clientsSlice";
 
 export const AddChargesForm = () => {
   const { clientId } = useParams();
@@ -29,16 +29,15 @@ export const AddChargesForm = () => {
   const onHoursChanged = e => setHours(e.target.value)
   
   let charges = client.charges || {}
-    
+  let chargeId = charges.length || 0
+  
   const onSubmit = async (data) => {
-    let chargeId = 0
-    if (chargeId) {
-      data.chargeId = payments.length
+    let charge = {id: chargeId, date: data.date, category: data.category, rate: data.rate, hours: data.hours, invoiced: false}
+    if (charges.length) {
+      data.charges = [...charges, charge]
     } else {
-      data.chargeId = 0
+      data.charges = [charge]
     }
-    let charge = {id: chargeId, date: data.chargeDate, category: data.category, rate: data.rate, hours: data.hours, invoiced: false}
-    data.charges = [...charges, charge]
     data.id = id
     
     await dispatch(addCharge(data))
@@ -67,8 +66,20 @@ export const AddChargesForm = () => {
                   />
               </div>
               <div className="form-group">
-                <label htmlFor="amount" >Category</label>
-                <input
+                <label htmlFor="category" >Category</label>
+                  <select 
+                    {...register('category')}
+                    className="form-control"
+                    id="category"
+                    name="category"
+                    value={category}
+                    onChange={onCategoryChanged}>
+                    <option value="this_category">This category</option>
+                    <option value="2that_category">That category</option>
+                    <option value="another_category">Another category</option>
+                    <option value="a_category">A category</option>
+                  </select>
+                {/* <input
                   {...register('category')}
                   type="text"
                   className="form-control"
@@ -76,7 +87,7 @@ export const AddChargesForm = () => {
                   name="category"
                   value={category}
                   onChange={onCategoryChanged}
-                  />
+                  /> */}
               </div>
               <div className="form-group">
                 <label htmlFor="amount" >Hours</label>
