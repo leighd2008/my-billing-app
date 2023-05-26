@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useEffect, useState} from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom'
@@ -6,6 +6,8 @@ import { useParams } from 'react-router'
 
 
 import { addCharge, selectClientById } from "../clients/clientsSlice";
+import { selectAllUsers, fetchUsers, selectUserById } from "../users/usersSlice";
+
 
 export const AddChargesForm = () => {
   const { clientId } = useParams();
@@ -17,7 +19,13 @@ export const AddChargesForm = () => {
   const [rate, setRate] = useState('')
   const [hours, setHours] = useState('')
   const [id, setId] = useState(client.id)
+  const [userId, setUserId] = useState('')
   
+  const users = useSelector(selectAllUsers)
+  
+  const userStatus = useSelector(state => state.users.status)
+  const error = useSelector(state => state.users.error)
+  let user = useSelector(state => selectUserById(state, userId))
   
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
@@ -27,12 +35,34 @@ export const AddChargesForm = () => {
   const onCategoryChanged = e => setCategory(e.target.value)
   const onRateChanged = e => setRate(e.target.value)
   const onHoursChanged = e => setHours(e.target.value)
+  const onUserChanged = e => setUserId(e.target.value)
+  
+    
+  
+  useEffect(() => {
+    if (userStatus === 'idle') {
+      dispatch(fetchUsers())
+    }
+  }, [userStatus, dispatch])
+  
+  let content
+  
+  if(userStatus === 'loading') {
+    content = ""
+  } else if (userStatus === 'succeeded') {
+    content = users.map(user => (
+      <option key={user.id} value={user.id}>{user.name}</option>
+    ))
+  } else if (userStatus === 'failed') {
+    content = <option>{error}</option>
+  }
   
   let charges = client.charges || {}
   let chargeId = charges.length || 0
   
   const onSubmit = async (data) => {
-    let charge = {id: chargeId, date: data.date, category: data.category, rate: data.rate, hours: data.hours, invoiced: false}
+    console.log(data)
+    let charge = {id: chargeId, date: data.date, category: data.category, user: user.name, rate: user.rate, hours: data.hours, invoiced: false}
     if (charges.length) {
       data.charges = [...charges, charge]
     } else {
@@ -67,27 +97,31 @@ export const AddChargesForm = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="category" >Category</label>
-                  <select 
-                    {...register('category')}
-                    className="form-control"
-                    id="category"
-                    name="category"
-                    value={category}
-                    onChange={onCategoryChanged}>
-                    <option value="this_category">This category</option>
-                    <option value="2that_category">That category</option>
-                    <option value="another_category">Another category</option>
-                    <option value="a_category">A category</option>
-                  </select>
-                {/* <input
+                <select 
                   {...register('category')}
-                  type="text"
                   className="form-control"
                   id="category"
                   name="category"
                   value={category}
-                  onChange={onCategoryChanged}
-                  /> */}
+                  onChange={onCategoryChanged}>
+                  <option value="this_category">This category</option>
+                  <option value="that_category">That category</option>
+                  <option value="another_category">Another category</option>
+                  <option value="a_category">A category</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="category" >User</label>
+                <select 
+                  {...register('user')}
+                  className="form-control"
+                  id="user"
+                  name="user"
+                  value={userId}
+                  onChange={onUserChanged}>
+                  <option value="">Users</option>
+                  {content}
+                </select>
               </div>
               <div className="form-group">
                 <label htmlFor="amount" >Hours</label>
