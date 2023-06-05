@@ -36,9 +36,9 @@ export default function addNewClientForm () {
 
   return (
     <section className="section">
-      <div className="container">
-        <section className="hero is-danger">
-          <div className="hero-body">
+      <div className="centered-view">
+        <section className="centered-container">
+          <div className="">
             <form onSubmit={handleSubmit(onSubmit)} className="centered-container-form">
               <div className="header">New Client Information</div>
               <div className="form-container">
@@ -104,7 +104,7 @@ export default function addNewClientForm () {
                     name="zip"
                     />
                 </div>
-                <button type="submit" className="btn btn-secondary">Add Client</button>
+                <button type="submit" className="btn">Add Client</button>
               </div>
             </form>
           </div>

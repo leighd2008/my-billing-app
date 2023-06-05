@@ -22,9 +22,9 @@ export const ClientPage = () => {
   return (
     <React.Fragment >
       <section className="section">
-        <div className="container">
-          <section className="hero is-danger">
-            <div className="hero-body">
+        <div className="centered-view">
+          <section className="centered-container">
+            <div className="">
               <h2>{`${client.firstName} ${client.lastName}`}</h2>
               <p>{`${client.address}`}</p>
               <p>{`${client.city}, ${client.usState} ${client.zip}`}</p>

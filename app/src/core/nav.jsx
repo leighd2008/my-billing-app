@@ -67,7 +67,7 @@ export const Nav = () => {
     // </nav>
     <nav>
     <section>
-      <h1>Redux Essentials Example</h1>
+      <h1> </h1>
 
       <div className="navContent">
         <div className="navLinks">

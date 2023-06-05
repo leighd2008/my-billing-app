@@ -5,18 +5,15 @@ import { useNavigate } from 'react-router-dom'
 
 import { ClientsList } from './ClientsList';
 
-import TrustInGod from "Images/Trust_In_God.jpg";
-
 const Clients = () => {
   const navigate = useNavigate()
   
   return (
     <React.Fragment>
       <section className="section">
-        <div className="container">
-          <section className="hero is-danger">
-            <div className="hero-body">
-              <img src={TrustInGod} alt="Trust in God" />
+        <div className="centered-view">
+          <section className="centered-container">
+            <div className="">
               <p className="title">Manage client information</p>
               <div>
                 <ClientsList />

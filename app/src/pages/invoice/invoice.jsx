@@ -1,17 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Sisters from "Images/Sisters.jpg";
 
 export default class Invoice extends React.Component {
   render() {
     return (
     <React.Fragment>
       <section className="section">
-        <div className="container">
-          <section className="hero is-danger">
-            <div className="hero-body">
+        <div className="centered-view">
+          <section className="centered-container">
+            <div className="">
               <p className="title">Generate an invoice</p>
-              <img src={Sisters} alt="Sisters" />
             </div>
           </section>
         </div>

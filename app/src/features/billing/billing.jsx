@@ -4,9 +4,6 @@ import { useNavigate } from "react-router";
 
 import { selectAllClients, fetchClients } from "../clients/clientsSlice";
 
-import Sisters from "Images/Sisters.jpg";
-
-
 const Billing = () => {
   const [clientId, setClientId] = useState('')
   const dispatch = useDispatch()
@@ -44,10 +41,9 @@ const Billing = () => {
   return (
     <React.Fragment>
         <section className="section">
-          <div className="container">
-            <section className="hero is-danger">
-              <div className="hero-body">
-                <img src={Sisters} alt="Sisters"></img>
+          <div className="centered-view">
+            <section className="centered-container">
+              <div className="">
                 <p className="title">Billing</p>
                 <select id="client" value={clientId} onChange={onClientChanged} >
                   <option value="">Clients</option>

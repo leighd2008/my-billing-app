@@ -61,7 +61,6 @@ export const AddChargesForm = () => {
   let chargeId = charges.length || 0
   
   const onSubmit = async (data) => {
-    console.log(data)
     let charge = {id: chargeId, date: data.date, category: data.category, user: user.name, rate: user.rate, hours: data.hours, invoiced: false}
     if (charges.length) {
       data.charges = [...charges, charge]
