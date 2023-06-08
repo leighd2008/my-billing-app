@@ -47,7 +47,6 @@ export const AddPaymentForm = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="centered-container-form">
             <div className="header">Add a payment</div>
               <h2>{`${client.firstName} ${client.lastName}`}</h2>
-              {/* <h2>{client.balance || '0.00'}</h2> */}
             <div className="form-container">
               <div className="form-group">
                 <label htmlFor="payment date" >Payment Date</label>
@@ -73,7 +72,7 @@ export const AddPaymentForm = () => {
                   onChange={onAmountChanged}
                   />
               </div>
-              <button type="submit" className="btn btn-outline-primary">Add Payment</button>
+              <button type="submit" className="btn">Add Payment</button>
             </div>
           </form>
         </div>

@@ -125,7 +125,7 @@ export const EditClientForm = () => {
                 value={id}
                 />
             </div>
-            <button type="submit" className="btn btn-outline-primary">Edit Client</button>
+            <button type="submit" className="btn">Edit Client</button>
           </div>
         </form>
       </div>

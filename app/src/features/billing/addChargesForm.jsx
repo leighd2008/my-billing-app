@@ -16,7 +16,7 @@ export const AddChargesForm = () => {
     
   const [chargeDate, setChargeDate] = useState('')
   const [category, setCategory] = useState('')
-  const [rate, setRate] = useState('')
+  // const [rate, setRate] = useState('')
   const [hours, setHours] = useState('')
   const [id, setId] = useState(client.id)
   const [userId, setUserId] = useState('')
@@ -33,7 +33,7 @@ export const AddChargesForm = () => {
   
   const onChargeDateChanged = e => setChargeDate(e.target.value)
   const onCategoryChanged = e => setCategory(e.target.value)
-  const onRateChanged = e => setRate(e.target.value)
+  // const onRateChanged = e => setRate(e.target.value)
   const onHoursChanged = e => setHours(e.target.value)
   const onUserChanged = e => setUserId(e.target.value)
   
@@ -59,9 +59,11 @@ export const AddChargesForm = () => {
   
   let charges = client.charges || {}
   let chargeId = charges.length || 0
+  let rate = ""
   
   const onSubmit = async (data) => {
-    let charge = {id: chargeId, date: data.date, category: data.category, user: user.name, rate: user.rate, hours: data.hours, invoiced: false}
+    category === "A category ($20)" ? rate = 20 : rate = user.rate
+    let charge = {id: chargeId, date: data.date, category: data.category, user: user.name, rate: rate, hours: data.hours, total: (2 * rate), invoiced: false}
     if (charges.length) {
       data.charges = [...charges, charge]
     } else {
@@ -106,7 +108,7 @@ export const AddChargesForm = () => {
                   <option value="this_category">This category</option>
                   <option value="that_category">That category</option>
                   <option value="another_category">Another category</option>
-                  <option value="a_category">A category</option>
+                  <option value="a_category">A category ($20)</option>
                 </select>
               </div>
               <div className="form-group">
@@ -126,7 +128,7 @@ export const AddChargesForm = () => {
                 <label htmlFor="amount" >Hours</label>
                 <input
                   {...register('hours')}
-                  type="text"
+                  type="number"
                   className="form-control"
                   id="hours"
                   name="hours"
@@ -134,7 +136,7 @@ export const AddChargesForm = () => {
                   onChange={onHoursChanged}
                   />
               </div>
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label htmlFor="amount" >Rate</label>
                 <input
                   {...register('rate')}
@@ -145,8 +147,8 @@ export const AddChargesForm = () => {
                   value={rate}
                   onChange={onRateChanged}
                   />
-              </div>
-              <button type="submit" className="btn btn-outline-primary">Add Charge</button>
+              </div> */}
+              <button type="submit" className="btn">Add Charge</button>
             </div>
           </form>
         </div>

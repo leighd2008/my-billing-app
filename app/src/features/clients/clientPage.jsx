@@ -29,6 +29,18 @@ export const ClientPage = () => {
               <p>{`${client.address}`}</p>
               <p>{`${client.city}, ${client.usState} ${client.zip}`}</p>
               <button onClick={() => navigate(`/editClient/${client.id}`)}>Edit Info</button>
+              <h3>Payments</h3>
+              {console.log(`payments: ${client.payments.length}`)}
+              {/* {client.payments.map((payment, i) => {
+                return (
+                <p>{`${payment.date}: $${payment.amount}`}</p>
+              )})} */}
+              <h3>Charges</h3>
+              {client.charges.map((charge, i) => {
+                  console.log(charge)
+                return (
+                <p key={i}>{`${charge.date}: ${charge.category} ${charge.user} ${charge.hours} ${charge.rate} `}</p>
+              )})}
               <p>Balance: {client.balance ? `${client.balance}` : '0'}</p>
             </div>
           </section>
