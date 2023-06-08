@@ -44,8 +44,6 @@ export const AddChargesForm = () => {
   const onHoursChanged = e => setHours(e.target.value)
   const onUserChanged = e => setUserId(e.target.value)
   
-    
-  
   useEffect(() => {
     if (userStatus === 'idle') {
       dispatch(fetchUsers())
@@ -66,20 +64,29 @@ export const AddChargesForm = () => {
   
   let charges = client.charges || {}
   let chargeId = charges.length || 0
-  let rate = ""
+  let currentRate
+  let currentHours
   
   const onSubmit = async (data) => {
-    category === "A category ($20)" ? rate = 20 : rate = user.rate
-    let charge = {id: chargeId, date: data.date, category: data.category, user: user.name, rate: rate, hours: data.hours, total: (2 * rate), invoiced: false}
-    if (charges.length) {
-      data.charges = [...charges, charge]
-    } else {
-      data.charges = [charge]
+    if(category === "a_category") {
+      currentRate = 20 
+      currentHours = 1
+    } else { 
+      currentRate = user.rate
+      currentHours = data.hours
     }
-    data.id = id
-    
-    await dispatch(addCharge(data))
-    navigate(`/clients/${clientId}`)
+    let charge = {id: chargeId, date: data.date, category: data.category, user: user.name, rate: currentRate, hours: currentHours, total: (currentHours * currentRate), invoiced: false}
+    if (confirm(`Click OK to proceed or Cancel to start over! \n Date: ${charge.date} \n Staff Member: ${charge.user} \n Rate: ${charge.rate} \n Billable hours: ${charge.hours} \n Total charge: ${charge.total}`)){
+      if (charges.length) {
+        data.charges = [...charges, charge]
+      } else {
+        data.charges = [charge]
+      }
+      data.id = id
+      
+      await dispatch(addCharge(data))
+      navigate(`/clients/${clientId}`)
+    }
   }
 
   return (
