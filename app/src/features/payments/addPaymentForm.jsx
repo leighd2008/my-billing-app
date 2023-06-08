@@ -11,6 +11,13 @@ export const AddPaymentForm = () => {
   const { clientId } = useParams();
   
   const client = useSelector(state => selectClientById(state, clientId))
+  if (!client) {
+    return (
+      <React.Fragment >
+        <h2>Client not found</h2>
+      </React.Fragment>
+    )
+  }
     
   const [paymentDate, setPaymentDate] = useState('')
   const [amount, setAmount] = useState('')
