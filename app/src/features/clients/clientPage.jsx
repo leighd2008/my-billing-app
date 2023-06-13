@@ -21,6 +21,8 @@ export const ClientPage = () => {
   
   const orderedCharges = client.charges.slice().sort((a, b) => a.date.localeCompare(b.date))
   
+  const orderedPayments = client.payments.slice().sort((a, b) => a.date.localeCompare(b.date))
+  
   return (
     <React.Fragment >
       <section className="section">
@@ -32,11 +34,24 @@ export const ClientPage = () => {
               <p>{`${client.city}, ${client.usState} ${client.zip}`}</p>
               <button onClick={() => navigate(`/editClient/${client.id}`)}>Edit Info</button>
               <h3>Payments</h3>
-              {console.log(`payments: ${client.payments.length}`)}
-              {client.payments.map((payment, i) => {
-                return (
-                <p>{`${payment.date}: $${payment.amount}`}</p>
-              )})}
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orderedPayments.map((payment, i) => {
+                    return (
+                      <tr key={i}>
+                        <td>{payment.date}</td>
+                        <td>{payment.amount}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
               <h3>Charges</h3>
               <table>
                 <thead>
