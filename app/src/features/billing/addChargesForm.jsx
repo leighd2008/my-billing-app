@@ -119,6 +119,7 @@ export const AddChargesForm = () => {
                   name="category"
                   value={category}
                   onChange={onCategoryChanged}>
+                  <option value="">Select ...</option>
                   <option value="this_category">This category</option>
                   <option value="that_category">That category</option>
                   <option value="another_category">Another category</option>
@@ -134,7 +135,7 @@ export const AddChargesForm = () => {
                   name="user"
                   value={userId}
                   onChange={onUserChanged}>
-                  <option value="">Users</option>
+                  <option value="">Select ...</option>
                   {content}
                 </select>
               </div>

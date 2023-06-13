@@ -19,6 +19,8 @@ export const ClientPage = () => {
     )
   }
   
+  const orderedCharges = client.charges.slice().sort((a, b) => a.date.localeCompare(b.date))
+  
   return (
     <React.Fragment >
       <section className="section">
@@ -31,16 +33,37 @@ export const ClientPage = () => {
               <button onClick={() => navigate(`/editClient/${client.id}`)}>Edit Info</button>
               <h3>Payments</h3>
               {console.log(`payments: ${client.payments.length}`)}
-              {/* {client.payments.map((payment, i) => {
+              {client.payments.map((payment, i) => {
                 return (
                 <p>{`${payment.date}: $${payment.amount}`}</p>
-              )})} */}
-              <h3>Charges</h3>
-              {client.charges.map((charge, i) => {
-                  console.log(charge)
-                return (
-                <p key={i}>{`${charge.date}: ${charge.category} ${charge.user} ${charge.hours} ${charge.rate} `}</p>
               )})}
+              <h3>Charges</h3>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Staff</th>
+                    <th>Rate</th>
+                    <th>Hours</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orderedCharges.map((charge, i) => {
+                    return (
+                      <tr key={i}>
+                        <td>{charge.date}</td>
+                        <td>{charge.category}</td>
+                        <td>{charge.user}</td> 
+                        <td>{charge.rate}</td>
+                        <td>{charge.hours}</td>
+                        <td>{charge.total}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
               <p>Balance: {client.balance ? `${client.balance}` : '0'}</p>
             </div>
           </section>
