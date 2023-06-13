@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router'
 
 
-import { addCharge, selectClientById } from "../clients/clientsSlice";
+import { addCharge, fetchClients, selectClientById } from "../clients/clientsSlice";
 import { selectAllUsers, fetchUsers, selectUserById } from "../users/usersSlice";
 
 
@@ -85,6 +85,7 @@ export const AddChargesForm = () => {
       data.id = id
       
       await dispatch(addCharge(data))
+      await dispatch(fetchClients())
       navigate(`/clients/${clientId}`)
     }
   }
