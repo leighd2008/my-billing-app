@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom'
 
 import { createClient } from "./clientsSlice";
+import Autocomplete from "../../components/Autocomplete";
 
 export default function addNewClientForm () {
   const [firstName, setFirstName] = useState('')
@@ -48,6 +49,7 @@ export default function addNewClientForm () {
                     {...register('firstName')}
                     type="text"
                     className="form-control"
+                    required={true}
                     id="firstName"
                     name="firstName"
                     onChange={onFirstNameChanged}
@@ -59,9 +61,22 @@ export default function addNewClientForm () {
                     {...register('lastName')}
                     type="text"
                     className="form-control"
+                    required={true}
                     id="lastName"
                     name="lastName"
                     onChange={onLastNameChanged}
+                    />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="email">Email</label>
+                  <input
+                    {...register('email')}
+                    type="email"
+                    className="form-control"
+                    required={true}
+                    id="email"
+                    name="email"
+                    // onChange={onEmailChanged}
                     />
                 </div>
                 <div className="form-group">
@@ -70,6 +85,7 @@ export default function addNewClientForm () {
                     {...register('address')}
                     type="text"
                     className="form-control"
+                    required={true}
                     id="address"
                     name="address"
                     />
@@ -80,26 +96,22 @@ export default function addNewClientForm () {
                     {...register('city')}
                     type="text"
                     className="form-control"
+                    required={true}
                     id="city"
                     name="city"
                     />
                 </div>
                 <div className="form-group">
                   <label htmlFor="usState" >State</label>
-                  <input
-                    {...register('usState')}
-                    type="text"
-                    className="form-control"
-                    id="usState"
-                    name="usState"
-                    />
+                    <Autocomplete suggestions={["Alabama", "Alaska", "American Samoa", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "District Of Columbia", "Federated States Of Micronesia", "Florida", "Georgia", "Guam", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Marshall Islands", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Northern Mariana Islands", "Ohio", "Oklahoma", "Oregon", "Palau", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virgin Islands", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]}/>
                 </div>
                 <div className="form-group">
                   <label htmlFor="zip code" >Zip Code</label>
                   <input
                     {...register('zip')}
-                    type="text"
+                    type="number"
                     className="form-control"
+                    required={true}
                     id="zip"
                     name="zip"
                     />
