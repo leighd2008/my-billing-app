@@ -1,5 +1,4 @@
 import React, { useState, Fragment } from "react";
-// import './styles.css'
 
 export default function Autocomplete (suggestions) {
   const [activeSuggestion, setActiveSuggestion] = useState(0)
