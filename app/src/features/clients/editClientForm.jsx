@@ -45,12 +45,13 @@ export const EditClientForm = () => {
         setShowSuggestions(true)
     };
     
+    
     const onClick = e => {
-        setActiveSuggestion(0)
-        setFilteredSuggestions([])
-        setShowSuggestions(false)
-        setUserInput(e.currentTarget.innerText)
-        console.log(userInput)
+      setActiveSuggestion(0)
+      setFilteredSuggestions([])
+      setShowSuggestions(false)
+      setUserInput(e.currentTarget.innerText)
+      console.log(userInput)
     };
     
     const onKeyDown = e => {
@@ -117,100 +118,105 @@ export const EditClientForm = () => {
   }
 
   return (
-    <div className="centered-view">
-      <div className="centered-container">
-        <form onSubmit={handleSubmit(onSubmit)} className="centered-container-form">
-          <div className="header">Edit Client</div>
-          <div className="form-container">
-            <div className="form-group">
-              <label htmlFor="firstName">First Name</label>
-              <input
-                {...register('firstName')}
-                type="text"
-                className="form-control"
-                id="firstName"
-                name="firstName"
-                value={firstName}
-                onChange={onFirstNameChanged}
-                />
-            </div>
-            <div className="form-group">
-              <label htmlFor="last name" >Last Name</label>
-              <input
-                {...register('lastName')}
-                type="text"
-                className="form-control"
-                id="lastName"
-                name="lastName"
-                value={lastName}
-                onChange={onLastNameChanged}
-                />
-            </div>
-            <div className="form-group">
-              <label htmlFor="address" >Street Address</label>
-              <input
-                {...register('address')}
-                type="text"
-                className="form-control"
-                id="address"
-                name="address"
-                value={address}
-                onChange={onAddressChanged}
-                />
-            </div>
-            <div className="form-group">
-              <label htmlFor="city" >City</label>
-              <input
-                {...register('city')}
-                type="text"
-                className="form-control"
-                id="city"
-                name="city"
-                value={city}
-                onChange={onCityChanged}
-                />
-            </div>
-            <div className="form-group">
-              <label htmlFor="usState" >State (use up and down arrows to highlight and either tab or enter to select. clicking won't work and I haven't figured it out yet.</label>
-              <input
-                {...register('usState')}
-                type="text"
-                className="form-control"
-                id="usState"
-                name="usState"
-                onChange={onChange}
-                onKeyDown={onKeyDown}
-                value={userInput}
-                />
-                {suggestionListComponent}
-            </div>
-            <div className="form-group">
-              <label htmlFor="zip code" >Zip Code</label>
-              <input
-                {...register('zip')}
-                type="text"
-                className="form-control"
-                id="zip"
-                name="zip"
-                value={zip}
-                onChange={onZipChanged}
-                />
-            </div>
-            <div className="form-group">
-              <label htmlFor="Client Id" >Client Id</label>
-              <input
-                {...register('id')}
-                type="text"
-                className="form-control"
-                id="id"
-                name="id"
-                value={id}
-                />
-            </div>
-            <button type="submit" className="btn">Edit Client</button>
+    <React.Fragment>
+      <section>
+        <div className="centered-view">
+          <div className="centered-container">
+            <form onSubmit={handleSubmit(onSubmit)} className="centered-container-form">
+              <div className="header">Edit Client</div>
+              <div className="form-container">
+                <div className="form-group">
+                  <label htmlFor="firstName">First Name</label>
+                  <input
+                    {...register('firstName')}
+                    type="text"
+                    className="form-control"
+                    id="firstName"
+                    name="firstName"
+                    value={firstName}
+                    onChange={onFirstNameChanged}
+                    />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="last name" >Last Name</label>
+                  <input
+                    {...register('lastName')}
+                    type="text"
+                    className="form-control"
+                    id="lastName"
+                    name="lastName"
+                    value={lastName}
+                    onChange={onLastNameChanged}
+                    />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="address" >Street Address</label>
+                  <input
+                    {...register('address')}
+                    type="text"
+                    className="form-control"
+                    id="address"
+                    name="address"
+                    value={address}
+                    onChange={onAddressChanged}
+                    />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="city" >City</label>
+                  <input
+                    {...register('city')}
+                    type="text"
+                    className="form-control"
+                    id="city"
+                    name="city"
+                    value={city}
+                    onChange={onCityChanged}
+                    />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="usState" >State (use up and down arrows to highlight and tab to select. clicking won't work and I haven't figured it out yet.</label>
+                  <input
+                    {...register('usState')}
+                    type="text"
+                    className="form-control"
+                    id="usState"
+                    name="usState"
+                    placeholder={usState}
+                    onChange={onChange}
+                    onKeyDown={onKeyDown}
+                    value={userInput}
+                    />
+                    {suggestionListComponent}
+                </div>
+                <div className="form-group">
+                  <label htmlFor="zip code" >Zip Code</label>
+                  <input
+                    {...register('zip')}
+                    type="number min-length"
+                    className="form-control"
+                    id="zip"
+                    name="zip"
+                    value={zip}
+                    onChange={onZipChanged}
+                    />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="Client Id" >Client Id</label>
+                  <input
+                    {...register('id')}
+                    type="text"
+                    className="form-control"
+                    id="id"
+                    name="id"
+                    value={id}
+                    />
+                </div>
+                <button type="submit" className="btn">Edit Client</button>
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
-    </div>
+        </div>
+      </section>
+    </React.Fragment>
   )
 }
