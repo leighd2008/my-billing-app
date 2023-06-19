@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom'
 
 import { createClient } from "./clientsSlice";
-import Autocomplete from "../../components/Autocomplete";
 
 export default function addNewClientForm () {
   const [firstName, setFirstName] = useState('')
@@ -24,11 +23,12 @@ export default function addNewClientForm () {
     
   
   const onChange = e => {
-    setUserInput(e.currentTarget.value)
+    setUserInput(e.target.value)
+    console.log(userInput)
     
     setFilteredSuggestions(suggestions.filter(
       suggestion => 
-        suggestion.toLowerCase().startsWith(e.currentTarget.value.toLowerCase())
+        suggestion.toLowerCase().startsWith(e.target.value.toLowerCase())
     ))
       setActiveSuggestion(0)
       setShowSuggestions(true)
@@ -38,11 +38,12 @@ export default function addNewClientForm () {
       setActiveSuggestion(0)
       setFilteredSuggestions([])
       setShowSuggestions(false)
-      setUserInput(e.currentTarget.innerText)
+      setUserInput(e.target.innerText)
+      console.log(userInput)
   };
   
   const onKeyDown = e => {
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13 || e.keyCode === 9) {
       setActiveSuggestion(0)
       setShowSuggestions(false)
       setUserInput(filteredSuggestions[activeSuggestion])
@@ -180,7 +181,7 @@ export default function addNewClientForm () {
                     />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="usState" >State</label>
+                  <label htmlFor="usState" >State (use up and down arrows to highlight and either tab or enter to select. clicking won't work and I haven't figured it out yet.</label>
                   <input
                     {...register('usState')}
                     type="text"

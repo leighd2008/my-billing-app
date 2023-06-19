@@ -24,6 +24,86 @@ export const EditClientForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
+    // *************** For Autocomplete ***************
+    const [activeSuggestion, setActiveSuggestion] = useState(0)
+    const [filteredSuggestions, setFilteredSuggestions] = useState([])
+    const [showSuggestions, setShowSuggestions] = useState(false)
+    const [userInput, setUserInput] = useState('')
+    
+    const suggestions = ["Alabama", "Alaska", "American Samoa", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "District Of Columbia", "Federated States Of Micronesia", "Florida", "Georgia", "Guam", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Marshall Islands", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Northern Mariana Islands", "Ohio", "Oklahoma", "Oregon", "Palau", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virgin Islands", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
+      
+    
+    const onChange = e => {
+      setUserInput(e.currentTarget.value)
+      console.log(userInput)
+      
+      setFilteredSuggestions(suggestions.filter(
+        suggestion => 
+          suggestion.toLowerCase().startsWith(e.currentTarget.value.toLowerCase())
+      ))
+        setActiveSuggestion(0)
+        setShowSuggestions(true)
+    };
+    
+    const onClick = e => {
+        setActiveSuggestion(0)
+        setFilteredSuggestions([])
+        setShowSuggestions(false)
+        setUserInput(e.currentTarget.innerText)
+        console.log(userInput)
+    };
+    
+    const onKeyDown = e => {
+      if (e.keyCode === 13 || e.keyCode === 9) {
+        setActiveSuggestion(0)
+        setShowSuggestions(false)
+        setUserInput(filteredSuggestions[activeSuggestion])
+      } else if (e.keyCode === 38) {
+        if (activeSuggestion === 0) {
+          return;
+        }
+        setActiveSuggestion(activeSuggestion - 1)
+      }
+      // User pressed the down arrow, increment the index
+      else if (e.keyCode === 40) {
+        if(activeSuggestion - 1 === filteredSuggestions.length) {
+          return;
+        }
+        setActiveSuggestion(activeSuggestion + 1)
+      }
+    };
+      
+      let suggestionListComponent;
+      
+      if (showSuggestions && userInput) {
+        if (filteredSuggestions.length) {
+          suggestionListComponent = (
+            <ul className="suggestions">
+              {filteredSuggestions.map((suggestion, index) => {
+                let className;
+                
+                if (index === activeSuggestion) {
+                  className = "suggestion-active";
+                }
+                return (
+                  <li className={className} key={suggestion} onClick={onClick}>
+                    {suggestion}
+                  </li>
+                );
+              })}
+            </ul>
+          );
+        } else {
+          suggestionListComponent = (
+            <div className="no-suggestions">
+              <em>No suggestions available.</em>
+            </div>
+          );
+        }
+      }
+      
+    // *************** For Autocomplete ***************
+  
   const onFirstNameChanged = e => setFirstName(e.target.value)
   const onLastNameChanged = e => setLastName(e.target.value)
   const onAddressChanged = e => setAddress(e.target.value)
@@ -91,16 +171,18 @@ export const EditClientForm = () => {
                 />
             </div>
             <div className="form-group">
-              <label htmlFor="usState" >State</label>
+              <label htmlFor="usState" >State (use up and down arrows to highlight and either tab or enter to select. clicking won't work and I haven't figured it out yet.</label>
               <input
                 {...register('usState')}
                 type="text"
                 className="form-control"
                 id="usState"
                 name="usState"
-                value={usState}
-                onChange={onUSStateChanged}
+                onChange={onChange}
+                onKeyDown={onKeyDown}
+                value={userInput}
                 />
+                {suggestionListComponent}
             </div>
             <div className="form-group">
               <label htmlFor="zip code" >Zip Code</label>
