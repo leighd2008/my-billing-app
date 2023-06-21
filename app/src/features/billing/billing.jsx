@@ -18,8 +18,6 @@ const Billing = () => {
   
   const onClientChanged = e => {
     setClientId(e.target.value)
-    
-    // navigate(`/addCharges/${e.target.value}`)
   }
   
   useEffect(() => {
@@ -45,9 +43,7 @@ const Billing = () => {
     
   const [chargeDate, setChargeDate] = useState('')
   const [category, setCategory] = useState('')
-  // const [rate, setRate] = useState('')
   const [hours, setHours] = useState('')
-  // const [id, setId] = useState(client.id)
   const [userId, setUserId] = useState('')
   
   const users = useSelector(selectAllUsers)
@@ -60,7 +56,6 @@ const Billing = () => {
   
   const onChargeDateChanged = e => setChargeDate(e.target.value)
   const onCategoryChanged = e => setCategory(e.target.value)
-  // const onRateChanged = e => setRate(e.target.value)
   const onHoursChanged = e => setHours(e.target.value)
   const onUserChanged = e => setUserId(e.target.value)
   
@@ -111,8 +106,6 @@ const Billing = () => {
       setCategory("")
       setUserId("")
       setClientId("")
-      // navigate(`/clients/${clientId}`)
-      // console.log(data)
     }
   }
   return (
