@@ -128,7 +128,7 @@ table {
 }
 
 .btn {
-  margin: 10px 0;
+  margin: 10px 20px;
   background: red;
   color: white;
   border: no;
@@ -137,10 +137,6 @@ table {
 .header {
   font-size: 25px;
   font-weight: bold;;
-}
-
-.form-group {
-  margin: 10px 0;
 }
 
 .container {
@@ -190,6 +186,15 @@ table {
       color: #5a5c69;
     }
     
+    form {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    
+    .form-group {
+      min-width: 300px;
+      margin: 20px;
+    }
     
     label {
       font-size: 12px;
