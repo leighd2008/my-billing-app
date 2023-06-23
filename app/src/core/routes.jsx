@@ -5,7 +5,7 @@ import loadable from "@loadable/component";
 
 // Load bundles asynchronously so that the initial render happens faster
 const Home = loadable(() =>
-  import(/* webpackChunkName: "ContextMenuChunk" */ "Pages/home/home")
+  import(/* webpackChunkName: "ContextMenuChunk" */ "Features/home/home")
 );
 const Clients = loadable(() =>
   import(/* webpackChunkName: "ContextMenuChunk" */ "Features/clients/clients")
@@ -17,7 +17,7 @@ const Payments = loadable(() =>
   import(/* webpackChunkName: "ContextMenuChunk" */ "Features/payments/payments")
 );
 const Invoice = loadable(() =>
-  import(/* webpackChunkName: "ContextMenuChunk" */ "Pages/invoice/invoice")
+  import(/* webpackChunkName: "ContextMenuChunk" */ "Features/invoice/invoice")
 );
 const AddNewClient = loadable(() =>
   import(/* webpackChunkName: "ContextMenuChunk" */ "Features/clients/addNewClient")

@@ -1,6 +1,6 @@
 {
   "name": "the-billing-app",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "The best way to build Electron apps with security in mind.",
   "private": true,
   "main": "app/electron/main.js",

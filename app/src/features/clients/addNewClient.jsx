@@ -181,7 +181,7 @@ export default function addNewClientForm () {
                     />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="usState" >State (use up and down arrows to highlight and either tab or enter to select. clicking won't work and I haven't figured it out yet.</label>
+                  <label htmlFor="usState" >State (use up and down arrows to highlight and tab to select. clicking won't work and I haven't figured it out yet.)</label>
                   <input
                     {...register('usState')}
                     type="text"
