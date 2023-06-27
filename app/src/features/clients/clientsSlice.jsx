@@ -39,18 +39,7 @@ const clientsSlice = createSlice({
   name: 'clients',
   initialState,
   reducers: {
-    // clientUpdated(state, action) {
-    //   const { id, firstName, lastName, address, city, usState, zip} = action.payload
-    //   const existingClient = state.clients.find(client => client.id === id)
-    //   if (existingClient) {
-    //     existingClient.firstName = firstName
-    //     existingClient.lastName = lastName
-    //     existingClient.address = address
-    //     existingClient.city = city
-    //     existingClient.usState = usState
-    //     existingClient.zip = zip 
-    //   }
-    // }
+    
   },
   extraReducers(builder) {
     builder
@@ -72,6 +61,9 @@ const clientsSlice = createSlice({
       state.status = 'idle'
     })
     builder.addCase(addCharge.fulfilled, (state, action) => {
+      state.status = 'idle'
+    })
+    builder.addCase(addPayment.fulfilled, (state, action) => {
       state.status = 'idle'
     })
   }

@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
 
 import { selectAllClients, fetchClients, addPayment, selectClientById } from "../clients/clientsSlice";
 
 const Payments = () => {
   const [clientId, setClientId] = useState('')
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   
   const clients = useSelector(selectAllClients)
   
@@ -61,13 +59,11 @@ const Payments = () => {
     }
     data.id = clientId
     
-    await dispatch(addPayment(data))
-    await dispatch(fetchClients())
+    dispatch(addPayment(data))
     setPaymentDate("")
     setAmount("")
     setClientId("")
   }
-
   
   return (
     <React.Fragment>

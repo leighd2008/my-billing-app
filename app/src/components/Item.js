@@ -11,7 +11,7 @@ class Item extends Component {
         className="option"
         onClick={event => this.clickedOption(event, this.props.position)}
       >
-        <option value={this.props.task} />
+        <option value={this.props.item} />
       </div>
     );
   }

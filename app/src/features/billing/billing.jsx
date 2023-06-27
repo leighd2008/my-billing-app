@@ -87,7 +87,7 @@ const Billing = () => {
     
     const [value, setValue] = useState('')
     
-    const handleTaskSelect = e => {
+    const handleCategorySelect = e => {
       setValue(e.target.value)
       if(e.target.value === "Arrears Calculation") {
         setFee(59)
@@ -119,13 +119,13 @@ const Billing = () => {
             value={value}
             list='tasks'
             autoComplete="on"
-            onChange={handleTaskSelect}
+            onChange={handleCategorySelect}
           />
           <datalist id='tasks'>
             {tasks &&
               tasks.length > 0 &&
               tasks.map((task, index) => {
-                return <Item task={task} position={index} key={index} />
+                return <Item item={task} position={index} key={index} />
               })
             }
           </datalist>
@@ -158,13 +158,13 @@ const Billing = () => {
             value={value}
             list='expenses'
             autoComplete="on"
-            onChange={handleTaskSelect}
+            onChange={handleCategorySelect}
           />
           <datalist id='expenses'>
             {expenses &&
               expenses.length > 0 &&
-              expenses.map((task, index) => {
-                return <Item task={task} position={index} key={index} />
+              expenses.map((expense, index) => {
+                return <Item item={expense} position={index} key={index} />
               })
             }
           </datalist>
