@@ -10,6 +10,7 @@ const initialState = {
 
 export const fetchClients = createAsyncThunk('clients/fetchClients', async() => {
     const clients = await api.fetchClients();
+    console.log('fetchClients')
     return clients
 })
 
@@ -32,6 +33,7 @@ export const addPayment = createAsyncThunk('clients/addPayment',
 
 export const addCharge = createAsyncThunk('clients/addCharge',
   async (data) => {
+    console.log('addCharge')
     return api.addCharge(data)
   }
 )
@@ -70,6 +72,9 @@ const clientsSlice = createSlice({
       state.status = 'idle'
     })
     builder.addCase(editClient.fulfilled, (state, action) => {
+      state.status = 'idle'
+    })
+    builder.addCase(addCharge.fulfilled, (state, action) => {
       state.status = 'idle'
     })
   }

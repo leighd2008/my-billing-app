@@ -61,9 +61,9 @@ const Billing = () => {
   const { 
     register, 
     handleSubmit, 
-    reset, 
-    formState ,
-    formState: { isSubmitSuccessful },
+    // reset, 
+    // formState ,
+    // formState: { isSubmitSuccessful },
   } = useForm();
   
   const onChargeDateChanged = e => setChargeDate(e.target.value)
@@ -193,7 +193,7 @@ const Billing = () => {
     <div>Please choose a Category Type above.</div>)
   }
 }
-const [refetch, setRefetch] = useState(false)
+// const [refetch, setRefetch] = useState(false)
 const onSubmit = async (data) => {
     console.log('DATA', data)
     let charges = client.charges || {}
@@ -228,7 +228,7 @@ const onSubmit = async (data) => {
       }
     }
     dispatch(addCharge(data))
-    dispatch(fetchClients())
+    // dispatch(fetchClients())
     setClientId("")
     setChargeType("")
     setChargeDate("")
@@ -240,7 +240,7 @@ const onSubmit = async (data) => {
     chargeId = ""
     charge = ""
     data = ""
-    setRefetch(true)
+    // setRefetch(true)
     console.log('charges', charges)
   }
   
