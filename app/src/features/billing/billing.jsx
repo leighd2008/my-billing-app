@@ -58,13 +58,7 @@ const Billing = () => {
   const userError = useSelector(state => state.users.userError)
   let user = useSelector(state => selectUserById(state, userId))
   
-  const { 
-    register, 
-    handleSubmit, 
-    // reset, 
-    // formState ,
-    // formState: { isSubmitSuccessful },
-  } = useForm();
+  const { register, handleSubmit, } = useForm();
   
   const onChargeDateChanged = e => setChargeDate(e.target.value)
   const onHoursChanged = e => setHours(e.target.value)
@@ -105,7 +99,7 @@ const Billing = () => {
         setFee(6.50)
       }
     }
-  
+      
   const expenses = ["Arrears Calculation", "Close file", "Consult", "Court Reporter Fee", "Error/Correction", "Filing Fee", "Postage", "Records", "Returned", "Runner Service Fee", "Service Fee", "Subpoena Issue Fee", "Transcript", "Witness Fee", "e-File Processing Fee"]
   
   let categoryDetail
@@ -193,42 +187,25 @@ const Billing = () => {
     <div>Please choose a Category Type above.</div>)
   }
 }
-// const [refetch, setRefetch] = useState(false)
 const onSubmit = async (data) => {
-    console.log('DATA', data)
     let charges = client.charges || {}
-    console.log('charges', charges)
     
     let chargeId = charges.length || 0
     let charge
     if(data.fee) {
-      charge = { date: data.date, category: data.expense, user: user.name, fee: data.fee, total: data.fee, invoiced: false}
-      console.log('CHARGE', charge)
+      charge = {chargeId: chargeId, date: data.date, category: data.expense, user: user.name, fee: data.fee, total: data.fee, invoiced: false}
       if (confirm(`Click OK to proceed or Cancel to start over! \n Date: ${charge.date} \n Category: ${charge.category} \n Staff Member: ${charge.user} \n Fee: ${charge.fee} \n Total charge: ${charge.total} ` )) {
-        // if (charges.length) {
         data.charges = [...charges, charge]
-        // } else {
-        //   data.charges = [charge]
-        // }
         data.id = clientId
       }
-      // this goes inside useForm() line 67
-      
     } else {
-      charge = { date: data.date, category: data.task, user: user.name, rate: user.rate, hours: data.hours, total: (user.rate * data.hours), invoiced: false}
-      console.log('CHARGE', charge)
+      charge = { chargeId: chargeId, date: data.date, category: data.task, user: user.name, rate: user.rate, hours: data.hours, total: (user.rate * data.hours), invoiced: false}
       if (confirm(`Click OK to proceed or Cancel to start over! \n Date: ${charge.date} \n Category: ${charge.category} \n Staff Member: ${charge.user} \n Rate: ${charge.rate} \n Billable hours: ${charge.hours} \n Total charge: ${charge.total} ` )) {
-        if (charges.length) {
-          data.charges = [...charges, charge]
-        } else {
-          data.charges = [charge]
-        }
-        data.charge = charge
+        data.charges = [...charges, charge]
         data.id = clientId
       }
     }
     dispatch(addCharge(data))
-    // dispatch(fetchClients())
     setClientId("")
     setChargeType("")
     setChargeDate("")
@@ -240,16 +217,7 @@ const onSubmit = async (data) => {
     chargeId = ""
     charge = ""
     data = ""
-    // setRefetch(true)
-    console.log('charges', charges)
   }
-  
-  // useEffect(() => {
-  //   if(refetch)
-  //     console.log('ugh')
-  //     dispatch(fetchClients())
-  //     setRefetch(false)
-  // }, [refetch, dispatch])
   
   return (
     <React.Fragment>

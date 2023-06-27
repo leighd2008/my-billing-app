@@ -24,8 +24,6 @@ const AddNewClient = loadable(() =>
 );
 import { ClientPage } from "../features/clients/clientPage";
 import { EditClientForm } from "../features/clients/editClientForm";
-import { AddChargesForm } from "../features/billing/addChargesForm";
-import { AddPaymentForm } from "../features/payments/addPaymentForm";
 
 class AppRoutes extends React.Component {
   render() {    
@@ -39,8 +37,6 @@ class AppRoutes extends React.Component {
         <Route path={ROUTES.ADD_NEW_CLIENT} element={<AddNewClient />}></Route>
         <Route exact path="clients/:clientId" element={<ClientPage />}></Route>
         <Route exact path="editClient/:clientId" element={<EditClientForm />}></Route>
-        <Route exact path="addCharges/:clientId" element={<AddChargesForm />}></Route>
-        <Route exact path="addPayment/:clientId" element={<AddPaymentForm />}></Route>
       </Routes>
     );
   }

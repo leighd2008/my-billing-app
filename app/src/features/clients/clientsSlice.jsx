@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as api from './clients.api';
 
-
 const initialState = {
   clients: [],
   status: 'idle',
@@ -10,7 +9,6 @@ const initialState = {
 
 export const fetchClients = createAsyncThunk('clients/fetchClients', async() => {
     const clients = await api.fetchClients();
-    console.log('fetchClients')
     return clients
 })
 
@@ -33,7 +31,6 @@ export const addPayment = createAsyncThunk('clients/addPayment',
 
 export const addCharge = createAsyncThunk('clients/addCharge',
   async (data) => {
-    console.log('addCharge')
     return api.addCharge(data)
   }
 )
@@ -42,18 +39,18 @@ const clientsSlice = createSlice({
   name: 'clients',
   initialState,
   reducers: {
-    clientUpdated(state, action) {
-      const { id, firstName, lastName, address, city, usState, zip} = action.payload
-      const existingClient = state.clients.find(client => client.id === id)
-      if (existingClient) {
-        existingClient.firstName = firstName
-        existingClient.lastName = lastName
-        existingClient.address = address
-        existingClient.city = city
-        existingClient.usState = usState
-        existingClient.zip = zip 
-      }
-    }
+    // clientUpdated(state, action) {
+    //   const { id, firstName, lastName, address, city, usState, zip} = action.payload
+    //   const existingClient = state.clients.find(client => client.id === id)
+    //   if (existingClient) {
+    //     existingClient.firstName = firstName
+    //     existingClient.lastName = lastName
+    //     existingClient.address = address
+    //     existingClient.city = city
+    //     existingClient.usState = usState
+    //     existingClient.zip = zip 
+    //   }
+    // }
   },
   extraReducers(builder) {
     builder
@@ -80,7 +77,7 @@ const clientsSlice = createSlice({
   }
 })
 
-export const { clientUpdated } = clientsSlice.actions
+// export const { clientUpdated } = clientsSlice.actions
 
 export default clientsSlice.reducer
 

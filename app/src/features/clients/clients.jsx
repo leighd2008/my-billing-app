@@ -2,12 +2,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 
-
 import { ClientsList } from './ClientsList';
 
 const Clients = () => {
   const navigate = useNavigate()
-  
   return (
     <React.Fragment>
       <section className="section">
@@ -28,5 +26,3 @@ const Clients = () => {
 };
 
 export default Clients;
-// HOW TO USE FIREBASE V 9
-// https://travis.media/how-to-use-firebase-with-react/

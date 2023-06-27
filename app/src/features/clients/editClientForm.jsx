@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router'
 
-
 import { editClient, selectClientById } from "./clientsSlice";
 
 export const EditClientForm = () => {
@@ -32,10 +31,8 @@ export const EditClientForm = () => {
     
     const suggestions = ["Alabama", "Alaska", "American Samoa", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "District Of Columbia", "Federated States Of Micronesia", "Florida", "Georgia", "Guam", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Marshall Islands", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Northern Mariana Islands", "Ohio", "Oklahoma", "Oregon", "Palau", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virgin Islands", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
       
-    
     const onChange = e => {
       setUserInput(e.currentTarget.value)
-      console.log(userInput)
       
       setFilteredSuggestions(suggestions.filter(
         suggestion => 
@@ -45,13 +42,11 @@ export const EditClientForm = () => {
         setShowSuggestions(true)
     };
     
-    
     const onClick = e => {
       setActiveSuggestion(0)
       setFilteredSuggestions([])
       setShowSuggestions(false)
       setUserInput(e.currentTarget.innerText)
-      console.log(userInput)
     };
     
     const onKeyDown = e => {
@@ -109,7 +104,6 @@ export const EditClientForm = () => {
   const onLastNameChanged = e => setLastName(e.target.value)
   const onAddressChanged = e => setAddress(e.target.value)
   const onCityChanged = e => setCity(e.target.value)
-  const onUSStateChanged = e => setUSState(e.target.value)
   const onZipChanged = e => setZip(e.target.value)
     
   const onSubmit = async (data) => {

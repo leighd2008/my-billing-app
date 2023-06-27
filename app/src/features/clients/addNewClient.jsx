@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom'
 
 import { createClient } from "./clientsSlice";
@@ -24,7 +24,6 @@ export default function addNewClientForm () {
   
   const onChange = e => {
     setUserInput(e.target.value)
-    console.log(userInput)
     
     setFilteredSuggestions(suggestions.filter(
       suggestion => 
@@ -39,7 +38,6 @@ export default function addNewClientForm () {
       setFilteredSuggestions([])
       setShowSuggestions(false)
       setUserInput(e.target.innerText)
-      console.log(userInput)
   };
   
   const onKeyDown = e => {
