@@ -35,6 +35,20 @@ export const addCharge = createAsyncThunk('clients/addCharge',
   }
 )
 
+export const deleteCharge = createAsyncThunk('clients/deleteCharge',
+  async (data) => {
+    console.log(data)
+    return api.deleteCharge(data)
+  }
+)
+
+export const deletePayment = createAsyncThunk('clients/deletePayment',
+  async (data) => {
+    console.log(data)
+    return api.deletePayment(data)
+  }
+)
+
 const clientsSlice = createSlice({
   name: 'clients',
   initialState,
@@ -64,6 +78,12 @@ const clientsSlice = createSlice({
       state.status = 'idle'
     })
     builder.addCase(addPayment.fulfilled, (state, action) => {
+      state.status = 'idle'
+    })
+    builder.addCase(deleteCharge.fulfilled, (state, action) => {
+      state.status = 'idle'
+    })
+    builder.addCase(deletePayment.fulfilled, (state, action) => {
       state.status = 'idle'
     })
   }

@@ -1,15 +1,26 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router'
 import { useNavigate } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
-import { selectClientById } from './clientsSlice'
+
+import { selectClientById, fetchClients, deleteCharge, deletePayment } from './clientsSlice'
 
 export const ClientPage = () => {
   const { clientId } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   
   const client = useSelector(state => selectClientById(state, clientId))
+  const clientStatus = useSelector(state => state.clients.status)
+  
+  useEffect(() => {
+    if (clientStatus === 'idle') {
+      dispatch(fetchClients())
+    }
+  }, [clientStatus, dispatch])
   
   if (!client) {
     return (
@@ -33,9 +44,35 @@ export const ClientPage = () => {
   
   const orderedPayments = client.payments.slice().sort((a, b) => a.date.localeCompare(b.date))
   
+  const handleDeleteCharge =  (chargeId) => {
+    let charges = client.charges.filter((charge) => {
+      return charge.chargeId !== chargeId
+    })
+    let data = {}
+    data.charges = charges
+    data.id = client.id
+    dispatch(deleteCharge(data))
+  }
+  
+  // function is deleting all the payments
+  const handleDeletePayment =  (paymentId) => {
+    console.log(paymentId)
+    let payments = client.payments
+    console.log(payments)
+    payments = client.payments.filter((payment) => {
+      return payment.id !== paymentId
+    })
+    console.log(payments)
+    let data = {}
+    data.payments = payments
+    data.id = client.id
+    dispatch(deletePayment(data))
+  }
+  
   return (
     <React.Fragment >
       <section className="section">
+      <FontAwesomeIcon icon={faTrash} />
         <div className="centered-view">
           <section className="centered-container">
             <div className="">
@@ -65,6 +102,7 @@ export const ClientPage = () => {
                         <td>{charge.rate}</td>
                         <td>{charge.hours}</td>
                         <td>{charge.total}</td>
+                        <td><button onClick={() => handleDeleteCharge(charge.chargeId)}><FontAwesomeIcon icon={faTrash} /></button></td>
                       </tr>
                     )
                   })}
@@ -92,6 +130,7 @@ export const ClientPage = () => {
                         <td>{charge.rate}</td>
                         <td>{charge.hours}</td> */}
                         <td>{charge.total}</td>
+                        <td><button onClick={() => handleDeleteCharge(charge.chargeId)}><FontAwesomeIcon icon={faTrash} /></button></td>
                       </tr>
                     )
                   })}
@@ -111,6 +150,7 @@ export const ClientPage = () => {
                       <tr key={i}>
                         <td>{payment.date}</td>
                         <td>{payment.amount}</td>
+                        <td><button onClick={() => handleDeletePayment(payment.id)}><FontAwesomeIcon icon={faTrash} /></button></td>
                       </tr>
                     )
                   })}
