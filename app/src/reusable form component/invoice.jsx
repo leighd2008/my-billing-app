@@ -38,6 +38,15 @@ const Invoice = () => {
   
   const client = useSelector(state => selectClientById(state, clientId))
   
+  
+  // if (!client) {
+  //   return (
+  //     <React.Fragment >
+  //       <h2>Client not found</h2>
+  //     </React.Fragment>
+  //   )
+  // }
+  
   return (
     <React.Fragment>
       <section className="section">

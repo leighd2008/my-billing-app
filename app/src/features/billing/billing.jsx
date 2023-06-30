@@ -58,7 +58,15 @@ const Billing = () => {
   const userError = useSelector(state => state.users.userError)
   let user = useSelector(state => selectUserById(state, userId))
   
-  const { register, handleSubmit, } = useForm();
+  const { register, handleSubmit, } = useForm({
+    defaultValues: {
+      task: '',
+      expense: '',
+      hours: '',
+      fee: '',
+    },
+    shouldUnregister: true
+  });
   
   const onChargeDateChanged = e => setChargeDate(e.target.value)
   const onHoursChanged = e => setHours(e.target.value)
@@ -85,10 +93,13 @@ const Billing = () => {
     
     const tasks = ["Calc", "Conf", "Consult", "Copy", "Deliver", "Depo", "Draft", "Email oc", "Email c", "Forward", "Hrg", "LTOC", "LTR", "Mediation", "Meeting", "Open", "PC", "PCA", "Prep", "Research", "Review", "Revise", "SC", "Scan & Email", "Sched", "Trial"]
     
-    const [value, setValue] = useState('')
+    const [task, setTask] = useState('')
+    const [expense, setExpense] = useState('')
     
-    const handleCategorySelect = e => {
-      setValue(e.target.value)
+    const handleTaskSelect = e => setTask(e.target.value)
+      
+    const handleExpenseSelect = e => {
+      setExpense(e.target.value)  
       if(e.target.value === "Arrears Calculation") {
         setFee(59)
       } else if(e.target.value === "Runner Service Fee") {
@@ -107,6 +118,31 @@ const Billing = () => {
   {if (chargeType === 'task') {
     categoryDetail = (
       <div className="category-detail">
+        <div className="form-group">
+          <label htmlFor="date" >Charge Date</label>
+          <input
+            {...register('date')}
+            type="date"
+            className="form-control"
+            id="date"
+            name="date"
+            value={chargeDate}
+            onChange={onChargeDateChanged}
+            />
+        </div>
+        <div className="form-group">
+          <label htmlFor="category" >Staff Member</label>
+          <select 
+            {...register('user')}
+            className="form-control"
+            id="user"
+            name="user"
+            value={userId}
+            onChange={onUserChanged}>
+            <option value="">Select ...</option>
+            {userContent}
+          </select>
+        </div>
         <div className="form-group plug-inner-addon">
           <label htmlFor="task" >Task </label>
           <input
@@ -116,10 +152,10 @@ const Billing = () => {
             placeholder="Begin typing to see suggestions"
             id="task"
             name="task"
-            value={value}
+            value={task}
             list='tasks'
             autoComplete="on"
-            onChange={handleCategorySelect}
+            onChange={handleTaskSelect}
           />
           <datalist id='tasks'>
             {tasks &&
@@ -146,6 +182,18 @@ const Billing = () => {
   } else if (chargeType === 'expense') {
     categoryDetail = (
       <div className="category-detail">
+        <div className="form-group">
+          <label htmlFor="date" >Charge Date</label>
+          <input
+            {...register('date')}
+            type="date"
+            className="form-control"
+            id="date"
+            name="date"
+            value={chargeDate}
+            onChange={onChargeDateChanged}
+            />
+        </div>
         <div className="form-group plug-inner-addon">
           <label htmlFor="expense" >Expense </label>
           <input
@@ -155,10 +203,10 @@ const Billing = () => {
             placeholder="Begin typing to see suggestions"
             id="expense"
             name="expense"
-            value={value}
+            value={expense}
             list='expenses'
             autoComplete="on"
-            onChange={handleCategorySelect}
+            onChange={handleExpenseSelect}
           />
           <datalist id='expenses'>
             {expenses &&
@@ -188,23 +236,26 @@ const Billing = () => {
   }
 }
 const onSubmit = async (data) => {
+  console.log('data', data)
+  
     let charges = client.charges || {}
     
     let chargeId = charges.length || 0
     let charge
     if(data.fee) {
-      charge = {chargeId: chargeId, date: data.date, category: data.expense, user: user.name, fee: data.fee, total: data.fee, invoiced: false}
-      if (confirm(`Click OK to proceed or Cancel to start over! \n Date: ${charge.date} \n Category: ${charge.category} \n Staff Member: ${charge.user} \n Fee: ${charge.fee} \n Total charge: ${charge.total} ` )) {
+      charge = {chargeId: chargeId, chargeType: 'expense', date: data.date, category: data.expense, fee: data.fee, total: data.fee, invoiced: false, }
+      if (confirm(`Click OK to proceed or Cancel to start over! \n Date: ${charge.date} \n Category: ${charge.category} \n Fee: ${charge.fee} \n Total charge: ${charge.total} ` )) {
         data.charges = [...charges, charge]
         data.id = clientId
       }
     } else {
-      charge = { chargeId: chargeId, date: data.date, category: data.task, user: user.name, rate: user.rate, hours: data.hours, total: (user.rate * data.hours), invoiced: false}
+      charge = { chargeId: chargeId, chargeType: 'task', date: data.date, category: data.task, user: user.name, rate: user.rate, hours: data.hours, total: (user.rate * data.hours), invoiced: false}
       if (confirm(`Click OK to proceed or Cancel to start over! \n Date: ${charge.date} \n Category: ${charge.category} \n Staff Member: ${charge.user} \n Rate: ${charge.rate} \n Billable hours: ${charge.hours} \n Total charge: ${charge.total} ` )) {
         data.charges = [...charges, charge]
         data.id = clientId
       }
     }
+    
     dispatch(addCharge(data))
     setClientId("")
     setChargeType("")
@@ -212,7 +263,8 @@ const onSubmit = async (data) => {
     setUserId("")
     setHours("")
     setFee("")
-    setValue("")
+    setTask("")
+    setExpense("")
     charges = {}
     chargeId = ""
     charge = ""
@@ -244,31 +296,7 @@ const onSubmit = async (data) => {
                 </div>
               </form>
               <form onSubmit={handleSubmit(onSubmit)} >
-                <div className="form-group">
-                  <label htmlFor="payment date" >Charge Date</label>
-                  <input
-                    {...register('date')}
-                    type="date"
-                    className="form-control"
-                    id="date"
-                    name="date"
-                    value={chargeDate}
-                    onChange={onChargeDateChanged}
-                    />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="category" >Staff Member</label>
-                  <select 
-                    {...register('user')}
-                    className="form-control"
-                    id="user"
-                    name="user"
-                    value={userId}
-                    onChange={onUserChanged}>
-                    <option value="">Select ...</option>
-                    {userContent}
-                  </select>
-                </div>
+                
                 {categoryDetail}
                 <button type="submit" className="btn">Add Charge</button>
               </form>

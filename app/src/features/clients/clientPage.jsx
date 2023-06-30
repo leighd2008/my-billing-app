@@ -19,7 +19,17 @@ export const ClientPage = () => {
     )
   }
   
-  const orderedCharges = client.charges.slice().sort((a, b) => a.date.localeCompare(b.date))
+  let services = client.charges.filter((charge) => {
+    return charge.chargeType === 'task'
+  })
+  
+  let expenses = client.charges.filter((charge) => {
+    return charge.chargeType === 'expense'
+  })
+  
+  const orderedServices = services.slice().sort((a, b) => a.date.localeCompare(b.date))
+  
+  const orderedExpenses = expenses.slice().sort((a, b) => a.date.localeCompare(b.date))
   
   const orderedPayments = client.payments.slice().sort((a, b) => a.date.localeCompare(b.date))
   
@@ -33,6 +43,60 @@ export const ClientPage = () => {
               <p>{`${client.address}`}</p>
               <p>{`${client.city}, ${client.usState} ${client.zip}`}</p>
               <button onClick={() => navigate(`/editClient/${client.id}`)}>Edit Info</button>
+              <h3>Professional Services</h3>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Staff</th>
+                    <th>Rate</th>
+                    <th>Hours</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orderedServices.map((charge, i) => {
+                    return (
+                      <tr key={i}>
+                        <td>{charge.date}</td>
+                        <td>{charge.category}</td>
+                        <td>{charge.user}</td> 
+                        <td>{charge.rate}</td>
+                        <td>{charge.hours}</td>
+                        <td>{charge.total}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+              <h3>Additional Charges</h3>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Category</th>
+                    {/* <th>Staff</th>
+                    <th>Rate</th>
+                    <th>Hours</th> */}
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orderedExpenses.map((charge, i) => {
+                    return (
+                      <tr key={i}>
+                        <td>{charge.date}</td>
+                        <td>{charge.category}</td>
+                        {/* <td>{charge.user}</td> 
+                        <td>{charge.rate}</td>
+                        <td>{charge.hours}</td> */}
+                        <td>{charge.total}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
               <h3>Payments</h3>
               <table>
                 <thead>
@@ -47,33 +111,6 @@ export const ClientPage = () => {
                       <tr key={i}>
                         <td>{payment.date}</td>
                         <td>{payment.amount}</td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-              <h3>Charges</h3>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Category</th>
-                    <th>Staff</th>
-                    <th>Rate</th>
-                    <th>Hours</th>
-                    <th>Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orderedCharges.map((charge, i) => {
-                    return (
-                      <tr key={i}>
-                        <td>{charge.date}</td>
-                        <td>{charge.category}</td>
-                        <td>{charge.user}</td> 
-                        <td>{charge.rate}</td>
-                        <td>{charge.hours}</td>
-                        <td>{charge.total}</td>
                       </tr>
                     )
                   })}
