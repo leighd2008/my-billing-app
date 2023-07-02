@@ -6,12 +6,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 36,
     marginRight: 20,
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-left'
   },
   invoiceDateContainer: {
     flexDirection: 'row',
     marginRight: 20,
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-left'
   },
   invoiceDate: {
     fontSize: 12,
@@ -22,15 +22,15 @@ const styles = StyleSheet.create({
   }
 });
 
-const InvoiceNo = ({invoice}) => (
+const InvoiceNo = ({invoiceData}) => (
   <Fragment>
     <View style={styles.invoiceNoContainer}>
       <Text style={styles.label}>Invoice No:</Text>
-      <Text style={styles.invoiceDate}>{invoice.invoice_no}</Text>
+      <Text style={styles.invoiceDate}>{invoiceData.invoice_no}</Text>
     </View>
     <View style={styles.invoiceDateContainer}>
       <Text style={styles.label}>Date: </Text>
-      <Text >{invoice.trans_date}</Text>
+      <Text >{invoiceData.trans_date}</Text>
     </View>
   </Fragment>
 );

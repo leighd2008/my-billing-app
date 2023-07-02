@@ -12,12 +12,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const BillTo = ({invoice}) => (
+const BillTo = ({invoiceData}) => (
   <View style={styles.headerContainer}>
     <Text style={styles.billTo}>Bill To:</Text>
-    <Text>{invoice.company}</Text>
-    <Text>{invoice.address}</Text>
-    <Text>{invoice.email}</Text>
+    <Text>{invoiceData.name}</Text>
+    <Text>{invoiceData.address1}</Text>
+    <Text>{invoiceData.address2}</Text>
+    <Text>{invoiceData.email}</Text>
   </View>
 );
 

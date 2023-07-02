@@ -31,8 +31,8 @@ module.exports = merge(base, {
       "base-uri": ["'self'"],
       "object-src": ["'none'"],
       "script-src": ["'self'"],
-      "style-src": ["'self' 'sha256-m9C3ibQ7/MuOKw17/yE5bYRuDJAxyp9QzejqJPbEqos='"],
-      "frame-src": ["'none'"],
+      "style-src": ["'self' 'sha256-jpJOxTrdc58x4woq2mVygDDIvjIAGNkLZ2yfx4ppdXo=' 'sha256-tbWZ4NP1341cpcrZVDn7B3o9bt/muXgduILAnC0Zbaw=' 'unsafe-hashes'"],
+      "frame-src": ["blob:"],
       "worker-src": ["'none'"]
     })
   ]

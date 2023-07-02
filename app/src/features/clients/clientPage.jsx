@@ -54,15 +54,11 @@ export const ClientPage = () => {
     dispatch(deleteCharge(data))
   }
   
-  // function is deleting all the payments
   const handleDeletePayment =  (paymentId) => {
-    console.log(paymentId)
     let payments = client.payments
-    console.log(payments)
     payments = client.payments.filter((payment) => {
       return payment.id !== paymentId
     })
-    console.log(payments)
     let data = {}
     data.payments = payments
     data.id = client.id
@@ -114,9 +110,6 @@ export const ClientPage = () => {
                   <tr>
                     <th>Date</th>
                     <th>Category</th>
-                    {/* <th>Staff</th>
-                    <th>Rate</th>
-                    <th>Hours</th> */}
                     <th>Total</th>
                   </tr>
                 </thead>
@@ -126,9 +119,6 @@ export const ClientPage = () => {
                       <tr key={i}>
                         <td>{charge.date}</td>
                         <td>{charge.category}</td>
-                        {/* <td>{charge.user}</td> 
-                        <td>{charge.rate}</td>
-                        <td>{charge.hours}</td> */}
                         <td>{charge.total}</td>
                         <td><button onClick={() => handleDeleteCharge(charge.chargeId)}><FontAwesomeIcon icon={faTrash} /></button></td>
                       </tr>

@@ -3,21 +3,17 @@ import { Text, View, StyleSheet } from '@react-pdf/renderer';
 
 const styles = StyleSheet.create({
   titleContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     marginTop: 24,
   },
-  reportTitle:{
-    color: '#61dafb',
-    letterSpacing: 4,
-    fontSize: 25,
-    textAlign: 'center',
-    textTransform: 'uppercase',
-  }
 });
 
-const InvoiceTitle = ({title}) => (
+const InvoiceTitle = () => (
   <View style={styles.titleContainer}>
-    <Text style={styles.reportTitle}>{title}</Text>
+    <Text>Scott L. Patterson, P.L.L.C</Text>
+    <Text>5420 S. Lakeshore Dr., Ste. 101</Text>
+    <Text>Tempe, AZ 85283</Text>
+    
   </View>
 );
 

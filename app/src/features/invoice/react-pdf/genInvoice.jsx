@@ -1,12 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { PDFViewer } from '@react-pdf/renderer';
-import { Page, Document, Image, StyleSheet } from '@react-pdf/renderer';
+import { Page, Document, StyleSheet } from '@react-pdf/renderer';
 import InvoiceTitle from './InvoiceTitle';
 import BillTo from './BillTo';
 import InvoiceNo from './InvoiceNo';
 import InvoiceItemsTable from './InvoiceItemsTable';
 import InvoiceThankYouMsg from './InvoiceThankYouMsg';
-// import logo from '../../../src/logo.svg';
 import invoice from './data/invoice-data';
 
 const styles = StyleSheet.create({
@@ -17,26 +16,19 @@ const styles = StyleSheet.create({
     paddingLeft: 60,
     lineHeight: 1.5,
     flexDirection: 'column',
-  },
-  logo: {
-    width: 74,
-    height: 68,
-    marginLeft: 'auto',
-    marginRight: 'auto',
   }
 });
 
-const Invoice = () => {
+const GenInvoice = ({invoiceData}) => {
   
   return (
     <Fragment>
-        <PDFViewer width="1000" height="600" className="app">
+        <PDFViewer width="850" height="600" className="app">
           <Document>
             <Page size="A4" style={styles.page}>
-              {/* <Image style={styles.logo} src={logo} /> */}
-              <InvoiceTitle title="Invoice" />
-              <InvoiceNo invoice={invoice} />
-              <BillTo invoice={invoice} />
+              <InvoiceTitle />
+              <BillTo invoiceData={invoiceData} />
+              <InvoiceNo invoiceData={invoiceData} />
               <InvoiceItemsTable invoice={invoice} />
               <InvoiceThankYouMsg />
             </Page>
@@ -46,4 +38,4 @@ const Invoice = () => {
   );
 }
 
-export default Invoice;
+export default GenInvoice;
