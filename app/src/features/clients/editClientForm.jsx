@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router'
 
-
 import { editClient, selectClientById } from "./clientsSlice";
+
+import Item from "../../components/Item";
 
 export const EditClientForm = () => {
   const { clientId } = useParams();
@@ -23,93 +24,19 @@ export const EditClientForm = () => {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+    
+  const states = ["Alabama", "Alaska", "American Samoa", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "District Of Columbia", "Federated States Of Micronesia", "Florida", "Georgia", "Guam", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Marshall Islands", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Northern Mariana Islands", "Ohio", "Oklahoma", "Oregon", "Palau", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virgin Islands", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
+    
+  const [value, setValue] = useState('')
   
-    // *************** For Autocomplete ***************
-    const [activeSuggestion, setActiveSuggestion] = useState(0)
-    const [filteredSuggestions, setFilteredSuggestions] = useState([])
-    const [showSuggestions, setShowSuggestions] = useState(false)
-    const [userInput, setUserInput] = useState('')
-    
-    const suggestions = ["Alabama", "Alaska", "American Samoa", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "District Of Columbia", "Federated States Of Micronesia", "Florida", "Georgia", "Guam", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Marshall Islands", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Northern Mariana Islands", "Ohio", "Oklahoma", "Oregon", "Palau", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virgin Islands", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
-      
-    
-    const onChange = e => {
-      setUserInput(e.currentTarget.value)
-      console.log(userInput)
-      
-      setFilteredSuggestions(suggestions.filter(
-        suggestion => 
-          suggestion.toLowerCase().startsWith(e.currentTarget.value.toLowerCase())
-      ))
-        setActiveSuggestion(0)
-        setShowSuggestions(true)
-    };
-    
-    
-    const onClick = e => {
-      setActiveSuggestion(0)
-      setFilteredSuggestions([])
-      setShowSuggestions(false)
-      setUserInput(e.currentTarget.innerText)
-      console.log(userInput)
-    };
-    
-    const onKeyDown = e => {
-      if (e.keyCode === 13 || e.keyCode === 9) {
-        setActiveSuggestion(0)
-        setShowSuggestions(false)
-        setUserInput(filteredSuggestions[activeSuggestion])
-      } else if (e.keyCode === 38) {
-        if (activeSuggestion === 0) {
-          return;
-        }
-        setActiveSuggestion(activeSuggestion - 1)
-      }
-      // User pressed the down arrow, increment the index
-      else if (e.keyCode === 40) {
-        if(activeSuggestion - 1 === filteredSuggestions.length) {
-          return;
-        }
-        setActiveSuggestion(activeSuggestion + 1)
-      }
-    };
-      
-      let suggestionListComponent;
-      
-      if (showSuggestions && userInput) {
-        if (filteredSuggestions.length) {
-          suggestionListComponent = (
-            <ul className="suggestions">
-              {filteredSuggestions.map((suggestion, index) => {
-                let className;
-                
-                if (index === activeSuggestion) {
-                  className = "suggestion-active";
-                }
-                return (
-                  <li className={className} key={suggestion} onClick={onClick}>
-                    {suggestion}
-                  </li>
-                );
-              })}
-            </ul>
-          );
-        } else {
-          suggestionListComponent = (
-            <div className="no-suggestions">
-              <em>No suggestions available.</em>
-            </div>
-          );
-        }
-      }
-      
-    // *************** For Autocomplete ***************
-  
+  const handleStateSelect = e => {
+    setValue(e.target.value)
+  }
+
   const onFirstNameChanged = e => setFirstName(e.target.value)
   const onLastNameChanged = e => setLastName(e.target.value)
   const onAddressChanged = e => setAddress(e.target.value)
   const onCityChanged = e => setCity(e.target.value)
-  const onUSStateChanged = e => setUSState(e.target.value)
   const onZipChanged = e => setZip(e.target.value)
     
   const onSubmit = async (data) => {
@@ -135,7 +62,7 @@ export const EditClientForm = () => {
                     name="firstName"
                     value={firstName}
                     onChange={onFirstNameChanged}
-                    />
+                  />
                 </div>
                 <div className="form-group">
                   <label htmlFor="last name" >Last Name</label>
@@ -147,7 +74,7 @@ export const EditClientForm = () => {
                     name="lastName"
                     value={lastName}
                     onChange={onLastNameChanged}
-                    />
+                  />
                 </div>
                 <div className="form-group">
                   <label htmlFor="address" >Street Address</label>
@@ -159,7 +86,7 @@ export const EditClientForm = () => {
                     name="address"
                     value={address}
                     onChange={onAddressChanged}
-                    />
+                  />
                 </div>
                 <div className="form-group">
                   <label htmlFor="city" >City</label>
@@ -171,22 +98,30 @@ export const EditClientForm = () => {
                     name="city"
                     value={city}
                     onChange={onCityChanged}
-                    />
+                  />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="usState" >State (use up and down arrows to highlight and tab to select. clicking won't work and I haven't figured it out yet.</label>
+                <div className="form-group plug-inner-addon">
+                  <label htmlFor="usState" >State</label>
                   <input
                     {...register('usState')}
                     type="text"
                     className="form-control"
+                    placeholder={usState}
                     id="usState"
                     name="usState"
-                    placeholder={usState}
-                    onChange={onChange}
-                    onKeyDown={onKeyDown}
-                    value={userInput}
-                    />
-                    {suggestionListComponent}
+                    value={value}
+                    list='states'
+                    autoComplete="on"
+                    onChange={handleStateSelect}
+                  />
+                  <datalist id='states'>
+                    {states &&
+                      states.length > 0 &&
+                      states.map((state, index) => {
+                        return <Item item={state} position={index} key={index} />
+                      })
+                    }
+                  </datalist>
                 </div>
                 <div className="form-group">
                   <label htmlFor="zip code" >Zip Code</label>
@@ -198,7 +133,7 @@ export const EditClientForm = () => {
                     name="zip"
                     value={zip}
                     onChange={onZipChanged}
-                    />
+                  />
                 </div>
                 <div className="form-group">
                   <label htmlFor="Client Id" >Client Id</label>
@@ -209,7 +144,7 @@ export const EditClientForm = () => {
                     id="id"
                     name="id"
                     value={id}
-                    />
+                  />
                 </div>
                 <button type="submit" className="btn">Edit Client</button>
               </div>

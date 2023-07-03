@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as api from './clients.api';
 
-
 const initialState = {
   clients: [],
   status: 'idle',
@@ -36,22 +35,23 @@ export const addCharge = createAsyncThunk('clients/addCharge',
   }
 )
 
+export const deleteCharge = createAsyncThunk('clients/deleteCharge',
+  async (data) => {
+    return api.deleteCharge(data)
+  }
+)
+
+export const deletePayment = createAsyncThunk('clients/deletePayment',
+  async (data) => {
+    return api.deletePayment(data)
+  }
+)
+
 const clientsSlice = createSlice({
   name: 'clients',
   initialState,
   reducers: {
-    clientUpdated(state, action) {
-      const { id, firstName, lastName, address, city, usState, zip} = action.payload
-      const existingClient = state.clients.find(client => client.id === id)
-      if (existingClient) {
-        existingClient.firstName = firstName
-        existingClient.lastName = lastName
-        existingClient.address = address
-        existingClient.city = city
-        existingClient.usState = usState
-        existingClient.zip = zip 
-      }
-    }
+    
   },
   extraReducers(builder) {
     builder
@@ -72,10 +72,22 @@ const clientsSlice = createSlice({
     builder.addCase(editClient.fulfilled, (state, action) => {
       state.status = 'idle'
     })
+    builder.addCase(addCharge.fulfilled, (state, action) => {
+      state.status = 'idle'
+    })
+    builder.addCase(addPayment.fulfilled, (state, action) => {
+      state.status = 'idle'
+    })
+    builder.addCase(deleteCharge.fulfilled, (state, action) => {
+      state.status = 'idle'
+    })
+    builder.addCase(deletePayment.fulfilled, (state, action) => {
+      state.status = 'idle'
+    })
   }
 })
 
-export const { clientUpdated } = clientsSlice.actions
+// export const { clientUpdated } = clientsSlice.actions
 
 export default clientsSlice.reducer
 

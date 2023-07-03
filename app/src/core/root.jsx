@@ -13,7 +13,6 @@ import "./root.scss";
 class Root extends React.Component {
   render() {
     const { store, history } = this.props;
-
     return (
       <React.Fragment>
         <Provider store={store}>

@@ -1,10 +1,6 @@
 import { db } from '../../db/firestore';
 import { collection, getDocs, addDoc, updateDoc, doc } from "firebase/firestore";
-// import firebase from 'firebase/app';
 
-const extractSnapshotData = snapshot =>
-  snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}))
-  
 export const fetchClients = () => 
   getDocs(collection(db, "clients"))
     .then(snapshot => 
@@ -29,4 +25,14 @@ export const addPayment = async(data) => {
 export const addCharge = async(data) => {
   const docRef = doc(db, 'clients', data.id)
   await updateDoc(docRef, {charges: data.charges})
+}
+
+export const deleteCharge = async(data) => {
+  const docRef = doc(db, 'clients', data.id)
+  await updateDoc(docRef, {charges: data.charges})
+}
+
+export const deletePayment = async(data) => {
+  const docRef = doc(db, 'clients', data.id)
+  await updateDoc(docRef, {payments: data.payments})
 }

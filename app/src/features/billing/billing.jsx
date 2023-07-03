@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
 
 import { selectAllClients, fetchClients, addCharge, selectClientById } from "../clients/clientsSlice";
 import { selectAllUsers, fetchUsers, selectUserById } from "../users/usersSlice";
 
+import Item from "../../components/Item";
+
 const Billing = () => {
+  
   const [clientId, setClientId] = useState('')
   const [chargeType, setChargeType] = useState('')
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   
   const clients = useSelector(selectAllClients)
   
@@ -24,7 +25,7 @@ const Billing = () => {
   useEffect(() => {
     if (clientStatus === 'idle') {
       dispatch(fetchClients())
-  }
+    }
   }, [clientStatus, dispatch])
   
   let clientContent
@@ -45,12 +46,11 @@ const Billing = () => {
   }
   
   const client = useSelector(state => selectClientById(state, clientId))
-    
-  const [chargeDate, setChargeDate] = useState('')
-  const [category, setCategory] = useState('')
-  const [hours, setHours] = useState('')
-  const [userId, setUserId] = useState('')
   
+  const [chargeDate, setChargeDate] = useState('')
+  const [hours, setHours] = useState('')
+  const [fee, setFee] = useState('')
+  const [userId, setUserId] = useState('')
   
   const users = useSelector(selectAllUsers)
   
@@ -58,11 +58,19 @@ const Billing = () => {
   const userError = useSelector(state => state.users.userError)
   let user = useSelector(state => selectUserById(state, userId))
   
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, } = useForm({
+    defaultValues: {
+      task: '',
+      expense: '',
+      hours: '',
+      fee: '',
+    },
+    shouldUnregister: true
+  });
   
   const onChargeDateChanged = e => setChargeDate(e.target.value)
-  const onCategoryChanged = e => setCategory(e.target.value)
   const onHoursChanged = e => setHours(e.target.value)
+  const onFeeChanged = e => setFee(e.target.value)
   const onUserChanged = e => setUserId(e.target.value)
   
   useEffect(() => {
@@ -78,134 +86,189 @@ const Billing = () => {
   } else if (userStatus === 'succeeded') {
     userContent = users.map(user => (
       <option key={user.id} value={user.id}>{user.name}</option>
-    ))
-  } else if (userStatus === 'failed') {
-    userContent = <option>{userError}</option>
-  }
-  
-    // *************** For Autocomplete ***************
-  const [activeSuggestion, setActiveSuggestion] = useState(0)
-  const [filteredSuggestions, setFilteredSuggestions] = useState([])
-  const [showSuggestions, setShowSuggestions] = useState(false)
-  const [userInput, setUserInput] = useState('')
-  
-  const tasks = ["Calc", "Conf", "Consult", "Copy", "Deliver", "Depo", "Draft", "Email oc", "Email c", "Forward", "Hrg", "LTOC", "LTR", "Mediation", "Meeting", "Open", "PC", "PCA", "Prep", "Research", "Review", "Revise", "SC", "Scan & Email", "Sched", "Trial"]
-  
-  const expenses = ["Arrears Calculation ($59)", "Close file", "Consult", "Court Reporter Fee", "Error/Correction", "Filing Fee", "Postage", "Records", "Returned", "Runner Service Fee ($15)", "Service Fee", "Subpoena Issue Fee ($40)", "Transcript", "Witness Fee", "e-File Processing Fee ($6.70)"]
-  
-  
-  const onChange = (suggestions) => e => {
-    setUserInput(e.target.value)
-    
-    setFilteredSuggestions(suggestions.filter(
-      suggestion => 
-        suggestion.toLowerCase().startsWith(e.target.value.toLowerCase())
-    ))
-      setActiveSuggestion(0)
-      setShowSuggestions(true)
-  };
-  
-  const onClick = e => {
-      setActiveSuggestion(0)
-      setFilteredSuggestions([])
-      setShowSuggestions(false)
-      setUserInput(e.target.innerText)
-  };
-  
-  const onKeyDown = (suggestions) => e => {
-    if (e.keyCode === 13 || e.keyCode === 9) {
-      setActiveSuggestion(0)
-      setShowSuggestions(false)
-      setUserInput(filteredSuggestions[activeSuggestion])
-    } else if (e.keyCode === 38) {
-      if (activeSuggestion === 0) {
-        return;
-      }
-      setActiveSuggestion(activeSuggestion - 1)
+      ))
+    } else if (userStatus === 'failed') {
+      userContent = <option>{userError}</option>
     }
-    // User pressed the down arrow, increment the index
-    else if (e.keyCode === 40) {
-      if(activeSuggestion - 1 === filteredSuggestions.length) {
-        return;
+    
+    const tasks = ["Calc", "Conf", "Consult", "Copy", "Deliver", "Depo", "Draft", "Email oc", "Email c", "Forward", "Hrg", "LTOC", "LTR", "Mediation", "Meeting", "Open", "PC", "PCA", "Prep", "Research", "Review", "Revise", "SC", "Scan & Email", "Sched", "Trial"]
+    
+    const [task, setTask] = useState('')
+    const [expense, setExpense] = useState('')
+    
+    const handleTaskSelect = e => setTask(e.target.value)
+      
+    const handleExpenseSelect = e => {
+      setExpense(e.target.value)  
+      if(e.target.value === "Arrears Calculation") {
+        setFee(59)
+      } else if(e.target.value === "Runner Service Fee") {
+        setFee(15)
+      } else if(e.target.value === "Subpoena Issue Fee") {
+        setFee(40)
+      } else if(e.target.value === "e-File Processing Fee") {
+        setFee(6.50)
       }
-      setActiveSuggestion(activeSuggestion + 1)
     }
-  };
-    
-    let suggestionListComponent;
-    
-    if (showSuggestions && userInput) {
-      if (filteredSuggestions.length) {
-        suggestionListComponent = (
-          <ul className="suggestions">
-            {filteredSuggestions.map((suggestion, index) => {
-              let className;
-              
-              if (index === activeSuggestion) {
-                className = "suggestion-active";
-              }
-              return (
-                <li className={className} key={suggestion} onClick={onClick}>
-                  {suggestion}
-                </li>
-              );
-            })}
-          </ul>
-        );
-      } else {
-        suggestionListComponent = (
-          <div className="no-suggestions">
-            <em>No suggestions available.</em>
+      
+  const expenses = ["Arrears Calculation", "Close file", "Consult", "Court Reporter Fee", "Error/Correction", "Filing Fee", "Postage", "Records", "Returned", "Runner Service Fee", "Service Fee", "Subpoena Issue Fee", "Transcript", "Witness Fee", "e-File Processing Fee"]
+  
+  let categoryDetail
+  
+  {if (chargeType === 'task') {
+    categoryDetail = (
+      <div className="category-detail">
+        <div className="form-group">
+          <label htmlFor="date" >Charge Date</label>
+          <input
+            {...register('date')}
+            type="date"
+            className="form-control"
+            id="date"
+            name="date"
+            value={chargeDate}
+            onChange={onChargeDateChanged}
+            />
+        </div>
+        <div className="form-group">
+          <label htmlFor="category" >Staff Member</label>
+          <select 
+            {...register('user')}
+            className="form-control"
+            id="user"
+            name="user"
+            value={userId}
+            onChange={onUserChanged}>
+            <option value="">Select ...</option>
+            {userContent}
+          </select>
+        </div>
+        <div className="form-group plug-inner-addon">
+          <label htmlFor="task" >Task </label>
+          <input
+            {...register('task')}
+            type="text"
+            className="form-control"
+            placeholder="Begin typing to see suggestions"
+            id="task"
+            name="task"
+            value={task}
+            list='tasks'
+            autoComplete="on"
+            onChange={handleTaskSelect}
+          />
+          <datalist id='tasks'>
+            {tasks &&
+              tasks.length > 0 &&
+              tasks.map((task, index) => {
+                return <Item item={task} position={index} key={index} />
+              })
+            }
+          </datalist>
+        </div> 
+        <div className="form-group">
+          <label htmlFor="hours" >Hours</label>
+          <input
+            {...register('hours')}
+            type="number"
+            className="form-control"
+            id="hours"
+            name="hours"
+            value={hours}
+            onChange={onHoursChanged}
+            />
+        </div>
+      </div>) 
+    } else if (chargeType === 'expense') {
+      categoryDetail = (
+        <div className="category-detail">
+          <div className="form-group">
+            <label htmlFor="date" >Charge Date</label>
+            <input
+              {...register('date')}
+              type="date"
+              className="form-control"
+              id="date"
+              name="date"
+              value={chargeDate}
+              onChange={onChargeDateChanged}
+              />
           </div>
-        );
-      }
+          <div className="form-group plug-inner-addon">
+            <label htmlFor="expense" >Expense </label>
+            <input
+              {...register('expense')}
+              type="text"
+              className="form-control"
+              placeholder="Begin typing to see suggestions"
+              id="expense"
+              name="expense"
+              value={expense}
+              list='expenses'
+              autoComplete="on"
+              onChange={handleExpenseSelect}
+            />
+            <datalist id='expenses'>
+              {expenses &&
+                expenses.length > 0 &&
+                expenses.map((expense, index) => {
+                  return <Item item={expense} position={index} key={index} />
+                })
+              }
+            </datalist>
+          </div>
+          <div className="form-group">
+              <label htmlFor="fee" >Fee (if pre-filled tab through to accept)</label>
+              <input
+                {...register('fee')}
+                type="number"
+                className="form-control"
+                id="fee"
+                name="fee"
+                value={fee}
+                onChange={onFeeChanged}
+                />
+          </div>
+        </div>) 
+    } else {
+      categoryDetail = (
+      <div>Please choose a Category Type above.</div>)
     }
-    
-  // *************** For Autocomplete ***************
-  
-  const onSubmit = async (data, e) => {
+  }
+
+  const onSubmit = async (data) => {
     let charges = client.charges || {}
     let chargeId = charges.length || 0
-    let currentRate
-    let currentHours
-    if(category === "Arrears Calculation ($59)") {
-      currentRate = 59 
-      currentHours = 1
-    } else if(category === "Runner Service Fee ($15)") {
-      currentRate = 15 
-      currentHours = 1
-    } else if(category === "Subpoena Issue Fee ($40)") {
-      currentRate = 40 
-      currentHours = 1
-    } else if(category === "e-File Processing Fee ($6.70)") {
-      currentRate = 6.70
-      currentHours = 1
-    } else { 
-      currentRate = user.rate
-      currentHours = data.hours
-    }
-    let charge = {id: chargeId, date: data.date, category: data.task || data.expense, user: user.name, rate: currentRate, hours: currentHours, total: (currentHours * currentRate), invoiced: false}
-    if (confirm(`Click OK to proceed or Cancel to start over! \n Date: ${charge.date} \n Category: ${charge.category} \n Staff Member: ${charge.user} \n Rate: ${charge.rate} \n Billable hours: ${charge.hours} \n Total charge: ${charge.total}`)){
-      if (charges.length) {
+    let charge
+    if(data.fee) {
+      charge = {id: chargeId, chargeType: 'expense', date: data.date, category: data.expense, fee: data.fee, total: data.fee, invoiced: false, }
+      if (confirm(`Click OK to proceed or Cancel to start over! \n Date: ${charge.date} \n Category: ${charge.category} \n Fee: ${charge.fee} \n Total charge: ${charge.total} ` )) {
         data.charges = [...charges, charge]
-      } else {
-        data.charges = [charge]
+        data.id = clientId
       }
-      data.id = clientId
-      
-      console.log(data)
-      
-      // await dispatch(addCharge(data))
-      // await dispatch(fetchClients())
-      setChargeDate("")
-      setHours("")
-      setCategory("")
-      setUserId("")
-      setClientId("")
-      setChargeType("")
-      setUserInput("")
+    } else {
+      charge = { id: chargeId, chargeType: 'task', date: data.date, category: data.task, user: user.name, rate: user.rate, hours: data.hours, total: (user.rate * data.hours), invoiced: false}
+      if (confirm(`Click OK to proceed or Cancel to start over! \n Date: ${charge.date} \n Category: ${charge.category} \n Staff Member: ${charge.user} \n Rate: ${charge.rate} \n Billable hours: ${charge.hours} \n Total charge: ${charge.total} ` )) {
+        data.charges = [...charges, charge]
+        data.id = clientId
+      }
     }
+    
+    dispatch(addCharge(data))
+    setClientId("")
+    setChargeType("")
+    setChargeDate("")
+    setUserId("")
+    setHours("")
+    setFee("")
+    setTask("")
+    setExpense("")
+    charges = {}
+    chargeId = ""
+    charge = ""
+    data = ""
   }
+  
   return (
     <React.Fragment>
       <section className="section">
@@ -222,7 +285,7 @@ const Billing = () => {
                   </select>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="client">Type</label>
+                  <label htmlFor="client">Category Type</label>
                   <select id="client" className="form-control" value={chargeType} onChange={onChargeTypeChanged} >
                     <option value="">Select ...</option>
                     <option value="task">Task</option>
@@ -231,74 +294,8 @@ const Billing = () => {
                 </div>
               </form>
               <form onSubmit={handleSubmit(onSubmit)} >
-                <div className="form-group">
-                  <label htmlFor="payment date" >Charge Date</label>
-                  <input
-                    {...register('date')}
-                    type="date"
-                    className="form-control"
-                    id="date"
-                    name="date"
-                    value={chargeDate}
-                    onChange={onChargeDateChanged}
-                    />
-                </div>
-                { chargeType === 'task' ? (
-                  <div className="form-group">
-                    <label htmlFor="task" >Task (use up and down arrows to highlight and tab to select. clicking won't work and I haven't figured it out yet.)</label>
-                    <input
-                      {...register('task')}
-                      type="text"
-                      className="form-control"
-                      placeholder="Begin typing to see suggestions"
-                      id="task"
-                      name="task"
-                      value={userInput}
-                      onChange={onChange(tasks)}
-                      onKeyDown={onKeyDown(tasks)}
-                    />
-                    {suggestionListComponent}
-                  </div> ) : (
-                  <div className="form-group">
-                    <label htmlFor="expense" >Expense (use up and down arrows to highlight and tab to select. clicking won't work and I haven't figured it out yet.)</label>
-                    <input
-                      {...register('expense')}
-                      type="text"
-                      className="form-control"
-                      placeholder="Begin typing to see suggestions"
-                      id="expense"
-                      name="expense"
-                      value={userInput}
-                      onChange={onChange(expenses)}
-                      onKeyDown={onKeyDown(expenses)}
-                    />
-                    {suggestionListComponent}
-                  </div>) }
-                <div className="form-group">
-                  <label htmlFor="category" >Staff Member</label>
-                  <select 
-                    {...register('user')}
-                    className="form-control"
-                    id="user"
-                    name="user"
-                    value={userId}
-                    onChange={onUserChanged}>
-                    <option value="">Select ...</option>
-                    {userContent}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="amount" >Hours</label>
-                  <input
-                    {...register('hours')}
-                    type="number"
-                    className="form-control"
-                    id="hours"
-                    name="hours"
-                    value={hours}
-                    onChange={onHoursChanged}
-                    />
-                </div>
+                
+                {categoryDetail}
                 <button type="submit" className="btn">Add Charge</button>
               </form>
             </div>
