@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {Text, View, StyleSheet } from '@react-pdf/renderer';
 
 const borderColor = '#90e5fc'
@@ -14,33 +14,68 @@ const styles = StyleSheet.create({
         fontStyle: 'bold',
         flexGrow: 1,
     },
+    date: {
+        width: '15%',
+        borderRightColor: borderColor,
+        borderRightWidth: 1,
+    },
     description: {
         width: '60%',
         borderRightColor: borderColor,
         borderRightWidth: 1,
     },
-    qty: {
+    description2: {
+        width: '70%',
+        borderRightColor: borderColor,
+        borderRightWidth: 1,
+    },
+    hours: {
         width: '10%',
         borderRightColor: borderColor,
         borderRightWidth: 1,
     },
-    rate: {
-        width: '15%',
-        borderRightColor: borderColor,
-        borderRightWidth: 1,
-    },
     amount: {
-        width: '15%'
+        width: '15%',
+        textAlign: 'right',
+        paddingRight: 8,
     },
   });
 
-  const InvoiceTableHeader = () => (
-    <View style={styles.container}>
-        <Text style={styles.description}>Item Description</Text>
-        <Text style={styles.qty}>Qty</Text>
-        <Text style={styles.rate}>@</Text>
-        <Text style={styles.amount}>Amount</Text>
-    </View>
-  );
-  
+  const InvoiceTableHeader = ({items}) => {
+    let tableContent = ''
+    if(items[0].chargeType === 'task') {
+      tableContent = (
+        <View style={styles.container}>
+          <Text style={styles.date}>Date</Text>
+          <Text style={styles.description}>Professional Services</Text>
+          <Text style={styles.hours}>Hours</Text>
+          <Text style={styles.amount}>Amount</Text>
+        </View>
+      )
+    } else if(items[0].chargeType === 'expense') {
+      tableContent = tableContent = (
+        <View style={styles.container}>
+          <Text style={styles.date}>Date</Text>
+          <Text style={styles.description2}>Additional Charges</Text>
+          {/* <Text style={styles.hours}>Hours</Text> */}
+          <Text style={styles.amount}>Amount</Text>
+        </View>
+      )
+    }else if(!items[0].chargeType) {
+      tableContent = tableContent = (
+        <View style={styles.container}>
+          <Text style={styles.date}>Date</Text>
+          <Text style={styles.description2}>Payments</Text>
+          {/* <Text style={styles.hours}>Hours</Text> */}
+          <Text style={styles.amount}>Amount</Text>
+        </View>
+      )
+    }
+    return(
+        <Fragment>
+          {tableContent}
+        </Fragment>
+      )
+          
+  }
   export default InvoiceTableHeader

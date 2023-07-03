@@ -37,14 +37,12 @@ export const addCharge = createAsyncThunk('clients/addCharge',
 
 export const deleteCharge = createAsyncThunk('clients/deleteCharge',
   async (data) => {
-    console.log(data)
     return api.deleteCharge(data)
   }
 )
 
 export const deletePayment = createAsyncThunk('clients/deletePayment',
   async (data) => {
-    console.log(data)
     return api.deletePayment(data)
   }
 )

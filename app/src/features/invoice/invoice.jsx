@@ -51,6 +51,27 @@ const Invoice = () => {
   
   // **** SELECT INVOICE DATE ****
   
+  // **** SELECT ITEMS TO BE INVOICED ****
+  let orderedServices, orderedExpenses, orderedPayments
+  if (client) {
+    let services = client.charges.filter((charge) => {
+      return charge.chargeType === 'task' && charge.invoiced === false
+    })
+    orderedServices = services.slice().sort((a, b) => a.date.localeCompare(b.date))
+    
+    let expenses = client.charges.filter((charge) => {
+      return charge.chargeType === 'expense' && charge.invoiced === false
+    })
+    orderedExpenses = expenses.slice().sort((a, b) => a.date.localeCompare(b.date))
+    
+    let payments = client.payments.filter((payment) => {
+      return payment.invoiced === false
+    })
+    orderedPayments = payments.slice().sort((a, b) => a.date.localeCompare(b.date))
+  }
+  // **** SELECT ITEMS TO BE INVOICED ****
+  
+  //  **** GENERATE INVOICE DATA ****
   let invoiceData = {}
   if (client && invoiceDate) {
     invoiceData.invoice_no = Math.floor(Math.random() * 90000) + 10000
@@ -59,9 +80,13 @@ const Invoice = () => {
     invoiceData.address1 = client.address
     invoiceData.address2 = `${client.city}, ${client.usState}, ${client.zip},`
     invoiceData.email = client.email 
+    invoiceData.services = orderedServices
+    invoiceData.expenses = orderedExpenses
+    invoiceData.payments = orderedPayments
     
   }
-  console.log(client)
+  //  **** GENERATE INVOICE DATA ****
+
   return (
     <React.Fragment>
       <section className="section">
@@ -98,9 +123,9 @@ const Invoice = () => {
             <h1>{`${invoiceData.invoice_no}`}</h1>
           : null} */}
           <section className="centered-container">
-            <GenInvoice 
-              invoiceData={invoiceData}
-            />
+            {client && invoiceDate 
+              ? <GenInvoice invoiceData={invoiceData} />
+              : <h3>Please select a client and an invoice date</h3>}
           </section>
       </section>
     </React.Fragment>

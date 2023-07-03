@@ -26,16 +26,25 @@ const styles = StyleSheet.create({
     },
   });
 
-
 const InvoiceTableFooter = ({items}) => {
-    const total = items.map(item => item.qty * item.rate)
+  let total
+  if(items[0].chargeType==='task') {
+    total = items.map(item => item.hours * item.rate)
         .reduce((accumulator, currentValue) => accumulator + currentValue , 0)
-    return(    
-        <View style={styles.row}>
-            <Text style={styles.description}>TOTAL</Text>
-            <Text style={styles.total}>{ Number.parseFloat(total).toFixed(2)}</Text>
-        </View>
-    )
+  } else if(items[0].chargeType==='expense') {
+    total = items.map(item => item.fee * 1)
+        .reduce((accumulator, currentValue) => accumulator + currentValue , 0)
+  } else if(!items[0].chargeType) {
+    total = items.map(item => item.amount * 1)
+        .reduce((accumulator, currentValue) => accumulator + currentValue , 0)
+  }
+  
+  return(    
+      <View style={styles.row}>
+          <Text style={styles.description}>TOTAL</Text>
+          <Text style={styles.total}>{ Number.parseFloat(total).toFixed(2)}</Text>
+      </View>
+  )
 };
  
 export default InvoiceTableFooter

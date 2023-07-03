@@ -179,77 +179,75 @@ const Billing = () => {
             />
         </div>
       </div>) 
-  } else if (chargeType === 'expense') {
-    categoryDetail = (
-      <div className="category-detail">
-        <div className="form-group">
-          <label htmlFor="date" >Charge Date</label>
-          <input
-            {...register('date')}
-            type="date"
-            className="form-control"
-            id="date"
-            name="date"
-            value={chargeDate}
-            onChange={onChargeDateChanged}
-            />
-        </div>
-        <div className="form-group plug-inner-addon">
-          <label htmlFor="expense" >Expense </label>
-          <input
-            {...register('expense')}
-            type="text"
-            className="form-control"
-            placeholder="Begin typing to see suggestions"
-            id="expense"
-            name="expense"
-            value={expense}
-            list='expenses'
-            autoComplete="on"
-            onChange={handleExpenseSelect}
-          />
-          <datalist id='expenses'>
-            {expenses &&
-              expenses.length > 0 &&
-              expenses.map((expense, index) => {
-                return <Item item={expense} position={index} key={index} />
-              })
-            }
-          </datalist>
-        </div>
-        <div className="form-group">
-            <label htmlFor="fee" >Fee (if pre-filled tab through to accept)</label>
+    } else if (chargeType === 'expense') {
+      categoryDetail = (
+        <div className="category-detail">
+          <div className="form-group">
+            <label htmlFor="date" >Charge Date</label>
             <input
-              {...register('fee')}
-              type="number"
+              {...register('date')}
+              type="date"
               className="form-control"
-              id="fee"
-              name="fee"
-              value={fee}
-              onChange={onFeeChanged}
+              id="date"
+              name="date"
+              value={chargeDate}
+              onChange={onChargeDateChanged}
               />
-        </div>
-      </div>) 
-  } else {
-    categoryDetail = (
-    <div>Please choose a Category Type above.</div>)
+          </div>
+          <div className="form-group plug-inner-addon">
+            <label htmlFor="expense" >Expense </label>
+            <input
+              {...register('expense')}
+              type="text"
+              className="form-control"
+              placeholder="Begin typing to see suggestions"
+              id="expense"
+              name="expense"
+              value={expense}
+              list='expenses'
+              autoComplete="on"
+              onChange={handleExpenseSelect}
+            />
+            <datalist id='expenses'>
+              {expenses &&
+                expenses.length > 0 &&
+                expenses.map((expense, index) => {
+                  return <Item item={expense} position={index} key={index} />
+                })
+              }
+            </datalist>
+          </div>
+          <div className="form-group">
+              <label htmlFor="fee" >Fee (if pre-filled tab through to accept)</label>
+              <input
+                {...register('fee')}
+                type="number"
+                className="form-control"
+                id="fee"
+                name="fee"
+                value={fee}
+                onChange={onFeeChanged}
+                />
+          </div>
+        </div>) 
+    } else {
+      categoryDetail = (
+      <div>Please choose a Category Type above.</div>)
+    }
   }
-}
-const onSubmit = async (data) => {
-  console.log('data', data)
-  
+
+  const onSubmit = async (data) => {
     let charges = client.charges || {}
-    
     let chargeId = charges.length || 0
     let charge
     if(data.fee) {
-      charge = {chargeId: chargeId, chargeType: 'expense', date: data.date, category: data.expense, fee: data.fee, total: data.fee, invoiced: false, }
+      charge = {id: chargeId, chargeType: 'expense', date: data.date, category: data.expense, fee: data.fee, total: data.fee, invoiced: false, }
       if (confirm(`Click OK to proceed or Cancel to start over! \n Date: ${charge.date} \n Category: ${charge.category} \n Fee: ${charge.fee} \n Total charge: ${charge.total} ` )) {
         data.charges = [...charges, charge]
         data.id = clientId
       }
     } else {
-      charge = { chargeId: chargeId, chargeType: 'task', date: data.date, category: data.task, user: user.name, rate: user.rate, hours: data.hours, total: (user.rate * data.hours), invoiced: false}
+      charge = { id: chargeId, chargeType: 'task', date: data.date, category: data.task, user: user.name, rate: user.rate, hours: data.hours, total: (user.rate * data.hours), invoiced: false}
       if (confirm(`Click OK to proceed or Cancel to start over! \n Date: ${charge.date} \n Category: ${charge.category} \n Staff Member: ${charge.user} \n Rate: ${charge.rate} \n Billable hours: ${charge.hours} \n Total charge: ${charge.total} ` )) {
         data.charges = [...charges, charge]
         data.id = clientId

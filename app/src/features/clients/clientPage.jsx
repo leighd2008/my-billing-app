@@ -46,7 +46,7 @@ export const ClientPage = () => {
   
   const handleDeleteCharge =  (chargeId) => {
     let charges = client.charges.filter((charge) => {
-      return charge.chargeId !== chargeId
+      return charge.id !== chargeId
     })
     let data = {}
     data.charges = charges
@@ -98,7 +98,7 @@ export const ClientPage = () => {
                         <td>{charge.rate}</td>
                         <td>{charge.hours}</td>
                         <td>{charge.total}</td>
-                        <td><button onClick={() => handleDeleteCharge(charge.chargeId)}><FontAwesomeIcon icon={faTrash} /></button></td>
+                        <td><button onClick={() => handleDeleteCharge(charge.id)}><FontAwesomeIcon icon={faTrash} /></button></td>
                       </tr>
                     )
                   })}
@@ -120,7 +120,7 @@ export const ClientPage = () => {
                         <td>{charge.date}</td>
                         <td>{charge.category}</td>
                         <td>{charge.total}</td>
-                        <td><button onClick={() => handleDeleteCharge(charge.chargeId)}><FontAwesomeIcon icon={faTrash} /></button></td>
+                        <td><button onClick={() => handleDeleteCharge(charge.id)}><FontAwesomeIcon icon={faTrash} /></button></td>
                       </tr>
                     )
                   })}

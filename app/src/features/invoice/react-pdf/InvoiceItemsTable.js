@@ -2,7 +2,6 @@ import React from "react";
 import { View, StyleSheet } from "@react-pdf/renderer";
 import InvoiceTableHeader from './InvoiceTableHeader';
 import InvoiceTableRow from './InvoiceTableRow';
-import InvoiceTableBlankSpace from './InvoiceTableBlankSpace';
 import InvoiceTableFooter from './InvoiceTableFooter';
 
 const tableRowsCount = 11;
@@ -17,12 +16,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const InvoiceItemsTable = ({invoice}) => (
+
+const InvoiceItemsTable = ({items}) => (
   <View style={styles.tableContainer}>
-    <InvoiceTableHeader />
-    <InvoiceTableRow items={invoice.items} />
-    <InvoiceTableBlankSpace rowsCount={tableRowsCount - invoice.items.length} />
-    <InvoiceTableFooter items={invoice.items} />
+    <InvoiceTableHeader items={items}/>
+    <InvoiceTableRow items={items} />
+    <InvoiceTableFooter items={items} />
   </View>
 );
 

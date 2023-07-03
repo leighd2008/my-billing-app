@@ -6,7 +6,6 @@ import BillTo from './BillTo';
 import InvoiceNo from './InvoiceNo';
 import InvoiceItemsTable from './InvoiceItemsTable';
 import InvoiceThankYouMsg from './InvoiceThankYouMsg';
-import invoice from './data/invoice-data';
 
 const styles = StyleSheet.create({
   page: {
@@ -23,18 +22,20 @@ const GenInvoice = ({invoiceData}) => {
   
   return (
     <Fragment>
-        <PDFViewer width="850" height="600" className="app">
-          <Document>
-            <Page size="A4" style={styles.page}>
-              <InvoiceTitle />
-              <BillTo invoiceData={invoiceData} />
-              <InvoiceNo invoiceData={invoiceData} />
-              <InvoiceItemsTable invoice={invoice} />
-              <InvoiceThankYouMsg />
-            </Page>
-          </Document>
-        </PDFViewer>
-      </Fragment>
+      <PDFViewer width="850" height="600" className="app">
+        <Document>
+          <Page size="A4" style={styles.page}>
+            <InvoiceTitle />
+            <BillTo invoiceData={invoiceData} />
+            <InvoiceNo invoiceData={invoiceData} />
+            <InvoiceItemsTable className='services' items={invoiceData.services} />
+            <InvoiceItemsTable className='expenses' items={invoiceData.expenses} />
+            <InvoiceItemsTable className='payments' items={invoiceData.payments} />
+            <InvoiceThankYouMsg />
+          </Page>
+        </Document>
+      </PDFViewer>
+    </Fragment>
   );
 }
 
