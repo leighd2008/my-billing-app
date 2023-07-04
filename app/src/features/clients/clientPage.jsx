@@ -68,7 +68,7 @@ export const ClientPage = () => {
   return (
     <React.Fragment >
       <section className="section">
-      <FontAwesomeIcon icon={faTrash} />
+      {/* <FontAwesomeIcon icon={faTrash} /> */}
         <div className="centered-view">
           <section className="centered-container">
             <div className="">
@@ -98,7 +98,10 @@ export const ClientPage = () => {
                         <td>{charge.rate}</td>
                         <td>{charge.hours}</td>
                         <td>{charge.total}</td>
-                        <td><button onClick={() => handleDeleteCharge(charge.id)}><FontAwesomeIcon icon={faTrash} /></button></td>
+                        <td><button 
+                          className='table-button'
+                          onClick={() => handleDeleteCharge(charge.id)}><FontAwesomeIcon icon={faTrash}/></button>
+                        </td>
                       </tr>
                     )
                   })}
@@ -120,7 +123,7 @@ export const ClientPage = () => {
                         <td>{charge.date}</td>
                         <td>{charge.category}</td>
                         <td>{charge.total}</td>
-                        <td><button onClick={() => handleDeleteCharge(charge.id)}><FontAwesomeIcon icon={faTrash} /></button></td>
+                        <td><button className='table-button' onClick={() => handleDeleteCharge(charge.id)}><FontAwesomeIcon icon={faTrash} /></button></td>
                       </tr>
                     )
                   })}
@@ -140,7 +143,7 @@ export const ClientPage = () => {
                       <tr key={i}>
                         <td>{payment.date}</td>
                         <td>{payment.amount}</td>
-                        <td><button onClick={() => handleDeletePayment(payment.id)}><FontAwesomeIcon icon={faTrash} /></button></td>
+                        <td><button className='table-button' onClick={() => handleDeletePayment(payment.id)}><FontAwesomeIcon icon={faTrash} /></button></td>
                       </tr>
                     )
                   })}
