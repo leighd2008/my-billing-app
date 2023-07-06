@@ -30,19 +30,48 @@ export const ClientPage = () => {
     )
   }
   
-  let services = client.charges.filter((charge) => {
-    return charge.chargeType === 'task'
-  })
+  // **** SELECT INVOICE DATE ****
   
-  let expenses = client.charges.filter((charge) => {
-    return charge.chargeType === 'expense'
-  })
+  let value
+  const onInvoiceDateChanged = e => {
+    invoiceData.trans_date = e.target.value
+  }
   
-  const orderedServices = services.slice().sort((a, b) => a.date.localeCompare(b.date))
+  // **** SELECT INVOICE DATE ****
   
-  const orderedExpenses = expenses.slice().sort((a, b) => a.date.localeCompare(b.date))
+  // **** SELECT ITEMS TO BE INVOICED ****
+  let orderedServices, orderedExpenses, orderedPayments
+  if (client) {
+    let services = client.charges.filter((charge) => {
+      return charge.chargeType === 'task' && charge.invoiced === false
+    })
+    orderedServices = services.slice().sort((a, b) => a.date.localeCompare(b.date))
+    
+    let expenses = client.charges.filter((charge) => {
+      return charge.chargeType === 'expense' && charge.invoiced === false
+    })
+    orderedExpenses = expenses.slice().sort((a, b) => a.date.localeCompare(b.date))
+    
+    let payments = client.payments.filter((payment) => {
+      return payment.invoiced === false
+    })
+    orderedPayments = payments.slice().sort((a, b) => a.date.localeCompare(b.date))
+  }
+  // **** SELECT ITEMS TO BE INVOICED ****
   
-  const orderedPayments = client.payments.slice().sort((a, b) => a.date.localeCompare(b.date))
+  //  **** GENERATE INVOICE DATA ****
+  let invoiceData = {}
+    invoiceData.invoice_no = Math.floor(Math.random() * 90000) + 10000
+    // invoiceData.trans_date = 'Please choose an Invoice date'
+    invoiceData.name = `${client.firstName} ${client.lastName}`
+    invoiceData.address1 = client.address
+    invoiceData.address2 = `${client.city}, ${client.usState}, ${client.zip},`
+    invoiceData.email = client.email 
+    invoiceData.services = orderedServices
+    invoiceData.expenses = orderedExpenses
+    invoiceData.payments = orderedPayments
+    
+  //  **** GENERATE INVOICE DATA ****
   
   const handleDeleteCharge =  (chargeId) => {
     let charges = client.charges.filter((charge) => {
@@ -68,11 +97,23 @@ export const ClientPage = () => {
   return (
     <React.Fragment >
       <section className="section">
-      {/* <FontAwesomeIcon icon={faTrash} /> */}
         <div className="centered-view">
           <section className="centered-container">
-            <div className="">
-              <h2>{`${client.firstName} ${client.lastName}`}</h2>
+            <div className="form-group">
+              <label htmlFor="invoice date" >Invoice Date</label>
+              <input
+                type="date"
+                className="form-control"
+                value={value}
+                onChange={onInvoiceDateChanged}
+                />
+                {invoiceData.trans_date ? 
+                  <h2>{`Invoice Date: ${invoiceData.trans_date}`}</h2>
+                  : null}
+            </div>
+              <div className="">
+              {/* <h2>{`Invoice Date: ${invoiceData.trans_date}`}</h2> */}
+              <p>{`${client.firstName} ${client.lastName}`}</p>
               <p>{`${client.address}`}</p>
               <p>{`${client.city}, ${client.usState} ${client.zip}`}</p>
               <button onClick={() => navigate(`/editClient/${client.id}`)}>Edit Info</button>
@@ -85,7 +126,7 @@ export const ClientPage = () => {
                     <th>Staff</th>
                     <th>Rate</th>
                     <th>Hours</th>
-                    <th>Total</th>
+                    <th>Amount</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -113,7 +154,7 @@ export const ClientPage = () => {
                   <tr>
                     <th>Date</th>
                     <th>Category</th>
-                    <th>Total</th>
+                    <th>Amount</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -149,7 +190,9 @@ export const ClientPage = () => {
                   })}
                 </tbody>
               </table>
-              <p>Balance: {client.balance ? `${client.balance}` : '0'}</p>
+              <h4>Previous Balance: {client.balance ? `$${client.balance}` : '0'}</h4>
+              <h4>Interest charges: </h4>
+              {/* https://fiscal.treasury.gov/prompt-payment/interest.html */}
             </div>
           </section>
         </div>
