@@ -6,14 +6,14 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     marginTop: 24,
   },
+  
 });
 
-const InvoiceTitle = () => (
+const InvoiceTitle = ({title}) => (
   <View style={styles.titleContainer}>
     <Text>Scott L. Patterson, P.L.L.C</Text>
     <Text>5420 S. Lakeshore Dr., Ste. 101</Text>
     <Text>Tempe, AZ 85283</Text>
-    
   </View>
 );
 

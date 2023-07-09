@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { PDFViewer } from '@react-pdf/renderer';
 import { Page, Document, StyleSheet } from '@react-pdf/renderer';
+import Header from './InvoiceHeader';
 import InvoiceTitle from './InvoiceTitle';
 import BillTo from './BillTo';
 import InvoiceNo from './InvoiceNo';
@@ -12,7 +13,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Helvetica',
     fontSize: 11,
     paddingTop: 30,
-    paddingLeft: 60,
+    paddingLeft: 30,
+    paddingRight: 30,
+    paddingBottom: 30,
     lineHeight: 1.5,
     flexDirection: 'column',
   }
@@ -25,6 +28,7 @@ const GenInvoice = ({invoiceData}) => {
       <PDFViewer width="850" height="600" className="app">
         <Document>
           <Page size="A4" style={styles.page}>
+            <Header name={invoiceData.name}/>
             <InvoiceTitle />
             <BillTo invoiceData={invoiceData} />
             <InvoiceNo invoiceData={invoiceData} />

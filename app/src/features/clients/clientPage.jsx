@@ -30,19 +30,52 @@ export const ClientPage = () => {
     )
   }
   
-  let services = client.charges.filter((charge) => {
-    return charge.chargeType === 'task'
-  })
+  // **** SELECT INVOICE DATE ****
   
-  let expenses = client.charges.filter((charge) => {
-    return charge.chargeType === 'expense'
-  })
+  let value
+  const onInvoiceDateChanged = e => {
+    invoiceData.trans_date = e.target.value
+  }
   
-  const orderedServices = services.slice().sort((a, b) => a.date.localeCompare(b.date))
+  // **** SELECT INVOICE DATE ****
   
-  const orderedExpenses = expenses.slice().sort((a, b) => a.date.localeCompare(b.date))
+  // **** SELECT ITEMS TO BE INVOICED ****
+  let orderedServices, orderedExpenses, orderedPayments
+  if (client) {
+    let services = client.charges.filter((charge) => {
+      return charge.chargeType === 'task' && charge.invoiced === false
+    })
+    orderedServices = services.slice().sort((a, b) => a.date.localeCompare(b.date))
+    
+    let expenses = client.charges.filter((charge) => {
+      return charge.chargeType === 'expense' && charge.invoiced === false
+    })
+    orderedExpenses = expenses.slice().sort((a, b) => a.date.localeCompare(b.date))
+    
+    let payments = client.payments.filter((payment) => {
+      return payment.invoiced === false
+    })
+    orderedPayments = payments.slice().sort((a, b) => a.date.localeCompare(b.date))
+  }
+  // **** SELECT ITEMS TO BE INVOICED ****
   
-  const orderedPayments = client.payments.slice().sort((a, b) => a.date.localeCompare(b.date))
+  //  **** GENERATE INVOICE DATA ****
+  let invoiceData = {}
+    invoiceData.invoice_no = Math.floor(Math.random() * 90000) + 10000
+    // invoiceData.trans_date = 'Please choose an Invoice date'
+    invoiceData.name = `${client.firstName} ${client.lastName}`
+    invoiceData.address1 = client.address
+    invoiceData.address2 = `${client.city}, ${client.usState}, ${client.zip},`
+    invoiceData.email = client.email 
+    invoiceData.services = orderedServices
+    invoiceData.expenses = orderedExpenses
+    invoiceData.payments = orderedPayments
+    invoiceData.totalHours = orderedServices.map(item => item.hours * 1).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+    invoiceData.totalServices = orderedServices.map(item => item.hours * item.rate).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+    invoiceData.totalExpenses = orderedExpenses.map(item => item.fee * 1).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+    invoiceData.totalPayments = orderedPayments.map(item => item.amount * 1).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+    
+  //  **** GENERATE INVOICE DATA ****
   
   const handleDeleteCharge =  (chargeId) => {
     let charges = client.charges.filter((charge) => {
@@ -68,11 +101,23 @@ export const ClientPage = () => {
   return (
     <React.Fragment >
       <section className="section">
-      {/* <FontAwesomeIcon icon={faTrash} /> */}
         <div className="centered-view">
           <section className="centered-container">
-            <div className="">
-              <h2>{`${client.firstName} ${client.lastName}`}</h2>
+            <div className="form-group">
+              <label htmlFor="invoice date" >Invoice Date</label>
+              <input
+                type="date"
+                className="form-control"
+                value={value}
+                onChange={onInvoiceDateChanged}
+                />
+                {invoiceData.trans_date ? 
+                  <h2>{`Invoice Date: ${invoiceData.trans_date}`}</h2>
+                  : null}
+            </div>
+              <div className="">
+              {/* <h2>{`Invoice Date: ${invoiceData.trans_date}`}</h2> */}
+              <p>{`${client.firstName} ${client.lastName}`}</p>
               <p>{`${client.address}`}</p>
               <p>{`${client.city}, ${client.usState} ${client.zip}`}</p>
               <button onClick={() => navigate(`/editClient/${client.id}`)}>Edit Info</button>
@@ -85,7 +130,7 @@ export const ClientPage = () => {
                     <th>Staff</th>
                     <th>Rate</th>
                     <th>Hours</th>
-                    <th>Total</th>
+                    <th>Amount</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -96,8 +141,8 @@ export const ClientPage = () => {
                         <td>{charge.category}</td>
                         <td>{charge.user}</td> 
                         <td>{charge.rate}</td>
-                        <td>{charge.hours}</td>
-                        <td>{charge.total}</td>
+                        <td>{(charge.hours * 1).toFixed(1)}</td>
+                        <td>{charge.total.toFixed(2)}</td>
                         <td><button 
                           className='table-button'
                           onClick={() => handleDeleteCharge(charge.id)}><FontAwesomeIcon icon={faTrash}/></button>
@@ -105,6 +150,14 @@ export const ClientPage = () => {
                       </tr>
                     )
                   })}
+                  <tr>
+                    <td></td>
+                    <td>Total for professional Services</td>
+                    <td></td> 
+                    <td></td>
+                    <td>{invoiceData.totalHours}</td>
+                    <td>{invoiceData.totalServices.toFixed(2)}</td>
+                  </tr>
                 </tbody>
               </table>
               <h3>Additional Charges</h3>
@@ -113,7 +166,10 @@ export const ClientPage = () => {
                   <tr>
                     <th>Date</th>
                     <th>Category</th>
-                    <th>Total</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>Amount</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -122,11 +178,22 @@ export const ClientPage = () => {
                       <tr key={i}>
                         <td>{charge.date}</td>
                         <td>{charge.category}</td>
-                        <td>{charge.total}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{(charge.total * 1).toFixed(2)}</td>
                         <td><button className='table-button' onClick={() => handleDeleteCharge(charge.id)}><FontAwesomeIcon icon={faTrash} /></button></td>
                       </tr>
                     )
                   })}
+                  <tr>
+                    <td></td>
+                    <td>Total for additional charges</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>{invoiceData.totalExpenses.toFixed(2)}</td>
+                  </tr>
                 </tbody>
               </table>
               <h3>Payments</h3>
@@ -134,7 +201,11 @@ export const ClientPage = () => {
                 <thead>
                   <tr>
                     <th>Date</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
                     <th>Amount</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -142,14 +213,27 @@ export const ClientPage = () => {
                     return (
                       <tr key={i}>
                         <td>{payment.date}</td>
-                        <td>{payment.amount}</td>
+                        <td>Payment</td>
+                        <td></td>
+                        <td></td>
+                        <td>{(payment.amount * 1).toFixed(2)}</td>
                         <td><button className='table-button' onClick={() => handleDeletePayment(payment.id)}><FontAwesomeIcon icon={faTrash} /></button></td>
                       </tr>
                     )
                   })}
+                  <tr>
+                    <td></td>
+                    <td>Total payments</td>
+                    <td></td>
+                    <td></td>
+                    <td>{invoiceData.totalPayments.toFixed(2)}</td>
+                    <td></td>
+                  </tr>
                 </tbody>
               </table>
-              <p>Balance: {client.balance ? `${client.balance}` : '0'}</p>
+              <h4>Previous Balance: {client.balance ? `$${client.balance.toFixed(2)}` : '0'}</h4>
+              <h4>Interest charges: </h4>
+              {/* https://fiscal.treasury.gov/prompt-payment/interest.html */}
             </div>
           </section>
         </div>

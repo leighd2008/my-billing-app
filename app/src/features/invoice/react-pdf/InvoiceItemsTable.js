@@ -11,14 +11,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginTop: 24,
-    borderWidth: 1,
-    borderColor: '#bff0fd',
+    // borderWidth: 1,
+    // borderColor: 'grey',
   },
 });
 
 
 const InvoiceItemsTable = ({items}) => (
-  <View style={styles.tableContainer}>
+  <View style={styles.tableContainer} widows orphans >
     <InvoiceTableHeader items={items}/>
     <InvoiceTableRow items={items} />
     <InvoiceTableFooter items={items} />
