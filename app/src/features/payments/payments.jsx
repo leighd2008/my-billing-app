@@ -38,7 +38,8 @@ const Payments = () => {
   
   const client = useSelector(state => selectClientById(state, clientId))
   
-  const [paymentDate, setPaymentDate] = useState('')
+  let curr = new Date()
+  const [paymentDate, setPaymentDate] = useState(curr.toISOString().substring(0,10))
   const [amount, setAmount] = useState('')
   
   const { register, handleSubmit } = useForm();
@@ -88,7 +89,7 @@ const Payments = () => {
                       className="form-control"
                       id="date"
                       name="date"
-                      value={paymentDate}
+                      defaultValue={paymentDate}
                       onChange={onPaymentDateChanged}
                       />
                   </div>

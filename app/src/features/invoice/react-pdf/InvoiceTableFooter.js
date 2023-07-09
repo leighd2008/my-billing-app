@@ -9,14 +9,17 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontStyle: 'bold',
     },
+    date: {
+      width: '15%',
+  },
     description: {
-        width: '70%',
-        textAlign: 'right',
+        width: '60%',
+        textAlign: 'left',
         paddingRight: 8,
     },
     description2: {
-      width: '85%',
-      textAlign: 'right',
+      width: '70%',
+      textAlign: 'left',
       paddingRight: 8,
   },
     total: {
@@ -28,7 +31,7 @@ const styles = StyleSheet.create({
         borderTopColor: 'grey',
     },
     hours: {
-      width: '15%',
+      width: '10%',
       textAlign: 'right',
       paddingTop: 4,
       paddingRight: 8,
@@ -48,6 +51,7 @@ const InvoiceTableFooter = ({items}) => {
       .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     totals = (
       <View style={styles.row}>
+        <Text style={styles.date}></Text>
         <Text style={styles.description}>Total for professional services rendered</Text>
         <Text style={styles.hours}>{ Number.parseFloat(totalHours).toFixed(2)}</Text>
         <Text style={styles.total}>{ Number.parseFloat(total).toFixed(2)}</Text>
@@ -58,6 +62,7 @@ const InvoiceTableFooter = ({items}) => {
       .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     totals = (
       <View style={styles.row}>
+        <Text style={styles.date}></Text>
         <Text style={styles.description2}>Total additional charges</Text>
         <Text style={styles.total}>{ Number.parseFloat(total).toFixed(2)}</Text>
       </View>
@@ -67,6 +72,7 @@ const InvoiceTableFooter = ({items}) => {
       .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     totals = (
       <View style={styles.row}>
+        <Text style={styles.date}></Text>
         <Text style={styles.description2}>Total payments</Text>
         <Text style={styles.total}>{ Number.parseFloat(total).toFixed(2)}</Text>
       </View>

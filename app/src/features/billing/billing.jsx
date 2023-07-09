@@ -10,7 +10,7 @@ import Item from "../../components/Item";
 const Billing = () => {
   
   const [clientId, setClientId] = useState('')
-  const [chargeType, setChargeType] = useState('')
+  const [chargeType, setChargeType] = useState('task')
   const dispatch = useDispatch()
   
   const clients = useSelector(selectAllClients)
@@ -18,8 +18,16 @@ const Billing = () => {
   const clientStatus = useSelector(state => state.clients.status)
   const clientError = useSelector(state => state.clients.clientError)
   
-  const onClientChanged = e => {
-    setClientId(e.target.value)
+  const handleClientSelect = e => {
+    setClientSelected(e.target.value)
+    let str = e.target.value
+    let lastName = str.substring(str.indexOf(' ') + 1)
+    let selectedClient = clients.filter((client) => {
+      return client.lastName === lastName
+    })
+    selectedClient[0] ? 
+    setClientId(selectedClient[0].id)
+    : null
   }
   
   useEffect(() => {
@@ -28,18 +36,18 @@ const Billing = () => {
     }
   }, [clientStatus, dispatch])
   
-  let clientContent
+  let clientContent = []
   
   if(clientStatus === 'loading') {
     clientContent = ""
   } else if (clientStatus === 'succeeded') {
-    clientContent = clients.map(client => (
-      <option key={client.id} value={client.id}>
-        {`${client.firstName} ${client.lastName}`}
-      </option>))
-  } else if (clientStatus === 'failed') {
-    clientContent = <option>{clientError}</option>
-  }
+    clients.map(client => {
+      clientContent = [...clientContent,
+        `${client.firstName} ${client.lastName}`]
+    })
+  } 
+  
+  const [clientSelected, setClientSelected] = useState('')
   
   const onChargeTypeChanged = e => {
     setChargeType(e.target.value)
@@ -47,7 +55,9 @@ const Billing = () => {
   
   const client = useSelector(state => selectClientById(state, clientId))
   
-  const [chargeDate, setChargeDate] = useState('')
+  let curr = new Date()
+  curr.setDate(curr.getDate())
+  const [chargeDate, setChargeDate] = useState(curr.toISOString().substring(0,10))
   const [hours, setHours] = useState('')
   const [fee, setFee] = useState('')
   const [userId, setUserId] = useState('')
@@ -277,17 +287,31 @@ const Billing = () => {
             <div className="centered-container-form">
                 <div className="header">Add a charge</div>
               <form >
-                <div className="form-group">
-                  <label htmlFor="client">Client</label>
-                  <select id="client" className="form-control" value={clientId} onChange={onClientChanged} >
-                    <option value="">Select ...</option>
-                    {clientContent}
-                  </select>
+              <div className="form-group plug-inner-addon">
+                  <label htmlFor="clientSelected" >Client </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter client name"
+                    id="clientSelected"
+                    name="clientSelected"
+                    value={clientSelected}
+                    list='clientContent'
+                    autoComplete="on"
+                    onChange={handleClientSelect}
+                  />
+                  <datalist id='clientContent'>
+                    {clientContent &&
+                      clientContent.length > 0 &&
+                      clientContent.map((clientSelected, index) => {
+                        return <Item item={clientSelected} position={index} key={index} />
+                      })
+                    }
+                  </datalist>
                 </div>
                 <div className="form-group">
                   <label htmlFor="client">Category Type</label>
                   <select id="client" className="form-control" value={chargeType} onChange={onChargeTypeChanged} >
-                    <option value="">Select ...</option>
                     <option value="task">Task</option>
                     <option value="expense">Expense</option>
                   </select>

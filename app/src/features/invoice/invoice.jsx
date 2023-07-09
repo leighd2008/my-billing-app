@@ -46,7 +46,8 @@ const Invoice = () => {
   
   // **** SELECT INVOICE DATE ****
   
-  const [invoiceDate, setInvoiceDate] = useState('')
+  let curr = new Date()
+  const [invoiceDate, setInvoiceDate] = useState(curr.toISOString().substring(0,10))
   const onInvoiceDateChanged = e => setInvoiceDate(e.target.value)
   
   // **** SELECT INVOICE DATE ****
@@ -102,11 +103,11 @@ const Invoice = () => {
                   </select>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="invoice date" >Payment Date</label>
+                    <label htmlFor="invoice date" >Invoice Date</label>
                     <input
                       type="date"
                       className="form-control"
-                      value={invoiceDate}
+                      defaultValue={invoiceDate}
                       onChange={onInvoiceDateChanged}
                       />
                   </div>

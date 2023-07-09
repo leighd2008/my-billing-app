@@ -124,7 +124,15 @@ nav a:hover {
 }
 
 table {
-  width: 600px;
+  width: 800px;
+}
+
+table td:nth-child(n+4) {
+  text-align: end;
+}
+
+table th:nth-child(n+4) {
+  text-align: end;
 }
 
 h3 {
