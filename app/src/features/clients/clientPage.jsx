@@ -67,6 +67,7 @@ export const ClientPage = () => {
     invoiceData.address1 = client.address
     invoiceData.address2 = `${client.city}, ${client.usState}, ${client.zip},`
     invoiceData.email = client.email 
+    invoiceData.prevBalance = client.balance
     invoiceData.services = orderedServices
     invoiceData.expenses = orderedExpenses
     invoiceData.payments = orderedPayments
@@ -74,6 +75,9 @@ export const ClientPage = () => {
     invoiceData.totalServices = orderedServices.map(item => item.hours * item.rate).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     invoiceData.totalExpenses = orderedExpenses.map(item => item.fee * 1).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     invoiceData.totalPayments = orderedPayments.map(item => item.amount * 1).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+    invoiceData.interestCharges = 0
+    invoiceData.balance = invoiceData.prevBalance - invoiceData.totalPayments + invoiceData.interestCharges + invoiceData.totalServices + invoiceData.totalExpenses
+    
     
   //  **** GENERATE INVOICE DATA ****
   
@@ -152,11 +156,11 @@ export const ClientPage = () => {
                   })}
                   <tr>
                     <td></td>
-                    <td>Total for professional Services</td>
+                    <td><h5>Total for professional Services</h5></td>
                     <td></td> 
                     <td></td>
                     <td>{invoiceData.totalHours}</td>
-                    <td>{invoiceData.totalServices.toFixed(2)}</td>
+                    <td><h5>{invoiceData.totalServices.toFixed(2)}</h5></td>
                   </tr>
                 </tbody>
               </table>
@@ -188,11 +192,11 @@ export const ClientPage = () => {
                   })}
                   <tr>
                     <td></td>
-                    <td>Total for additional charges</td>
+                    <td><h5>Total for additional charges</h5></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>{invoiceData.totalExpenses.toFixed(2)}</td>
+                    <td><h5>{invoiceData.totalExpenses.toFixed(2)}</h5></td>
                   </tr>
                 </tbody>
               </table>
@@ -216,23 +220,76 @@ export const ClientPage = () => {
                         <td>Payment</td>
                         <td></td>
                         <td></td>
-                        <td>{(payment.amount * 1).toFixed(2)}</td>
+                        <td>({(payment.amount * 1).toFixed(2)})</td>
                         <td><button className='table-button' onClick={() => handleDeletePayment(payment.id)}><FontAwesomeIcon icon={faTrash} /></button></td>
                       </tr>
                     )
                   })}
                   <tr>
                     <td></td>
-                    <td>Total payments</td>
+                    <td><h5>Total payments</h5></td>
                     <td></td>
                     <td></td>
-                    <td>{invoiceData.totalPayments.toFixed(2)}</td>
+                    <td><h5>({invoiceData.totalPayments.toFixed(2)})</h5></td>
                     <td></td>
                   </tr>
                 </tbody>
               </table>
-              <h4>Previous Balance: {client.balance ? `$${client.balance.toFixed(2)}` : '0'}</h4>
-              <h4>Interest charges: </h4>
+              <h3>Stuff</h3>
+              <table>
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>Amount</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td>
+                    <td><h5>Interest Charges</h5></td>
+                    <td></td>
+                    <td></td>
+                    <td><h5>{invoiceData.interestCharges.toFixed(2)}</h5></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td><h5>Total charges for this bill</h5></td>
+                    <td></td>
+                    <td></td>
+                    <td><h5>{(invoiceData.totalServices + invoiceData.totalExpenses).toFixed(2)}</h5></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td><h5>Previous Balance</h5></td>
+                    <td></td>
+                    <td></td>
+                    <td><h5>{invoiceData.prevBalance.toFixed(2)}</h5></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td><h5>Total payments and adjustments</h5></td>
+                    <td></td>
+                    <td></td>
+                    <td><h5>({invoiceData.totalPayments.toFixed(2)})</h5></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td><h5>Balance due</h5></td>
+                    <td></td>
+                    <td></td>
+                    <td><h5>{invoiceData.balance.toFixed(2)}</h5></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
               {/* https://fiscal.treasury.gov/prompt-payment/interest.html */}
             </div>
           </section>
