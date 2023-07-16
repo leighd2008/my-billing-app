@@ -16,12 +16,6 @@ export const ClientPage = () => {
   const client = useSelector(state => selectClientById(state, clientId))
   const clientStatus = useSelector(state => state.clients.status)
   
-  useEffect(() => {
-    if (clientStatus === 'idle') {
-      dispatch(fetchClients())
-    }
-  }, [clientStatus, dispatch])
-  
   if (!client) {
     return (
       <React.Fragment >
@@ -29,6 +23,27 @@ export const ClientPage = () => {
       </React.Fragment>
     )
   }
+  
+  const pastInvoices = client.invoices
+  let pastInvoice
+  let pastInvoicesContent
+  
+  if (pastInvoices) {
+    pastInvoicesContent = pastInvoices.map((pastInvoice, i )=> (
+      <option key={i} value={pastInvoice.date}>{pastInvoice.date}</option>
+      ))
+  } else {
+    pastInvoicesContent = 
+      <option key={i} >No Past Invoices Found</option>
+  }
+  
+  const onPastInvoicesChanged = e => console.log("invoice date: ", e.target.value)
+  
+  useEffect(() => {
+    if (clientStatus === 'idle') {
+      dispatch(fetchClients())
+    }
+  }, [clientStatus, dispatch])
   
   // **** SELECT INVOICE DATE ****
   
@@ -291,6 +306,19 @@ export const ClientPage = () => {
                 </tbody>
               </table>
               {/* https://fiscal.treasury.gov/prompt-payment/interest.html */}
+            </div>
+            <div className="form-group">
+              <label htmlFor="past invoices" ><h3>Past Invoices</h3></label>
+              <select
+                type="date"
+                className="form-control"
+                id="pastInvoices"
+                name="pastInvoices"
+                value={pastInvoice}
+                onChange={onPastInvoicesChanged}>
+                <option value="">Select ...</option>
+                {pastInvoicesContent}
+              </select>
             </div>
           </section>
         </div>
