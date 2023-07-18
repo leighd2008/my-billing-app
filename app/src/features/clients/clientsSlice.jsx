@@ -47,6 +47,12 @@ export const deletePayment = createAsyncThunk('clients/deletePayment',
   }
 )
 
+export const addInvoice = createAsyncThunk('clients/addInvoice',
+  async (data) => {
+    return api.addInvoice(data)
+  }
+)
+
 const clientsSlice = createSlice({
   name: 'clients',
   initialState,
@@ -82,6 +88,9 @@ const clientsSlice = createSlice({
       state.status = 'idle'
     })
     builder.addCase(deletePayment.fulfilled, (state, action) => {
+      state.status = 'idle'
+    })
+    builder.addCase(addInvoice.fulfilled, (state, action) => {
       state.status = 'idle'
     })
   }

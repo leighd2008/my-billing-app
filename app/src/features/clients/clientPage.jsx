@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 
-import { selectClientById, fetchClients, deleteCharge, deletePayment } from './clientsSlice'
+import { selectClientById, fetchClients, deleteCharge, deletePayment, addInvoice } from './clientsSlice'
 
 export const ClientPage = () => {
   const { clientId } = useParams();
@@ -23,6 +24,8 @@ export const ClientPage = () => {
       </React.Fragment>
     )
   }
+  
+  const { handleSubmit } = useForm();
   
   const pastInvoices = client.invoices
   let pastInvoice
@@ -92,7 +95,13 @@ export const ClientPage = () => {
     invoiceData.totalPayments = orderedPayments.map(item => item.amount * 1).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     invoiceData.interestCharges = 0
     invoiceData.balance = invoiceData.prevBalance - invoiceData.totalPayments + invoiceData.interestCharges + invoiceData.totalServices + invoiceData.totalExpenses
-    
+  
+  const onSubmit = async (data) => {
+    let invoices = client.invoices || {}
+    data.id = clientId 
+    data.invoices = [...invoices, invoiceData]
+    dispatch(addInvoice(data))
+  }
     
   //  **** GENERATE INVOICE DATA ****
   
@@ -130,9 +139,9 @@ export const ClientPage = () => {
                 value={value}
                 onChange={onInvoiceDateChanged}
                 />
-                {invoiceData.trans_date ? 
+                {/* {invoiceData.trans_date ? 
                   <h2>{`Invoice Date: ${invoiceData.trans_date}`}</h2>
-                  : null}
+                  : null} */}
             </div>
               <div className="">
               {/* <h2>{`Invoice Date: ${invoiceData.trans_date}`}</h2> */}
@@ -306,6 +315,9 @@ export const ClientPage = () => {
                 </tbody>
               </table>
               {/* https://fiscal.treasury.gov/prompt-payment/interest.html */}
+              <form onSubmit={handleSubmit(onSubmit)} >
+                <button type='submit' className='btn'>Generate Invoice</button>
+              </form>
             </div>
             <div className="form-group">
               <label htmlFor="past invoices" ><h3>Past Invoices</h3></label>
