@@ -61,7 +61,7 @@ const Billing = () => {
   const [chargeDate2, setChargeDate2] = useState(curr.toISOString().substring(0,10))
   const [hours, setHours] = useState('')
   const [fee, setFee] = useState('')
-  const [userId, setUserId] = useState('')
+  const [userId, setUserId] = useState('8jBzJQuyzRKNxDKqRsLj')
   
   let dateList = []
   for (let i = -7; i < 8; i++) {
@@ -274,8 +274,8 @@ const Billing = () => {
   }
 
   const onSubmit = async (data) => {
-    let charges = client.charges || {}
-    let chargeId = charges.length || 0
+    let charges = client.charges
+    let chargeId = charges.length
     let charge
     if(data.fee) {
       charge = {id: chargeId, chargeType: 'expense', date: data.date, category: data.expense, fee: data.fee, total: data.fee, invoiced: false, }
@@ -292,10 +292,10 @@ const Billing = () => {
     }
     
     dispatch(addCharge(data))
-    setClientId("")
-    setChargeType("")
+    // setClientId("")
+    setChargeType("task")
     setChargeDate("")
-    setUserId("")
+    setUserId("8jBzJQuyzRKNxDKqRsLj")
     setHours("")
     setFee("")
     setTask("")

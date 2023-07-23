@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
 
 const InvoiceTableRow = ({items}) => {
   let rows = ''
-  console.log(items[0].chargeType)
   if(items[0].chargeType === 'task') {
     rows = items.map( item => 
       <View style={styles.row} key={item.id}>

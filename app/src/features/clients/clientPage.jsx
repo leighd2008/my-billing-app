@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router'
@@ -25,19 +25,34 @@ export const ClientPage = () => {
     )
   }
   
+  // **** Past Invoices ****
+  
   const { handleSubmit } = useForm();
   
-  const pastInvoices = client.invoices
+  let pastInvoices
+  let lastInvoice
+  let nextLastInvoice
+  
+  if (client.invoices.length > 0) {
+    pastInvoices = client.invoices.slice().sort((a,b) => a.trans_date.localeCompare(b.trans_date))
+    lastInvoice = pastInvoices[pastInvoices.length-1]
+    nextLastInvoice = pastInvoices[pastInvoices.length-2]
+    console.log('pastInvoices', pastInvoices)
+    console.log('lastInvoice', lastInvoice)
+    console.log('nextLastInvoice', nextLastInvoice)
+    
+  } 
+  
   let pastInvoice
   let pastInvoicesContent
   
   if (pastInvoices) {
     pastInvoicesContent = pastInvoices.map((pastInvoice, i )=> (
-      <option key={i} value={pastInvoice.date}>{pastInvoice.date}</option>
+      <option key={i} value={pastInvoice.trans_date}>{pastInvoice.trans_date}</option>
       ))
   } else {
     pastInvoicesContent = 
-      <option key={i} >No Past Invoices Found</option>
+      <option >No Past Invoices Found</option>
   }
   
   const onPastInvoicesChanged = e => console.log("invoice date: ", e.target.value)
@@ -48,11 +63,16 @@ export const ClientPage = () => {
     }
   }, [clientStatus, dispatch])
   
-  // **** SELECT INVOICE DATE ****
+  // **** Past Invoices ****
   
-  let value
+  // **** SELECT INVOICE DATE ****
+  let curr = new Date()
+  curr.setDate(curr.getDate())
+  const [invoiceDate, setInvoiceDate] = useState(curr.toISOString().substring(0,10))
+  
   const onInvoiceDateChanged = e => {
-    invoiceData.trans_date = e.target.value
+    setInvoiceDate(e.target.value)
+    invoiceData.trans_date = invoiceDate
   }
   
   // **** SELECT INVOICE DATE ****
@@ -76,9 +96,10 @@ export const ClientPage = () => {
     orderedPayments = payments.slice().sort((a, b) => a.date.localeCompare(b.date))
   }
   // **** SELECT ITEMS TO BE INVOICED ****
-  
   //  **** GENERATE INVOICE DATA ****
+
   let invoiceData = {}
+    invoiceData.trans_date = invoiceDate
     invoiceData.invoice_no = Math.floor(Math.random() * 90000) + 10000
     // invoiceData.trans_date = 'Please choose an Invoice date'
     invoiceData.name = `${client.firstName} ${client.lastName}`
@@ -93,14 +114,42 @@ export const ClientPage = () => {
     invoiceData.totalServices = orderedServices.map(item => item.hours * item.rate).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     invoiceData.totalExpenses = orderedExpenses.map(item => item.fee * 1).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     invoiceData.totalPayments = orderedPayments.map(item => item.amount * 1).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
-    invoiceData.interestCharges = 0
+    
+    nextLastInvoice ? invoiceData.prevInterest = nextLastInvoice.interestCharges : 0
+    lastInvoice ? invoiceData.prevStartBalance = lastInvoice.prevBalance : 0
+    
+    invoiceData.interestCharges = (invoiceData.prevStartBalance-invoiceData.prevInterest)*(0.12/365*30).toFixed(2) || 0
     invoiceData.balance = invoiceData.prevBalance - invoiceData.totalPayments + invoiceData.interestCharges + invoiceData.totalServices + invoiceData.totalExpenses
+  // previous invoice starting balance and previous-previous invoice interest charges. interestCharges = (previous starting balance - previous-previous interest charges)*(0.12/365*30) 
   
   const onSubmit = async (data) => {
     let invoices = client.invoices || {}
     data.id = clientId 
+    data.balance = invoiceData.balance
     data.invoices = [...invoices, invoiceData]
+    
+    let charges = structuredClone(client.charges)
+    let payments = structuredClone(client.payments)
+    
+    orderedServices.map(item => {
+      let chargeId = item.id
+      charges[chargeId].invoiced = true
+    })
+    orderedExpenses.map(item => {
+      let chargeId = item.id
+      charges[chargeId].invoiced = true
+    })
+    orderedPayments.map(item => {
+      let paymentId = item.id
+      payments[paymentId].invoiced = true
+    })
+    data.charges = [...charges]
+    data.payments = [...payments]
     dispatch(addInvoice(data))
+    
+    //  check invoice generation and interest calculations
+    //  mark payments and charges on this invoiced as invoiced
+    
   }
     
   //  **** GENERATE INVOICE DATA ****
@@ -136,7 +185,7 @@ export const ClientPage = () => {
               <input
                 type="date"
                 className="form-control"
-                value={value}
+                value={invoiceDate}
                 onChange={onInvoiceDateChanged}
                 />
                 {/* {invoiceData.trans_date ? 
