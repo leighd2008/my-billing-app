@@ -31,7 +31,9 @@ const styles = StyleSheet.create({
 
   const InvoiceTableHeader = ({items}) => {
     let tableContent = ''
-    if(items[0].chargeType === 'task') {
+    if(!items.length) {
+      
+    } else if(items[0].chargeType === 'task') {
       tableContent = (
         <View style={styles.container}>
           <Text style={styles.date}>Date</Text>

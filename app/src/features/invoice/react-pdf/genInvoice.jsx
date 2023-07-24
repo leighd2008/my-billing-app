@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
 });
 
 const GenInvoice = ({invoiceData}) => {
-  
   return (
     <Fragment>
       <PDFViewer width="850" height="600" className="app">
@@ -35,7 +34,7 @@ const GenInvoice = ({invoiceData}) => {
             <InvoiceItemsTable className='services' items={invoiceData.services} />
             <InvoiceItemsTable className='expenses' items={invoiceData.expenses} />
             <InvoiceItemsTable className='payments' items={invoiceData.payments} />
-            <InvoiceThankYouMsg />
+            <InvoiceThankYouMsg className='stuff' invoiceData={invoiceData} />
           </Page>
         </Document>
       </PDFViewer>

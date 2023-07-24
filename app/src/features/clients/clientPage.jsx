@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
-
+import ROUTES from "Constants/routes";
 import { selectClientById, fetchClients, deleteCharge, deletePayment, addInvoice } from './clientsSlice'
 
 export const ClientPage = () => {
@@ -37,10 +37,6 @@ export const ClientPage = () => {
     pastInvoices = client.invoices.slice().sort((a,b) => a.trans_date.localeCompare(b.trans_date))
     lastInvoice = pastInvoices[pastInvoices.length-1]
     nextLastInvoice = pastInvoices[pastInvoices.length-2]
-    console.log('pastInvoices', pastInvoices)
-    console.log('lastInvoice', lastInvoice)
-    console.log('nextLastInvoice', nextLastInvoice)
-    
   } 
   
   let pastInvoice
@@ -115,11 +111,19 @@ export const ClientPage = () => {
     invoiceData.totalExpenses = orderedExpenses.map(item => item.fee * 1).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     invoiceData.totalPayments = orderedPayments.map(item => item.amount * 1).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     
-    nextLastInvoice ? invoiceData.prevInterest = nextLastInvoice.interestCharges : 0
-    lastInvoice ? invoiceData.prevStartBalance = lastInvoice.prevBalance : 0
+    nextLastInvoice ? invoiceData.prevInterest = nextLastInvoice.interestCharges : 0.00
+    lastInvoice ? invoiceData.prevStartBalance = lastInvoice.prevBalance : 0.00
     
-    invoiceData.interestCharges = (invoiceData.prevStartBalance-invoiceData.prevInterest)*(0.12/365*30).toFixed(2) || 0
+    invoiceData.interestCharges = (invoiceData.prevStartBalance-invoiceData.prevInterest)*(0.12/365*30).toFixed(2) || 0.00
     invoiceData.balance = invoiceData.prevBalance - invoiceData.totalPayments + invoiceData.interestCharges + invoiceData.totalServices + invoiceData.totalExpenses
+    invoiceData.totalCharges = (invoiceData.totalServices + invoiceData.totalExpenses).toFixed(2)
+    // invoiceData.stuff = [{
+    //   // 'Interest Charges': (invoiceData.prevStartBalance-invoiceData.prevInterest)*(0.12/365*30).toFixed(2) || 0,
+    //   // 'Total Charges': (invoiceData.totalServices + invoiceData.totalExpenses).toFixed(2),
+    //   // 'Previous Balance': invoiceData.prevBalance.toFixed(2),
+    //   // 'Total Payments and Adjustments': invoiceData.totalPayments.toFixed(2),
+    //   // 'Balance Due': invoiceData.balance.toFixed(2)
+    // }]
   // previous invoice starting balance and previous-previous invoice interest charges. interestCharges = (previous starting balance - previous-previous interest charges)*(0.12/365*30) 
   
   const onSubmit = async (data) => {
@@ -133,19 +137,20 @@ export const ClientPage = () => {
     
     orderedServices.map(item => {
       let chargeId = item.id
-      charges[chargeId].invoiced = true
+      // charges[chargeId].invoiced = true
     })
     orderedExpenses.map(item => {
       let chargeId = item.id
-      charges[chargeId].invoiced = true
+      // charges[chargeId].invoiced = true
     })
     orderedPayments.map(item => {
       let paymentId = item.id
-      payments[paymentId].invoiced = true
+      // payments[paymentId].invoiced = true
     })
     data.charges = [...charges]
     data.payments = [...payments]
     dispatch(addInvoice(data))
+    navigate(ROUTES.INVOICE, {state: {clientId: clientId, invoiceDate: invoiceDate, invoiceData: invoiceData}})
     
     //  check invoice generation and interest calculations
     //  mark payments and charges on this invoiced as invoiced
