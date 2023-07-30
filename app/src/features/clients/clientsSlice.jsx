@@ -96,8 +96,6 @@ const clientsSlice = createSlice({
   }
 })
 
-// export const { clientUpdated } = clientsSlice.actions
-
 export default clientsSlice.reducer
 
 export const selectAllClients = state => state.clients.clients

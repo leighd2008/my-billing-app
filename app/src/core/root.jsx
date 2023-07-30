@@ -5,10 +5,8 @@ import { Provider } from "react-redux";
 import AppRoutes from "Core/routes";
 import { Nav } from "./nav";
 
-// import "./root.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./root.scss";
-
 
 class Root extends React.Component {
   render() {

@@ -292,7 +292,6 @@ const Billing = () => {
     }
     
     dispatch(addCharge(data))
-    // setClientId("")
     setChargeType("task")
     setChargeDate("")
     setUserId("8jBzJQuyzRKNxDKqRsLj")

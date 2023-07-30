@@ -117,14 +117,6 @@ export const ClientPage = () => {
     invoiceData.interestCharges = (invoiceData.prevStartBalance-invoiceData.prevInterest)*(0.12/365*30).toFixed(2) || 0.00
     invoiceData.balance = invoiceData.prevBalance - invoiceData.totalPayments + invoiceData.interestCharges + invoiceData.totalServices + invoiceData.totalExpenses
     invoiceData.totalCharges = (invoiceData.totalServices + invoiceData.totalExpenses).toFixed(2)
-    // invoiceData.stuff = [{
-    //   // 'Interest Charges': (invoiceData.prevStartBalance-invoiceData.prevInterest)*(0.12/365*30).toFixed(2) || 0,
-    //   // 'Total Charges': (invoiceData.totalServices + invoiceData.totalExpenses).toFixed(2),
-    //   // 'Previous Balance': invoiceData.prevBalance.toFixed(2),
-    //   // 'Total Payments and Adjustments': invoiceData.totalPayments.toFixed(2),
-    //   // 'Balance Due': invoiceData.balance.toFixed(2)
-    // }]
-  // previous invoice starting balance and previous-previous invoice interest charges. interestCharges = (previous starting balance - previous-previous interest charges)*(0.12/365*30) 
   
   const onSubmit = async (data) => {
     let invoices = client.invoices || {}
@@ -193,12 +185,8 @@ export const ClientPage = () => {
                 value={invoiceDate}
                 onChange={onInvoiceDateChanged}
                 />
-                {/* {invoiceData.trans_date ? 
-                  <h2>{`Invoice Date: ${invoiceData.trans_date}`}</h2>
-                  : null} */}
             </div>
               <div className="">
-              {/* <h2>{`Invoice Date: ${invoiceData.trans_date}`}</h2> */}
               <p>{`${client.firstName} ${client.lastName}`}</p>
               <p>{`${client.address}`}</p>
               <p>{`${client.city}, ${client.usState} ${client.zip}`}</p>
