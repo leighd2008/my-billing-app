@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     marginTop: 24,
   },
-  
 });
 
 const InvoiceTitle = ({title}) => (

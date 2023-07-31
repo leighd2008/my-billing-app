@@ -58,9 +58,21 @@ const Billing = () => {
   let curr = new Date()
   curr.setDate(curr.getDate())
   const [chargeDate, setChargeDate] = useState(curr.toISOString().substring(0,10))
+  const [chargeDate2, setChargeDate2] = useState(curr.toISOString().substring(0,10))
   const [hours, setHours] = useState('')
   const [fee, setFee] = useState('')
-  const [userId, setUserId] = useState('')
+  const [userId, setUserId] = useState('8jBzJQuyzRKNxDKqRsLj')
+  
+  let dateList = []
+  for (let i = -7; i < 8; i++) {
+    const newDate = new Date()
+    newDate.setDate(newDate.getDate() + i)
+    dateList = [...dateList, newDate.toISOString().substring(0,10)]
+  }
+  
+  let dateContent = dateList.map((date, i )=> (
+      <option key={i} value={date}>{date}</option>
+      ))
   
   const users = useSelector(selectAllUsers)
   
@@ -79,6 +91,7 @@ const Billing = () => {
   });
   
   const onChargeDateChanged = e => setChargeDate(e.target.value)
+  const onChargeDate2Changed = e => setChargeDate2(e.target.value)
   const onHoursChanged = e => setHours(e.target.value)
   const onFeeChanged = e => setFee(e.target.value)
   const onUserChanged = e => setUserId(e.target.value)
@@ -139,6 +152,20 @@ const Billing = () => {
             value={chargeDate}
             onChange={onChargeDateChanged}
             />
+        </div>
+        <div className="form-group">
+          <label htmlFor="date2" >Charge Date2</label>
+          <select
+            {...register('date2')}
+            type="date"
+            className="form-control"
+            id="date2"
+            name="date2"
+            value={chargeDate2}
+            onChange={onChargeDate2Changed}>
+            <option value="">{chargeDate2}</option>
+            {dateContent}
+            </select>
         </div>
         <div className="form-group">
           <label htmlFor="category" >Staff Member</label>
@@ -247,8 +274,8 @@ const Billing = () => {
   }
 
   const onSubmit = async (data) => {
-    let charges = client.charges || {}
-    let chargeId = charges.length || 0
+    let charges = client.charges
+    let chargeId = charges.length
     let charge
     if(data.fee) {
       charge = {id: chargeId, chargeType: 'expense', date: data.date, category: data.expense, fee: data.fee, total: data.fee, invoiced: false, }
@@ -265,10 +292,9 @@ const Billing = () => {
     }
     
     dispatch(addCharge(data))
-    setClientId("")
-    setChargeType("")
+    setChargeType("task")
     setChargeDate("")
-    setUserId("")
+    setUserId("8jBzJQuyzRKNxDKqRsLj")
     setHours("")
     setFee("")
     setTask("")

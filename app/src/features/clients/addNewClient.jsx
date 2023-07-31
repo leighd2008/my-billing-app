@@ -31,6 +31,8 @@ export default function addNewClientForm () {
   const onSubmit = (data) => {
     data.payments = []
     data.charges = []
+    data.invoices = []
+    data.balance = 0
     if (canSave) {
       try {
         setAddNewClientStatus('pending')
