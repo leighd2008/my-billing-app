@@ -1,16 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { AuthContext } from "../../components/Auth";
 
 import { selectAllClients, fetchClients, selectClientById } from "../clients/clientsSlice";
 
 import GenInvoice from './react-pdf/genInvoice'
 
 const Invoice = () => {
-  const { state } = useLocation()
-  // **** SELECT CLIENT ****
+  const navigate = useNavigate()
+  const { currentUser } = useContext(AuthContext);
   
-  const clientId = state.clientId
+  useEffect(() => {
+    if (!currentUser ) {
+      alert('Please login to access this page')
+      return navigate('/')
+    }
+  }, [currentUser])
+  
+  const { state } = useLocation()
+  // console.log(state)
+  // **** SELECT CLIENT ****
+  let clientId
+  state ? clientId = state.clientId : clientId = ''
+  
   const dispatch = useDispatch()
   const clients = useSelector(selectAllClients)
   
@@ -47,12 +61,13 @@ const Invoice = () => {
   // **** SELECT INVOICE DATE ****
   
   let curr = new Date()
-  const invoiceDate = state.invoiceDate
+  let invoiceDate
+  state ? invoiceDate = state.invoiceDate : invoiceDate = curr
   const onInvoiceDateChanged = e => setInvoiceDate(e.target.value)
   
   // **** SELECT INVOICE DATE ****
-  
-  const invoiceData = state.invoiceData
+  let invoiceData
+  state ? invoiceData = state.invoiceData : invoiceData = ''
   return (
     <React.Fragment>
       <section className="section">

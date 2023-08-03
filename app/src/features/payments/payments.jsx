@@ -1,10 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
+import { AuthContext } from "../../components/Auth";
 
 import { selectAllClients, fetchClients, addPayment, selectClientById } from "../clients/clientsSlice";
 
 const Payments = () => {
+  const navigate = useNavigate()
+  const { currentUser } = useContext(AuthContext);
+  
+  useEffect(() => {
+    if (!currentUser ) {
+      alert('Please login to access this page')
+      return navigate('/')
+    }
+  }, [currentUser])
+  
   const [clientId, setClientId] = useState('')
   const dispatch = useDispatch()
   

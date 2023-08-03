@@ -1,19 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom'
+import { AuthContext } from "../../components/Auth";
 
 import { createClient } from "./clientsSlice";
 
 import Item from "../../components/Item";
 
 export default function addNewClientForm () {
+  const navigate = useNavigate();
+  const { currentUser } = useContext(AuthContext);
+  
+  useEffect(() => {
+    if (!currentUser ) {
+      alert('Please login to access this page')
+      return navigate('/')
+    }
+  }, [currentUser])
+  
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [addNewClientStatus, setAddNewClientStatus] = useState('idle')
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   
   const states = ["Alabama", "Alaska", "American Samoa", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "District Of Columbia", "Federated States Of Micronesia", "Florida", "Georgia", "Guam", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Marshall Islands", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Northern Mariana Islands", "Ohio", "Oklahoma", "Oregon", "Palau", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virgin Islands", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
   
