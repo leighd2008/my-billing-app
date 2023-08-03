@@ -5,5 +5,7 @@
   "ADD_NEW_CLIENT": "/addNewClient",
   "CLIENT_PAGE": "/clients/:clientId",
   "BILLING": "/billing",
-  "PAYMENTS": "/payments"
+  "PAYMENTS": "/payments",
+  "LOGIN": "/login",
+  "SIGNUP": "/signup"
 }
