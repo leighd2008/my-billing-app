@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -23,16 +23,21 @@ const Invoice = () => {
   // console.log(state)
   // **** SELECT CLIENT ****
   let clientId
-  state ? clientId = state.clientId : clientId = ''
+  state ? clientId = state.clientId : null
   
   const dispatch = useDispatch()
   const clients = useSelector(selectAllClients)
   
   const clientStatus = useSelector(state => state.clients.status)
   const clientError = useSelector(state => state.clients.clientError)
+  const [selectedClient, setSelectedClient] = useState()
   
   const onClientChanged = e => {
-    setClientId(e.target.value)
+    setSelectedClient(clients.filter((client) => {
+      return client.id === e.target.value
+    })[0])
+    clientId = e.target.value
+    
   }
   
   useEffect(() => {
@@ -55,19 +60,80 @@ const Invoice = () => {
   }
   
   const client = useSelector(state => selectClientById(state, clientId))
-  
+  const [invoiceData, setInvoiceData] = useState()
+  state ? setInvoiceData(state.invoiceData) : null
   // **** SELECT CLIENT ****
   
-  // **** SELECT INVOICE DATE ****
+   // **** Past Invoices ****
+  const [pastInvoices, setPastInvoices] = useState([]); 
+  let pastInvoicesContent
+  let pastInvoice
+  useEffect(() =>{
+    if (selectedClient) {
+      if (selectedClient.invoices.length > 0) {
+        setPastInvoices(selectedClient.invoices.slice().sort((a,b) => a.trans_date.localeCompare(b.trans_date)))
+      }
+    } 
+  }, [selectedClient])
   
-  let curr = new Date()
-  let invoiceDate
-  state ? invoiceDate = state.invoiceDate : invoiceDate = curr
-  const onInvoiceDateChanged = e => setInvoiceDate(e.target.value)
+  useEffect(() => {
+    if(pastInvoices) {
+      pastInvoicesContent = pastInvoices.map((pastInvoice, i )=> (
+        <option key={i} value={pastInvoice.trans_date}>{pastInvoice.trans_date}</option>
+        ))
+    } else {
+      pastInvoicesContent = 
+        <option >No Past Invoices Found</option>
+    }
+  }, [pastInvoices])
+   
+   
+   
+   const onPastInvoicesChanged = e => {
+    setInvoiceData(pastInvoices.filter((invoice, i) => {
+      return invoice.invoice_no === Number(e.target.value)
+    })[0])
+    // <GenInvoice invoiceData={invoiceData} />
+    console.log("invoice data: ", invoiceData)
+  }
+   
+   // **** Past Invoices ****
   
-  // **** SELECT INVOICE DATE ****
-  let invoiceData
-  state ? invoiceData = state.invoiceData : invoiceData = ''
+  // **** SHOW DROP DOWN MENUS IN NOT GENERATING NEW INVOICE ****
+  let invoiceContent
+  {if (!state) {
+    invoiceContent = (
+      <div className="category-detail">
+        <div className="form-group">
+          <label htmlFor="client">Client</label>
+          <select id="client" className="form-control" value={clientId} onChange={onClientChanged} >
+            <option value="">Select ...</option>
+            {clientContent}
+          </select>
+        </div>
+        <div className="form-group">
+        <label htmlFor="past invoices" ><h3>Past Invoices</h3></label>
+              <select
+                type="date"
+                className="form-control"
+                id="pastInvoices"
+                name="pastInvoices"
+                value={pastInvoice}
+                onChange={onPastInvoicesChanged}>
+              <option value="">Select ...</option>
+             { pastInvoices.length > 0 ? 
+                pastInvoicesContent = pastInvoices.map((pastInvoice, i )=> (
+                  <option key={i} value={pastInvoice.invoice_no}>{pastInvoice.trans_date}</option>
+                  ))
+              : pastInvoicesContent = 
+                    <option >No Past Invoices Found</option>}
+              </select>
+          </div>
+      </div>
+    )
+  }}
+  // **** SHOW DROP DOWN MENUS IN NOT GENERATING NEW INVOICE ****
+  
   return (
     <React.Fragment>
       <section className="section">
@@ -75,27 +141,12 @@ const Invoice = () => {
           <section className="centered-container">
             <div className="header">Generate an invoice</div>
             <form >
-                <div className="form-group">
-                  <label htmlFor="client">Client</label>
-                  <select id="client" className="form-control" value={clientId} onChange={onClientChanged} >
-                    <option value="">Select ...</option>
-                    {clientContent}
-                  </select>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="invoice date" >Invoice Date</label>
-                    <input
-                      type="date"
-                      className="form-control"
-                      defaultValue={invoiceDate}
-                      onChange={onInvoiceDateChanged}
-                      />
-                  </div>
-              </form>
+              {invoiceContent}
+            </form>
           </section>
         </div>
           <section className="centered-container">
-            {client && invoiceDate 
+            {invoiceData
               ? <GenInvoice invoiceData={invoiceData} />
               : <h3>Please select a client and an invoice date</h3>}
           </section>

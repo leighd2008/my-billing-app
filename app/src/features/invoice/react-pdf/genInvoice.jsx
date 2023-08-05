@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
 });
 
 const GenInvoice = ({invoiceData}) => {
+  console.log(invoiceData)
   return (
     <Fragment>
       <PDFViewer width="850" height="600" className="app">

@@ -92,6 +92,7 @@ export const ClientPage = () => {
     orderedPayments = payments.slice().sort((a, b) => a.date.localeCompare(b.date))
   }
   // **** SELECT ITEMS TO BE INVOICED ****
+  
   //  **** GENERATE INVOICE DATA ****
 
   let invoiceData = {}
@@ -129,24 +130,22 @@ export const ClientPage = () => {
     
     orderedServices.map(item => {
       let chargeId = item.id
-      // charges[chargeId].invoiced = true
+      charges[chargeId].invoiced = true
     })
     orderedExpenses.map(item => {
       let chargeId = item.id
-      // charges[chargeId].invoiced = true
+      charges[chargeId].invoiced = true
     })
     orderedPayments.map(item => {
       let paymentId = item.id
-      // payments[paymentId].invoiced = true
+      payments[paymentId].invoiced = true
     })
     data.charges = [...charges]
     data.payments = [...payments]
     dispatch(addInvoice(data))
-    navigate(ROUTES.INVOICE, {state: {clientId: clientId, invoiceDate: invoiceDate, invoiceData: invoiceData}})
+    navigate(ROUTES.INVOICE, {state: {clientId: clientId, /*invoiceDate: invoiceDate,*/ invoiceData: invoiceData}})
     
     //  check invoice generation and interest calculations
-    //  mark payments and charges on this invoiced as invoiced
-    
   }
     
   //  **** GENERATE INVOICE DATA ****
