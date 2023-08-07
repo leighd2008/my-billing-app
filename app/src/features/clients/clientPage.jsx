@@ -92,6 +92,7 @@ export const ClientPage = () => {
     orderedPayments = payments.slice().sort((a, b) => a.date.localeCompare(b.date))
   }
   // **** SELECT ITEMS TO BE INVOICED ****
+  
   //  **** GENERATE INVOICE DATA ****
 
   let invoiceData = {}
