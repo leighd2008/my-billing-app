@@ -72,7 +72,7 @@ const Billing = () => {
   const [chargeDate2, setChargeDate2] = useState(curr.toISOString().substring(0,10))
   const [hours, setHours] = useState('')
   const [fee, setFee] = useState('')
-  const [userId, setUserId] = useState('8jBzJQuyzRKNxDKqRsLj')
+  const [userId, setUserId] = useState('GcO8emvrf4eQSScHsQDh')
   
   let dateList = []
   for (let i = -7; i < 8; i++) {
@@ -305,7 +305,7 @@ const Billing = () => {
     dispatch(addCharge(data))
     setChargeType("task")
     setChargeDate("")
-    setUserId("8jBzJQuyzRKNxDKqRsLj")
+    setUserId("GcO8emvrf4eQSScHsQDh")
     setHours("")
     setFee("")
     setTask("")
