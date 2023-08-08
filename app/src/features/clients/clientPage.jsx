@@ -30,9 +30,10 @@ export const ClientPage = () => {
   const { handleSubmit } = useForm();
   
   let pastInvData
-  let pastInvoices
+  let pastInvoices = []
   let lastInvoice
   let nextLastInvoice
+  let pastInvoicesContent
   
   if (client.invoices.length > 0) {
     pastInvoices = client.invoices.slice().sort((a,b) => a.trans_date.localeCompare(b.trans_date))
@@ -46,6 +47,7 @@ export const ClientPage = () => {
     pastInvData = (pastInvoices.filter((invoice, i) => {
       return invoice.invoice_no === Number(e.target.value)
     })[0])
+    
     navigate(ROUTES.INVOICE, {state: {clientId: clientId, invoiceDate: invoiceDate, invoiceData: pastInvData}})
   }
   
@@ -126,15 +128,15 @@ export const ClientPage = () => {
     
     orderedServices.map(item => {
       let chargeId = item.id
-      // charges[chargeId].invoiced = true
+      charges[chargeId].invoiced = true
     })
     orderedExpenses.map(item => {
       let chargeId = item.id
-      // charges[chargeId].invoiced = true
+      charges[chargeId].invoiced = true
     })
     orderedPayments.map(item => {
       let paymentId = item.id
-      // payments[paymentId].invoiced = true
+      payments[paymentId].invoiced = true
     })
     data.charges = [...charges]
     data.payments = [...payments]

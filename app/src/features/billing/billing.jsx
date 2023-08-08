@@ -303,8 +303,9 @@ const Billing = () => {
     }
     
     dispatch(addCharge(data))
+    setClientSelected("")
     setChargeType("task")
-    setChargeDate("")
+    setChargeDate(curr.toISOString().substring(0,10))
     setUserId("GcO8emvrf4eQSScHsQDh")
     setHours("")
     setFee("")
