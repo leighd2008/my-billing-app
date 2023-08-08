@@ -14,8 +14,6 @@ const styles = StyleSheet.create({
 
 
 const InvoiceItemsTable = ({items}) => {
-  console.log(items)
-  console.log(items.length)
   if (items.length > 0) {
   return (
   <View style={styles.tableContainer} widows orphans >

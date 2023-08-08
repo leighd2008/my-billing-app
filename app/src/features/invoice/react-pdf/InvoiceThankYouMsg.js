@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
 
 
   const InvoiceThankYouMsg = ({invoiceData}) => {
-    console.log(invoiceData)
     let tableContent = ''
     tableContent = tableContent = (
       <Fragment>

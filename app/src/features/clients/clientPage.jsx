@@ -25,10 +25,11 @@ export const ClientPage = () => {
     )
   }
   
-  // **** Past Invoices ****
+  // **** PAST INVOICES ****
   
   const { handleSubmit } = useForm();
   
+  let pastInvData
   let pastInvoices
   let lastInvoice
   let nextLastInvoice
@@ -40,18 +41,13 @@ export const ClientPage = () => {
   } 
   
   let pastInvoice
-  let pastInvoicesContent
   
-  if (pastInvoices) {
-    pastInvoicesContent = pastInvoices.map((pastInvoice, i )=> (
-      <option key={i} value={pastInvoice.trans_date}>{pastInvoice.trans_date}</option>
-      ))
-  } else {
-    pastInvoicesContent = 
-      <option >No Past Invoices Found</option>
+  const onPastInvoicesChanged = e => {
+    pastInvData = (pastInvoices.filter((invoice, i) => {
+      return invoice.invoice_no === Number(e.target.value)
+    })[0])
+    navigate(ROUTES.INVOICE, {state: {clientId: clientId, invoiceDate: invoiceDate, invoiceData: pastInvData}})
   }
-  
-  const onPastInvoicesChanged = e => console.log("invoice date: ", e.target.value)
   
   useEffect(() => {
     if (clientStatus === 'idle') {
@@ -59,7 +55,7 @@ export const ClientPage = () => {
     }
   }, [clientStatus, dispatch])
   
-  // **** Past Invoices ****
+  // **** PAST INVOICES ****
   
   // **** SELECT INVOICE DATE ****
   let curr = new Date()
@@ -372,7 +368,12 @@ export const ClientPage = () => {
                 value={pastInvoice}
                 onChange={onPastInvoicesChanged}>
                 <option value="">Select ...</option>
-                {pastInvoicesContent}
+                { pastInvoices.length > 0 ? 
+                pastInvoicesContent = pastInvoices.map((pastInvoice, i )=> (
+                  <option key={i} value={pastInvoice.invoice_no}>{pastInvoice.trans_date}</option>
+                  ))
+              : pastInvoicesContent = 
+                    <option >No Past Invoices Found</option>}
               </select>
             </div>
           </section>

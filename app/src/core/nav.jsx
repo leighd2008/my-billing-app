@@ -33,7 +33,7 @@ export const Nav = () => {
             <NavLink
               className="navbar-item"
               to={ROUTES.INVOICE}>
-              Invoice
+              Past Invoices
             </NavLink>
             <NavLink
               className="navbar-item"
