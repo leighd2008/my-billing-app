@@ -59,6 +59,7 @@ async function createWindow() {
     y: 0,
     title: "Application is currently initializing...",
     webPreferences: {
+      // comment out next line to enable devtools in production
       devTools: isDev,
       nodeIntegration: false,
       nodeIntegrationInWorker: false,

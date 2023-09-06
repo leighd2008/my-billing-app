@@ -4,6 +4,8 @@ import { AuthContext } from "../../components/Auth";
 import { auth } from "../../db/firestore";
 import { signOut } from "firebase/auth";
 
+import LogIn from "../../components/Login";
+import SignUp from "../../components/SignUp"
 
 const Home = () => {
   const { currentUser } = useContext(AuthContext);
@@ -14,19 +16,20 @@ const Home = () => {
           <div className="centered-view">
             <section className="centered-container">
               <div className="">
-                <h1>Welcome</h1>
-                {currentUser ? (
-                  <>
-                    <p>If you can see this you are logged in.</p>
-                    <button onClick={() =>signOut(auth)}>Sign out</button> 
-                  </>
-                ) : (
-                  <span>
-                  <Link to="/login">Log In</Link> 
-                  <p>or</p> 
-                  <Link to="/signup">Sign Up</Link>
-                  </span>
-                )}
+                <form className="centered-container-form">
+                  <div className="header"><h1>Welcome</h1></div>
+                  {currentUser ? (
+                    <>
+                      <p>If you can see this you are logged in.</p>
+                      <button onClick={() =>signOut(auth)}>Sign out</button> 
+                    </>
+                  ) : (
+                    <span>
+                      <LogIn />
+                      <SignUp />
+                    </span>
+                  )}
+                </form>
               </div>
             </section>
           </div>

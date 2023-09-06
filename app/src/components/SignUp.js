@@ -27,16 +27,32 @@ const SignUp = () => {
   }, [currentUser])
   
   return (
-    <>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email</label>
-        <input type="email" name="email" placeholder="Email" />
-        <label htmlFor="password">Password</label>
-        <input type="password" name="password" placeholder="Password" />
-        <button type="submit">Submit</button>
+      <div className="">
+        <form onSubmit={handleSubmit} className="centered-container-form">
+          <div className="header">Sign UP</div>
+          <div className="form-container">
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input 
+                type="email" 
+                className="form-control"
+                name="email" 
+                placeholder="Email" 
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input 
+                type="password" 
+                className="form-control"
+                name="password" 
+                placeholder="Password" 
+              />
+            </div>
+          <button type="submit">Submit</button>
+        </div>
       </form>
-    </>
+    </div>
   );
 };
 

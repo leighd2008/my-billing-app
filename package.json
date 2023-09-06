@@ -1,7 +1,8 @@
 {
   "name": "the-billing-app",
-  "version": "1.2.0",
-  "description": "The best way to build Electron apps with security in mind.",
+  "version": "2.0",
+  "description": "The best invoicing and billing app.",
+  "category": "Billing",
   "private": true,
   "main": "app/electron/main.js",
   "scripts": {
@@ -13,16 +14,16 @@
     "prod-build": "cross-env NODE_ENV=production npx webpack --mode=production --config ./webpack.production.js",
     "prod": "npm run prod-build && electron .",
     "pack": "electron-builder --dir",
-    "dist": "npm run test && npm run prod-build && electron-builder",
-    "dist-mac": "npm run test && npm run prod-build && electron-builder --mac",
+    "dist": "npm run prod-build && electron-builder",
+    "dist-mac": "npm run prod-build && electron-builder --mac",
     "dist-linux": "npm run prod-build && electron-builder --linux",
     "dist-windows": "npm run prod-build && electron-builder --windows",
-    "dist-all": "npm run test && npm run prod-build && electron-builder --mac --linux --windows",
+    "dist-all": "npm run prod-build && electron-builder --mac --linux --windows",
     "test": "mocha"
   },
   "build": {
     "productName": "The Billing App",
-    "appId": "com.yourcompany|electron.yourproductname",
+    "appId": "com.youAndMeWebCreations|electron.theBillingApp",
     "directories": {
       "buildResources": "resources"
     },
@@ -54,7 +55,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/reZach/secure-electron-template.git"
+    "url": "git+https://github.com/leighd2008/my-billing-app.git"
   },
   "keywords": [
     "electron",
@@ -67,12 +68,17 @@
     "webpack",
     "boilerplate"
   ],
-  "author": "reZach",
+  "author": {
+    "name" : "Diane Leigh",
+    "email": "youAndMeWebCreations@gmail.com",
+    "url" : "https://www.youandmewebcreations.com/"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/reZach/secure-electron-template/issues"
+    "url": "https://github.com/leighd2008/my-billing-app/issues",
+    "email": "youAndMeWebCreations@gmail.com"
   },
-  "homepage": "https://github.com/reZach/secure-electron-template#readme",
+  "homepage": "https://github.com/leighd2008/my-billing-app#readme",
   "browserslist": [
     "last 2 Chrome versions"
   ],

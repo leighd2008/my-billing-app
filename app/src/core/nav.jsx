@@ -11,35 +11,35 @@ export const Nav = () => {
         <div className="navContent">
           <div className="navLinks">
           <NavLink
-              className="navbar-item"
-              to={ROUTES.HOME}>
-              Home
-            </NavLink>
-            <NavLink
-              className="navbar-item"
-              to={ROUTES.CLIENTS}>
-              Client list
-            </NavLink>
-            <NavLink
-              className="navbar-item"
-              to={ROUTES.BILLING}>
-              Billing
-            </NavLink>
-            <NavLink
-              className="navbar-item"
-              to={ROUTES.PAYMENTS}>
-              Payments
-            </NavLink>
-            <NavLink
-              className="navbar-item"
-              to={ROUTES.INVOICE}>
-              Past Invoices
-            </NavLink>
-            <NavLink
-              className="navbar-item"
-              to={ROUTES.ADD_NEW_CLIENT}>
-              Add New Client
-            </NavLink>
+            className="navbar-item"
+            to={ROUTES.HOME}>
+            Home
+          </NavLink>
+          <NavLink
+            className="navbar-item"
+            to={ROUTES.CLIENTS}>
+            Client list
+          </NavLink>
+          <NavLink
+            className="navbar-item"
+            to={ROUTES.BILLING}>
+            Billing
+          </NavLink>
+          <NavLink
+            className="navbar-item"
+            to={ROUTES.PAYMENTS}>
+            Payments
+          </NavLink>
+          <NavLink
+            className="navbar-item"
+            to={ROUTES.INVOICE}>
+            Past Invoices
+          </NavLink>
+          <NavLink
+            className="navbar-item"
+            to={ROUTES.ADD_NEW_CLIENT}>
+            Add New Client
+          </NavLink>
           </div>
         </div>
       </section>
