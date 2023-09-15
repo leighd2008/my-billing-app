@@ -16,7 +16,7 @@ const Home = () => {
           <div className="centered-view">
             <section className="centered-container">
               <div className="">
-                <form className="centered-container-form">
+                {/* <form className="centered-container-form"> */}
                   <div className="header"><h1>Welcome</h1></div>
                   {currentUser ? (
                     <>
@@ -29,7 +29,7 @@ const Home = () => {
                       <SignUp />
                     </span>
                   )}
-                </form>
+                {/* </form> */}
               </div>
             </section>
           </div>

@@ -224,7 +224,7 @@ export const ClientPage = () => {
                     <td><h5>Total for professional Services</h5></td>
                     <td></td> 
                     <td></td>
-                    <td>{invoiceData.totalHours}</td>
+                    <td>{invoiceData.totalHours.toFixed(1)}</td>
                     <td><h5>{invoiceData.totalServices.toFixed(2)}</h5></td>
                   </tr>
                 </tbody>
