@@ -101,7 +101,7 @@ export const ClientPage = () => {
     invoiceData.address1 = client.address
     invoiceData.address2 = `${client.city}, ${client.usState}, ${client.zip},`
     invoiceData.email = client.email 
-    invoiceData.prevBalance = client.balance
+    invoiceData.prevBalance = (client.balance*1).toFixed(2)
     invoiceData.services = orderedServices
     invoiceData.expenses = orderedExpenses
     invoiceData.payments = orderedPayments
@@ -112,9 +112,11 @@ export const ClientPage = () => {
     
     nextLastInvoice ? invoiceData.prevInterest = nextLastInvoice.interestCharges : 0.00
     lastInvoice ? invoiceData.prevStartBalance = lastInvoice.prevBalance : 0.00
-    
-    invoiceData.interestCharges = (invoiceData.prevStartBalance-invoiceData.prevInterest)*(0.12/365*30).toFixed(2) || 0.00
-    invoiceData.balance = invoiceData.prevBalance - invoiceData.totalPayments + invoiceData.interestCharges + invoiceData.totalServices + invoiceData.totalExpenses
+    let interestRate = (0.12/365*30)
+    invoiceData.interestCharges = (((invoiceData.prevStartBalance-invoiceData.prevInterest)*interestRate).toFixed(2) || 0.00)
+    console.log(invoiceData.interestCharges)
+    console.log(invoiceData.totalPayments)
+    invoiceData.balance = (invoiceData.prevBalance - invoiceData.totalPayments + +invoiceData.interestCharges + invoiceData.totalServices + invoiceData.totalExpenses).toFixed(2)
     invoiceData.totalCharges = (invoiceData.totalServices + invoiceData.totalExpenses).toFixed(2)
   
   const onSubmit = async (data) => {
@@ -210,8 +212,8 @@ export const ClientPage = () => {
                         <td>{charge.category}</td>
                         <td>{charge.user}</td> 
                         <td>{charge.rate}</td>
-                        <td>{(charge.hours * 1).toFixed(1)}</td>
-                        <td>{charge.total.toFixed(2)}</td>
+                        <td>{charge.hours}</td>
+                        <td>{charge.total}</td>
                         <td><button 
                           className='table-button'
                           onClick={() => handleDeleteCharge(charge.id)}><FontAwesomeIcon icon={faTrash}/></button>
@@ -250,7 +252,7 @@ export const ClientPage = () => {
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td>{(charge.total * 1).toFixed(2)}</td>
+                        <td>{charge.total}</td>
                         <td><button className='table-button' onClick={() => handleDeleteCharge(charge.id)}><FontAwesomeIcon icon={faTrash} /></button></td>
                       </tr>
                     )
@@ -285,7 +287,7 @@ export const ClientPage = () => {
                         <td>Payment</td>
                         <td></td>
                         <td></td>
-                        <td>({(payment.amount * 1).toFixed(2)})</td>
+                        <td>({payment.amount})</td>
                         <td><button className='table-button' onClick={() => handleDeletePayment(payment.id)}><FontAwesomeIcon icon={faTrash} /></button></td>
                       </tr>
                     )
@@ -318,7 +320,7 @@ export const ClientPage = () => {
                     <td><h5>Interest Charges</h5></td>
                     <td></td>
                     <td></td>
-                    <td><h5>{invoiceData.interestCharges.toFixed(2)}</h5></td>
+                    <td><h5>{invoiceData.interestCharges}</h5></td>
                     <td></td>
                   </tr>
                   <tr>
@@ -334,7 +336,7 @@ export const ClientPage = () => {
                     <td><h5>Previous Balance</h5></td>
                     <td></td>
                     <td></td>
-                    <td><h5>{invoiceData.prevBalance.toFixed(2)}</h5></td>
+                    <td><h5>{invoiceData.prevBalance}</h5></td>
                     <td></td>
                   </tr>
                   <tr>
@@ -350,7 +352,7 @@ export const ClientPage = () => {
                     <td><h5>Balance due</h5></td>
                     <td></td>
                     <td></td>
-                    <td><h5>{invoiceData.balance.toFixed(2)}</h5></td>
+                    <td><h5>{invoiceData.balance}</h5></td>
                     <td></td>
                   </tr>
                 </tbody>

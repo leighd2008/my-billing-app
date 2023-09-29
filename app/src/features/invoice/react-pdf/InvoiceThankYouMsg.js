@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
       <Fragment>
         <View style={styles.container}>
           <Text style={styles.description2}>Interest Charges</Text>
-          <Text style={styles.amount}>{invoiceData.interestCharges.toFixed(2)}</Text>
+          <Text style={styles.amount}>{invoiceData.interestCharges}</Text>
         </View>
         <View style={styles.container}>
           <Text style={styles.description2}>Total Charges for this Bill</Text>
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         </View>
         <View style={styles.container}>
           <Text style={styles.description2}>Previous Balance</Text>
-          <Text style={styles.amount}>{invoiceData.prevBalance.toFixed(2)}</Text>
+          <Text style={styles.amount}>{(invoiceData.prevBalance)}</Text>
         </View>
         <View style={styles.container}>
           <Text style={styles.description2}>Total Payments and Adjustments</Text>
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         </View>
         <View style={styles.container}>
           <Text style={styles.description2}>Balance Due</Text>
-          <Text style={styles.amount}>{invoiceData.balance.toFixed(2)}</Text>
+          <Text style={styles.amount}>{invoiceData.balance}</Text>
         </View>
       </Fragment>
     )

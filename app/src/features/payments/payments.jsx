@@ -63,7 +63,7 @@ const Payments = () => {
     let payments = client.payments || {}
     let pmntId = payments.length || 0
       
-    let payment = {id: pmntId, date: data.date, amount: data.amount, invoiced: false}
+    let payment = {id: pmntId, date: data.date, amount: (data.amount*1).toFixed(2), invoiced: false}
     
     if (payments.length) {
       data.payments = [...payments, payment]

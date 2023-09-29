@@ -165,20 +165,6 @@ const Billing = () => {
             />
         </div>
         <div className="form-group">
-          <label htmlFor="date2" >Charge Date2</label>
-          <select
-            {...register('date2')}
-            type="date"
-            className="form-control"
-            id="date2"
-            name="date2"
-            value={chargeDate2}
-            onChange={onChargeDate2Changed}>
-            <option value="">{chargeDate2}</option>
-            {dateContent}
-            </select>
-        </div>
-        <div className="form-group">
           <label htmlFor="category" >Staff Member</label>
           <select 
             {...register('user')}
@@ -289,18 +275,21 @@ const Billing = () => {
     let chargeId = charges.length
     let charge
     if(data.fee) {
-      charge = {id: chargeId, chargeType: 'expense', date: data.date, category: data.expense, fee: data.fee, total: data.fee, invoiced: false, }
-      if (confirm(`Click OK to proceed or Cancel to start over! \n Date: ${charge.date} \n Category: ${charge.category} \n Fee: ${charge.fee} \n Total charge: ${charge.total} ` )) {
+      charge = {id: chargeId, chargeType: 'expense', date: data.date, category: data.expense, fee: data.fee, total: (data.fee*1).toFixed(2), invoiced: false, }
+      // if (confirm(`Click OK to proceed or Cancel to start over! \n Date: ${charge.date} \n Category: ${charge.category} \n Fee: ${charge.fee} \n Total charge: ${charge.total} ` )) 
+      {
         data.charges = [...charges, charge]
         data.id = clientId
       }
     } else {
-      charge = { id: chargeId, chargeType: 'task', date: data.date, category: data.task, user: user.name, rate: user.rate, hours: data.hours, total: (user.rate * data.hours), invoiced: false}
-      if (confirm(`Click OK to proceed or Cancel to start over! \n Date: ${charge.date} \n Category: ${charge.category} \n Staff Member: ${charge.user} \n Rate: ${charge.rate} \n Billable hours: ${charge.hours} \n Total charge: ${charge.total} ` )) {
+      charge = { id: chargeId, chargeType: 'task', date: data.date, category: data.task, user: user.name, rate: user.rate, hours: (data.hours*1).toFixed(1), total: (user.rate * data.hours).toFixed(2), invoiced: false}
+      // if (confirm(`Click OK to proceed or Cancel to start over! \n Date: ${charge.date} \n Category: ${charge.category} \n Staff Member: ${charge.user} \n Rate: ${charge.rate} \n Billable hours: ${charge.hours} \n Total charge: ${charge.total} ` ))
+      {
         data.charges = [...charges, charge]
         data.id = clientId
       }
     }
+    console.log(data.fee)
     
     dispatch(addCharge(data))
     setClientSelected("")
