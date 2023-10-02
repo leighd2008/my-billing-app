@@ -112,7 +112,7 @@ export const ClientPage = () => {
     
     nextLastInvoice ? invoiceData.prevInterest = nextLastInvoice.interestCharges : invoiceData.prevInterest = 0.00
     lastInvoice ? invoiceData.prevStartBalance = lastInvoice.prevBalance : invoiceData.prevStartBalance = 0.00
-    let interestRate = (0.12/365*30)
+    let interestRate = (0.12/12)
     console.log('prevInterest: ', invoiceData.prevInterest)
     console.log('prevStartBalance: ', invoiceData.prevStartBalance)
     invoiceData.interestCharges = ((invoiceData.prevStartBalance-invoiceData.prevInterest)*interestRate).toFixed(2)
