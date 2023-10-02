@@ -141,7 +141,7 @@ const Billing = () => {
       } else if(e.target.value === "Subpoena Issue Fee") {
         setFee(40)
       } else if(e.target.value === "e-File Processing Fee") {
-        setFee(6.50)
+        setFee(6.70)
       }
     }
       

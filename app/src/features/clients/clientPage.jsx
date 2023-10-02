@@ -110,12 +110,12 @@ export const ClientPage = () => {
     invoiceData.totalExpenses = orderedExpenses.map(item => item.fee * 1).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     invoiceData.totalPayments = orderedPayments.map(item => item.amount * 1).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     
-    nextLastInvoice ? invoiceData.prevInterest = nextLastInvoice.interestCharges : 0.00
-    lastInvoice ? invoiceData.prevStartBalance = lastInvoice.prevBalance : 0.00
+    nextLastInvoice ? invoiceData.prevInterest = nextLastInvoice.interestCharges : invoiceData.prevInterest = 0.00
+    lastInvoice ? invoiceData.prevStartBalance = lastInvoice.prevBalance : invoiceData.prevStartBalance = 0.00
     let interestRate = (0.12/365*30)
-    invoiceData.interestCharges = (((invoiceData.prevStartBalance-invoiceData.prevInterest)*interestRate).toFixed(2) || 0.00)
-    console.log(invoiceData.interestCharges)
-    console.log(invoiceData.totalPayments)
+    console.log('prevInterest: ', invoiceData.prevInterest)
+    console.log('prevStartBalance: ', invoiceData.prevStartBalance)
+    invoiceData.interestCharges = ((invoiceData.prevStartBalance-invoiceData.prevInterest)*interestRate).toFixed(2)
     invoiceData.balance = (invoiceData.prevBalance - invoiceData.totalPayments + +invoiceData.interestCharges + invoiceData.totalServices + invoiceData.totalExpenses).toFixed(2)
     invoiceData.totalCharges = (invoiceData.totalServices + invoiceData.totalExpenses).toFixed(2)
   
@@ -317,14 +317,6 @@ export const ClientPage = () => {
                 <tbody>
                   <tr>
                     <td></td>
-                    <td><h5>Interest Charges</h5></td>
-                    <td></td>
-                    <td></td>
-                    <td><h5>{invoiceData.interestCharges}</h5></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
                     <td><h5>Total charges for this bill</h5></td>
                     <td></td>
                     <td></td>
@@ -333,7 +325,7 @@ export const ClientPage = () => {
                   </tr>
                   <tr>
                     <td></td>
-                    <td><h5>Previous Balance</h5></td>
+                    <td><h5>Previous balance</h5></td>
                     <td></td>
                     <td></td>
                     <td><h5>{invoiceData.prevBalance}</h5></td>
@@ -345,6 +337,14 @@ export const ClientPage = () => {
                     <td></td>
                     <td></td>
                     <td><h5>({invoiceData.totalPayments.toFixed(2)})</h5></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td><h5>Interest charges on past due balance</h5></td>
+                    <td></td>
+                    <td></td>
+                    <td><h5>{(invoiceData.interestCharges*1).toFixed(2)}</h5></td>
                     <td></td>
                   </tr>
                   <tr>
