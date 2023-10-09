@@ -284,7 +284,7 @@ export const ClientPage = () => {
                     return (
                       <tr key={i}>
                         <td>{payment.date}</td>
-                        <td>Payment</td>
+                        <td>{payment.creditType}</td>
                         <td></td>
                         <td></td>
                         <td>({payment.amount})</td>

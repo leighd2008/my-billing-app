@@ -69,7 +69,6 @@ const Billing = () => {
   let curr = new Date()
   curr.setDate(curr.getDate())
   const [chargeDate, setChargeDate] = useState(curr.toISOString().substring(0,10))
-  const [chargeDate2, setChargeDate2] = useState(curr.toISOString().substring(0,10))
   const [hours, setHours] = useState('')
   const [fee, setFee] = useState('')
   const [userId, setUserId] = useState('GcO8emvrf4eQSScHsQDh')
@@ -102,7 +101,6 @@ const Billing = () => {
   });
   
   const onChargeDateChanged = e => setChargeDate(e.target.value)
-  const onChargeDate2Changed = e => setChargeDate2(e.target.value)
   const onHoursChanged = e => setHours(e.target.value)
   const onFeeChanged = e => setFee(e.target.value)
   const onUserChanged = e => setUserId(e.target.value)
@@ -289,7 +287,6 @@ const Billing = () => {
         data.id = clientId
       }
     }
-    console.log(data.fee)
     
     dispatch(addCharge(data))
     setClientSelected("")

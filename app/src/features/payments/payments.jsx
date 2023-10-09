@@ -18,6 +18,7 @@ const Payments = () => {
   }, [currentUser])
   
   const [clientId, setClientId] = useState('')
+  const [creditType, setCreditType] = useState('payment')
   const dispatch = useDispatch()
   
   const clients = useSelector(selectAllClients)
@@ -48,6 +49,8 @@ const Payments = () => {
     clientContent = <option>{clientError}</option>
   }
   
+  const onCreditTypeChanged = e => setCreditType(e.target.value)
+  
   const client = useSelector(state => selectClientById(state, clientId))
   
   let curr = new Date()
@@ -63,7 +66,7 @@ const Payments = () => {
     let payments = client.payments || {}
     let pmntId = payments.length || 0
       
-    let payment = {id: pmntId, date: data.date, amount: (data.amount*1).toFixed(2), invoiced: false}
+    let payment = {id: pmntId, creditType: creditType, date: data.date, amount: (data.amount*1).toFixed(2), invoiced: false}
     
     if (payments.length) {
       data.payments = [...payments, payment]
@@ -85,13 +88,22 @@ const Payments = () => {
             <section className="centered-container">
               <div className="centered-container-form">
                 <div className="header">Add a payment</div>
-                <div className="form-group">
-                  <label htmlFor="client">Client</label>
-                  <select id="client" className="form-control" value={clientId} onChange={onClientChanged} >
-                    <option value="">Select ...</option>
-                    {clientContent}
-                  </select>
-                </div>
+                <form>
+                  <div className="form-group">
+                    <label htmlFor="client">Client</label>
+                    <select id="client" className="form-control" value={clientId} onChange={onClientChanged} >
+                      <option value="">Select ...</option>
+                      {clientContent}
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="client">Payment / Credit</label>
+                    <select id="client" className="form-control" value={creditType} onChange={onCreditTypeChanged} >
+                      <option value="payment">Payment</option>
+                      <option value="credit">Credit</option>
+                    </select>
+                  </div>
+                </form>
                 <form onSubmit={handleSubmit(onSubmit)} >
                   <div className="form-group">
                     <label htmlFor="payment date" >Payment Date</label>

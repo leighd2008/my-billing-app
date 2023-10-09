@@ -28,7 +28,7 @@ export const Nav = () => {
           <NavLink
             className="navbar-item"
             to={ROUTES.PAYMENTS}>
-            Payments
+            Payments / Credits
           </NavLink>
           <NavLink
             className="navbar-item"

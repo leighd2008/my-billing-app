@@ -58,7 +58,7 @@ const InvoiceTableRow = ({items}) => {
       rows = items.map( item =>
         <View style={styles.row} key={item.id}>
           <Text style={styles.date}>{item.date}</Text>
-          <Text style={styles.description2}>Payment - Thank You!</Text>
+          <Text style={styles.description2}>{item.creditType}</Text>
           <Text style={styles.amount}>{(item.amount * 1).toFixed(2)}</Text>
         </View>)
     } else {
