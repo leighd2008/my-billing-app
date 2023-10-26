@@ -6,6 +6,7 @@ import { AuthContext } from "../../components/Auth";
 
 import { selectAllClients, fetchClients, addCharge, selectClientById } from "../clients/clientsSlice";
 import { selectAllUsers, fetchUsers, selectUserById } from "../users/usersSlice";
+import { selectChargeTypes, fetchChargeTypes } from './billingSlice'
 
 import Item from "../../components/Item";
 
@@ -20,6 +21,7 @@ const Billing = () => {
     }
   }, [currentUser])
   
+ 
   const [clientId, setClientId] = useState('')
   const [chargeType, setChargeType] = useState('task')
   const dispatch = useDispatch()
@@ -60,6 +62,27 @@ const Billing = () => {
   
   const [clientSelected, setClientSelected] = useState('')
   
+  const chargeTypesStatus = useSelector(state => state.billing.status)
+  const chargeTypes = useSelector(selectChargeTypes)
+  let tasks = []
+  let expenses = []
+  let expenseKeys = []
+  
+  
+  useEffect(() => {
+    if (chargeTypesStatus === 'idle'){
+      dispatch(fetchChargeTypes())
+    }
+  }, [chargeTypesStatus, dispatch])
+  
+  if (chargeTypesStatus === 'loading') {
+    console.log('hold on')
+  } else if (chargeTypesStatus === 'succeeded') {
+    tasks = chargeTypes[1].tasks
+    expenses = chargeTypes[0].expenses
+    expenseKeys = Object.keys(expenses)
+  }
+  
   const onChargeTypeChanged = e => {
     setChargeType(e.target.value)
   }
@@ -71,18 +94,8 @@ const Billing = () => {
   const [chargeDate, setChargeDate] = useState(curr.toISOString().substring(0,10))
   const [hours, setHours] = useState('')
   const [fee, setFee] = useState('')
-  const [userId, setUserId] = useState('GcO8emvrf4eQSScHsQDh')
-  
-  let dateList = []
-  for (let i = -7; i < 8; i++) {
-    const newDate = new Date()
-    newDate.setDate(newDate.getDate() + i)
-    dateList = [...dateList, newDate.toISOString().substring(0,10)]
-  }
-  
-  let dateContent = dateList.map((date, i )=> (
-      <option key={i} value={date}>{date}</option>
-      ))
+  // const [userId, setUserId] = useState('GcO8emvrf4eQSScHsQDh')
+  const [userId, setUserId] = useState('8jBzJQuyzRKNxDKqRsLj')
   
   const users = useSelector(selectAllUsers)
   
@@ -122,9 +135,7 @@ const Billing = () => {
     } else if (userStatus === 'failed') {
       userContent = <option>{userError}</option>
     }
-    
-    const tasks = ["Calc", "Conf", "Consult", "Copy", "Deliver", "Depo", "Draft", "Email oc", "Email c", "Forward", "Hrg", "LTOC", "LTR", "Mediation", "Meeting", "Open", "PC", "PCA", "Prep", "Research", "Review", "Revise", "SC", "Scan & Email", "Sched", "Trial"]
-    
+
     const [task, setTask] = useState('')
     const [expense, setExpense] = useState('')
     
@@ -132,18 +143,16 @@ const Billing = () => {
       
     const handleExpenseSelect = e => {
       setExpense(e.target.value)  
-      if(e.target.value === "Arrears Calculation") {
-        setFee(59)
-      } else if(e.target.value === "Runner Service Fee") {
-        setFee(15)
-      } else if(e.target.value === "Subpoena Issue Fee") {
-        setFee(40)
-      } else if(e.target.value === "e-File Processing Fee") {
-        setFee(6.70)
+      if(e.target.value === "Arrears calculation") {
+        setFee(expenses[e.target.value])
+      } else if(e.target.value === "Runner service fee") {
+        setFee(expenses[e.target.value])
+      } else if(e.target.value === "Subpoena issue fee") {
+        setFee(expenses[e.target.value])
+      } else if(e.target.value === "e-File processing fee") {
+        setFee(expenses[e.target.value])
       }
     }
-      
-  const expenses = ["Arrears Calculation", "Close file", "Consult", "Court Reporter Fee", "Error/Correction", "Filing Fee", "Postage", "Records", "Returned", "Runner Service Fee", "Service Fee", "Subpoena Issue Fee", "Transcript", "Witness Fee", "e-File Processing Fee"]
   
   let categoryDetail
   
@@ -241,9 +250,9 @@ const Billing = () => {
               onChange={handleExpenseSelect}
             />
             <datalist id='expenses'>
-              {expenses &&
-                expenses.length > 0 &&
-                expenses.map((expense, index) => {
+              {expenseKeys &&
+                expenseKeys.length > 0 &&
+                expenseKeys.map((expense, index) => {
                   return <Item item={expense} position={index} key={index} />
                 })
               }
@@ -274,14 +283,12 @@ const Billing = () => {
     let charge
     if(data.fee) {
       charge = {id: chargeId, chargeType: 'expense', date: data.date, category: data.expense, fee: data.fee, total: (data.fee*1).toFixed(2), invoiced: false, }
-      // if (confirm(`Click OK to proceed or Cancel to start over! \n Date: ${charge.date} \n Category: ${charge.category} \n Fee: ${charge.fee} \n Total charge: ${charge.total} ` )) 
       {
         data.charges = [...charges, charge]
         data.id = clientId
       }
     } else {
       charge = { id: chargeId, chargeType: 'task', date: data.date, category: data.task, user: user.name, rate: user.rate, hours: (data.hours*1).toFixed(1), total: (user.rate * data.hours).toFixed(2), invoiced: false}
-      // if (confirm(`Click OK to proceed or Cancel to start over! \n Date: ${charge.date} \n Category: ${charge.category} \n Staff Member: ${charge.user} \n Rate: ${charge.rate} \n Billable hours: ${charge.hours} \n Total charge: ${charge.total} ` ))
       {
         data.charges = [...charges, charge]
         data.id = clientId
@@ -292,7 +299,8 @@ const Billing = () => {
     setClientSelected("")
     setChargeType("task")
     setChargeDate(curr.toISOString().substring(0,10))
-    setUserId("GcO8emvrf4eQSScHsQDh")
+    // setUserId("GcO8emvrf4eQSScHsQDh")
+    setUserId("8jBzJQuyzRKNxDKqRsLj")
     setHours("")
     setFee("")
     setTask("")
