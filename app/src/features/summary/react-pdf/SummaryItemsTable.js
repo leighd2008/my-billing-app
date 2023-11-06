@@ -1,8 +1,8 @@
 import React from "react";
 import { View, StyleSheet } from "@react-pdf/renderer";
-import InvoiceTableHeader from './SummaryTableHeader';
-import InvoiceTableRow from './SummaryTableRow';
-import InvoiceTableFooter from './SummaryTableFooter';
+import SummaryTableHeader from './SummaryTableHeader';
+import SummaryTableRow from './SummaryTableRow';
+import SummaryTableFooter from './SummaryTableFooter';
 
 const styles = StyleSheet.create({
   tableContainer: {
@@ -13,18 +13,18 @@ const styles = StyleSheet.create({
 });
 
 
-const InvoiceItemsTable = ({items}) => {
-  if (items.length > 0) {
+const InvoiceItemsTable = (/*{items}*/) => {
+  // if (items.length > 0) {
   return (
   <View style={styles.tableContainer} widows orphans >
-    <InvoiceTableHeader items={items}/>
-    <InvoiceTableRow items={items} />
-    {/* <InvoiceTableFooter items={items} /> */}
+    <SummaryTableHeader />
+    {/* <SummaryTableRow items={items} /> */}
+    {/* <SummaryTableFooter items={items} /> */}
   </View>
 );
-} else {
-  return null
-}
+// } else {
+//   return null
+// }
 }
 
 export default InvoiceItemsTable;

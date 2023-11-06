@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { Spinner } from '../../components/Spinner'
 
+import ROUTES from "Constants/routes";
 import { selectAllClients, fetchClients } from './clientsSlice'
 
 export const ClientsList = () => {
@@ -72,7 +73,7 @@ export const ClientsList = () => {
     {orderedClients.map((client, i) => {
       data[client.id] = client.summary
     })}
-    console.log(data)
+    navigate(ROUTES.SUMMARY, {state: {summaryData: data}})
   }
   
     

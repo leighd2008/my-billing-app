@@ -21,20 +21,20 @@ const styles = StyleSheet.create({
   }
 });
 
-const GenSummary = ({invoiceData}) => {
+const GenSummary = ({summaryData}) => {
   return (
     <Fragment>
       <PDFViewer width="850" height="600" className="app">
         <Document>
           <Page size="A4" style={styles.page}>
-            <Header name={invoiceData.name}/>
-            {/* <SummaryTitle /> */}
-            <BillTo invoiceData={invoiceData} />
+            {/* <Header name={invoiceData.name}/> */}
+            <SummaryTitle />
+            {/* <BillTo invoiceData={invoiceData} /> */}
             {/* <SummaryNo invoiceData={invoiceData} /> */}
-            <SummaryItemsTable className='services' items={invoiceData.services} />
-            <SummaryItemsTable className='expenses' items={invoiceData.expenses} />
-            <SummaryItemsTable className='payments' items={invoiceData.payments} />
-            <SummaryThankYouMsg className='stuff' invoiceData={invoiceData} />
+            <SummaryItemsTable className='services' /*items={summaryData}*/></SummaryItemsTable>
+            {/* <SummaryItemsTable className='expenses' items={invoiceData.expenses} /> */}
+            {/* <SummaryItemsTable className='payments' items={invoiceData.payments} /> */}
+            {/* <SummaryThankYouMsg className='stuff' invoiceData={invoiceData} /> */}
           </Page>
         </Document>
       </PDFViewer>

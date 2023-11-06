@@ -5,65 +5,71 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        height: 24,
+        // height: 24,
         textAlign: 'center',
+        fontSize: 12,
         fontStyle: 'bold',
         flexGrow: 1,
     },
-    date: {
-        width: '15%',
+    column1: {
+      width: '12%',
+      textAlign: 'left',
     },
-    description: {
-        width: '60%',
-    },
-    description2: {
-        width: '70%',
-    },
-    hours: {
-        width: '10%',
-    },
-    amount: {
-      width: '15%',
+    column2: {
+      width: '19%',
       textAlign: 'right',
-      paddingRight: 8,
+      paddingRight: 12,
     },
   });
 
-  const InvoiceTableHeader = ({items}) => {
+  const SummaryTableHeader = () => {
     let tableContent = ''
-    if(!items.length) {
-      
-    } else if(items[0].chargeType === 'task') {
-      tableContent = (
+    tableContent = (
+      <View>
         <View style={styles.container}>
-          <Text style={styles.date}>Date</Text>
-          <Text style={styles.description}>Professional Services</Text>
-          <Text style={styles.hours}>Hours</Text>
-          <Text style={styles.amount}>Amount</Text>
+          <Text style={styles.column1}></Text>
+          <Text style={styles.column2}>Billable:</Text>
+          <Text style={styles.column2}>Unbillable:</Text>
+          <Text style={styles.column2}>Interest</Text>
+          <Text style={styles.column2}>Payments</Text>
+          <Text style={styles.column2}>Prior bal</Text>
         </View>
-      )
-    } else if(items[0].chargeType === 'expense') {
-      tableContent = tableContent = (
         <View style={styles.container}>
-          <Text style={styles.date}></Text>
-          <Text style={styles.description2}>Additional Charges</Text>
-          <Text style={styles.amount}></Text>
+          <Text style={styles.column1}>Client</Text>
+          <Text style={styles.column2}>Fees</Text>
+          <Text style={styles.column2}>Fees</Text>
+          <Text style={styles.column2}>Fin charge</Text>
+          <Text style={styles.column2}>Credits</Text>
+          <Text style={styles.column2}>New charges</Text>
         </View>
-      )
-    }else if(!items[0].chargeType) {
-      tableContent = tableContent = (
         <View style={styles.container}>
-          <Text style={styles.date}></Text>
-          <Text style={styles.description2}>Payments</Text>
-          <Text style={styles.amount}></Text>
+          <Text style={styles.column1}>Last bill</Text>
+          <Text style={styles.column2}>Costs</Text>
+          <Text style={styles.column2}>Costs</Text>
+          <Text style={styles.column2}>Tax fees</Text>
+          <Text style={styles.column2}>Wrt offs</Text>
+          <Text style={styles.column2}>New A/R</Text>
         </View>
+        <View style={styles.container}>
+          <Text style={styles.column1}>Last charge</Text>
+          <Text style={styles.column2}>Hours</Text>
+          <Text style={styles.column2}>Hours</Text>
+          <Text style={styles.column2}>Tax costs</Text>
+          <Text style={styles.column2}>Refunds</Text>
+          <Text style={styles.column2}>New bal</Text>
+        </View>
+        <View style={{
+      borderBottomColor: 'black',
+      borderBottomWidth: 1,
+      marginLeft: 0,
+      marginRight: 4
+    }} />
+      </View>
       )
-    }
     return(
       <Fragment>
         {tableContent}
       </Fragment>
     )
-          
-  }
-  export default InvoiceTableHeader
+  }        
+  export default SummaryTableHeader
