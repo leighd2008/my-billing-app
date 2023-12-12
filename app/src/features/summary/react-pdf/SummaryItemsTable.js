@@ -13,12 +13,12 @@ const styles = StyleSheet.create({
 });
 
 
-const InvoiceItemsTable = (/*{items}*/) => {
+const SummaryItemsTable = ({items}) => {
   // if (items.length > 0) {
   return (
   <View style={styles.tableContainer} widows orphans >
     <SummaryTableHeader />
-    {/* <SummaryTableRow items={items} /> */}
+    <SummaryTableRow items={items} />
     {/* <SummaryTableFooter items={items} /> */}
   </View>
 );
@@ -27,4 +27,4 @@ const InvoiceItemsTable = (/*{items}*/) => {
 // }
 }
 
-export default InvoiceItemsTable;
+export default SummaryItemsTable;

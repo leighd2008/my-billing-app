@@ -2,70 +2,69 @@ import React, {Fragment} from 'react';
 import {Text, View, StyleSheet } from '@react-pdf/renderer';
 
 const styles = StyleSheet.create({
-    row: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        height: 24,
-        fontStyle: 'bold',
-    },
-    date: {
-        width: '15%',
-        textAlign: 'left',
-        paddingRight: 8,
-    },
-    description: {
-        width: '60%',
-        textAlign: 'left',
-        paddingLeft: 8,
-    },
-    description2: {
-        width: '70%',
-        textAlign: 'left',
-        paddingLeft: 8,
-    },
-    hours: {
-        width: '10%',
-        textAlign: 'right',
-        paddingRight: 8,
-    },
-    amount: {
-        width: '15%',
-        textAlign: 'right',
-        paddingRight: 8,
-    },
-  });
+  container: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      textAlign: 'center',
+      fontSize: 12,
+      fontStyle: 'bold',
+      flexGrow: 1,
+  },
+  column1: {
+    width: '17%',
+    textAlign: 'left',
+  },
+  column2: {
+    width: '18%',
+    textAlign: 'right',
+    paddingRight: 12,
+  },
+});
 
 
-const InvoiceTableRow = ({items}) => {
+const SummaryTableRow = ({items}) => {
   let rows = ''
-  if(items[0].chargeType === 'task') {
-    rows = items.map( item => 
-      <View style={styles.row} key={item.id}>
-        <Text style={styles.date}>{item.date}</Text>
-        <Text style={styles.description}>{item.category}</Text>
-        <Text style={styles.hours}>{item.hours}</Text>
-        <Text style={styles.amount}>{(item.hours * item.rate).toFixed(2)}</Text>
-      </View>
-    )} else if(items[0].chargeType === 'expense') {
-      rows = items.map( item =>
-        <View style={styles.row} key={item.id}>
-          <Text style={styles.date}>{item.date}</Text>
-          <Text style={styles.description2}>{item.category}</Text>
-          <Text style={styles.amount}>{(item.fee * 1).toFixed(2)}</Text>
+    rows = Object.keys(items).map( (keyName, i) => (
+      <View key={i}>
+        <View style={styles.container} key={i}>
+          <Text style={styles.column1}>{items[keyName].name || 'Name'}</Text>
         </View>
-      )
-    } else if(!items[0].chargeType) {
-      rows = items.map( item =>
-        <View style={styles.row} key={item.id}>
-          <Text style={styles.date}>{item.date}</Text>
-          <Text style={styles.description2}>{item.creditType}</Text>
-          <Text style={styles.amount}>{(item.amount * 1).toFixed(2)}</Text>
-        </View>)
-    } else {
-      <Text >No items in file</Text>
-    }
+        <View style={styles.container} key={i}>
+          <Text style={styles.column1}></Text>
+          <Text style={styles.column2}>{(items[keyName].fees).toFixed(2) || 0.00}</Text>
+          <Text style={styles.column2}>{items[keyName].unbillableFees || '0.00'}</Text>
+          <Text style={styles.column2}>{(items[keyName].interest * 1).toFixed(2) || 0.00}</Text>
+          <Text style={styles.column2}>{(items[keyName].payments).toFixed(2) || 0.00}</Text>
+          <Text style={styles.column2}>{(items[keyName].priorBalance * 1).toFixed(2) || 0.00}</Text>
+        </View>
+        <View style={styles.container} key={i}>
+          <Text style={styles.column1}>{items[keyName].lastBill || " "}</Text>
+          <Text style={styles.column2}>{(items[keyName].costs).toFixed(2) || 0.00}</Text>
+          <Text style={styles.column2}>{(items[keyName].unbillableCosts) || '0.00'}</Text>
+          <Text style={styles.column2}>{(items[keyName].finCharge) || '0.00'}</Text>
+          <Text style={styles.column2}>{(items[keyName].credits).toFixed(2) || 0.00}</Text>
+          <Text style={styles.column2}>{(items[keyName].newCharges * 1).toFixed(2) || 0.00}</Text>
+        </View>
+        <View style={styles.container} key={i}>
+          <Text style={styles.column1}>{items[keyName].lastCharge || " "}</Text>
+          <Text style={styles.column2}>{(items[keyName].hours).toFixed(2) || '0:00'}</Text>
+          <Text style={styles.column2}>{(items[keyName].unbillableHours) || '0.00'}</Text>
+          <Text style={styles.column2}>{(items[keyName].taxFees) || '0.00'}</Text>
+          <Text style={styles.column2}>{(items[keyName].wrtOffs) || '0.00'}</Text>
+          <Text style={styles.column2}>{(items[keyName].newAR).toFixed(2) || 0.00}</Text>
+        </View>
+        <View style={styles.container} key={i}>
+          <Text style={styles.column1}></Text>
+          <Text style={styles.column2}></Text>
+          <Text style={styles.column2}></Text>
+          <Text style={styles.column2}>{(items[keyName].taxCosts || '0.00')}</Text>
+          <Text style={styles.column2}>{(items[keyName].refunds || '0.00')}</Text>
+          <Text style={styles.column2}>{(items[keyName].newBalance)}</Text>
+        </View>
+      </View>
+    ))
     
     return (<Fragment>{rows}</Fragment> )
 };
   
-export default InvoiceTableRow
+export default SummaryTableRow

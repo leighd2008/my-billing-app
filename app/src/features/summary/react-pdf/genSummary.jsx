@@ -31,7 +31,7 @@ const GenSummary = ({summaryData}) => {
             <SummaryTitle />
             {/* <BillTo invoiceData={invoiceData} /> */}
             {/* <SummaryNo invoiceData={invoiceData} /> */}
-            <SummaryItemsTable className='services' /*items={summaryData}*/></SummaryItemsTable>
+            <SummaryItemsTable className='services' items={summaryData}></SummaryItemsTable>
             {/* <SummaryItemsTable className='expenses' items={invoiceData.expenses} /> */}
             {/* <SummaryItemsTable className='payments' items={invoiceData.payments} /> */}
             {/* <SummaryThankYouMsg className='stuff' invoiceData={invoiceData} /> */}
