@@ -37,8 +37,6 @@ let curr = new Date()
     hour12: true,
     minute: "2-digit"
   })
-  console.log(currDate)
-  console.log(currTime)
 
 const InvoiceTitle = ({title}) => (
   <View style={styles.titleContainer}>

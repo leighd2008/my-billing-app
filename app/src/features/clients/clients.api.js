@@ -44,5 +44,5 @@ export const addInvoice = async(data) => {
 
 export const addSummary = async(data) => {
   const docRef = doc(db, 'clients', data.id)
-  await updateDoc(docRef, {summary: data})
+  await updateDoc(docRef, {summary: data.summary})
 }

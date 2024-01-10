@@ -105,13 +105,14 @@ export const ClientPage = () => {
   // **** SELECT ITEMS TO BE INVOICED ****
   
     //  **** GENERATE INVOICE / SUMMARY DATA ****
+    
 
   let invoiceData = {}
     invoiceData.trans_date = invoiceDate
     invoiceData.invoice_no = Math.floor(Math.random() * 90000) + 10000
     // invoiceData.trans_date = 'Please choose an Invoice date'
     invoiceData.name = `${client.firstName} ${client.lastName}`
-    invoiceData.summaryName = `${client.lastName} ${client.firstName}`
+    invoiceData.summaryName = `${client.lastName}, ${client.firstName}`
     invoiceData.address1 = client.address
     invoiceData.address2 = `${client.city}, ${client.usState}, ${client.zip},`
     invoiceData.email = client.email 
@@ -129,77 +130,36 @@ export const ClientPage = () => {
     nextLastInvoice ? invoiceData.prevInterest = nextLastInvoice.interestCharges : invoiceData.prevInterest = 0.00
     lastInvoice ? invoiceData.prevStartBalance = lastInvoice.prevBalance : invoiceData.prevStartBalance = 0.00
     let interestRate = (0.12/12)
-    console.log('prevInterest: ', invoiceData.prevInterest)
-    console.log('prevStartBalance: ', invoiceData.prevStartBalance)
     invoiceData.interestCharges = ((invoiceData.prevStartBalance-invoiceData.prevInterest)*interestRate).toFixed(2)
-    invoiceData.balance = (invoiceData.prevBalance - invoiceData.totalPayments + +invoiceData.interestCharges + invoiceData.totalServices + invoiceData.totalExpenses).toFixed(2)
+    invoiceData.balance = (invoiceData.prevBalance - invoiceData.totalAdjustments + +invoiceData.interestCharges + invoiceData.totalServices + invoiceData.totalExpenses).toFixed(2)
     invoiceData.totalCharges = (invoiceData.totalServices + invoiceData.totalExpenses).toFixed(2)
-    
+
   //  **** GENERATE INVOICE / SUMMARY DATA ****
     
   //  **** GENERATE SUMMARY ****  
   const onSubmitSummary = async (data) => {
-    // let invoices = client.invoices || {}
-    data.id = clientId 
-    data.name = invoiceData.summaryName
-    data.lastBill = lastInvoice ? lastInvoice.trans_date : ""
-    data.lastCharge = lastChargeDate ? lastChargeDate : ""
-    data.fees = invoiceData.totalServices
-    data.costs = invoiceData.totalExpenses
-    data.hours = invoiceData.totalHours
-    data.interest = invoiceData.interestCharges
-    data.payments = invoiceData.totalPayments
-    data.credits = invoiceData.totalCredits
-    data.priorBalance = invoiceData.prevBalance
-    data.newCharges = invoiceData.totalCharges
-    data.newAR = invoiceData.totalPayments + invoiceData.totalCredits
-    data.newBalance = invoiceData.balance
-    
-    // data.invoices = [...invoices, invoiceData]
-    
-    // let charges = structuredClone(client.charges)
-    // let payments = structuredClone(client.payments)
-    
-    // data.charges = [...charges]
-    // data.payments = [...payments]
-    console.log(data)
+    let summary = {}
+    data.id = clientId
+    summary.id = clientId
+    summary.name = invoiceData.summaryName
+    summary.lastBill = lastInvoice ? lastInvoice.trans_date : ""
+    summary.lastCharge = lastChargeDate ? lastChargeDate : ""
+    summary.fees = invoiceData.totalServices
+    summary.costs = invoiceData.totalExpenses
+    summary.hours = invoiceData.totalHours
+    summary.interest = invoiceData.interestCharges
+    summary.payments = invoiceData.totalPayments
+    summary.credits = invoiceData.totalCredits
+    summary.priorBalance = invoiceData.prevBalance
+    summary.newCharges = invoiceData.totalCharges
+    summary.newAR = invoiceData.totalPayments + invoiceData.totalCredits
+    summary.newBalance = invoiceData.balance
+    data.summary = [summary]
+   
     dispatch(addSummary(data))
-    
-    // navigate(ROUTES.SUMMARY, {state: {clientId: clientId, invoiceDate: invoiceDate, invoiceData: invoiceData}})
-    
-    //  check invoice generation and interest calculations
-    //  mark payments and charges on this invoiced as invoiced
     
   }
     
-  //  **** GENERATE SUMMARY ****
-  
-  // let invoiceData = {}
-  // invoiceData.trans_date = invoiceDate
-  // invoiceData.invoice_no = Math.floor(Math.random() * 90000) + 10000
-  // // invoiceData.trans_date = 'Please choose an Invoice date'
-  // invoiceData.name = `${client.firstName} ${client.lastName}`
-  // invoiceData.address1 = client.address
-  // invoiceData.address2 = `${client.city}, ${client.usState}, ${client.zip},`
-  // invoiceData.email = client.email 
-  // invoiceData.prevBalance = (client.balance*1).toFixed(2)
-  // invoiceData.services = orderedServices
-  // invoiceData.expenses = orderedExpenses
-  // invoiceData.payments = orderedPayments
-  // invoiceData.totalHours = orderedServices.map(item => item.hours * 1).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
-  // invoiceData.totalServices = orderedServices.map(item => item.hours * item.rate).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
-  // invoiceData.totalExpenses = orderedExpenses.map(item => item.fee * 1).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
-  // invoiceData.totalPayments = orderedPayments.map(item => item.amount * 1).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
-  
-  // nextLastInvoice ? invoiceData.prevInterest = nextLastInvoice.interestCharges : invoiceData.prevInterest = 0.00
-  // lastInvoice ? invoiceData.prevStartBalance = lastInvoice.prevBalance : invoiceData.prevStartBalance = 0.00
-  // let interestRate = (0.12/12)
-  // console.log('prevInterest: ', invoiceData.prevInterest)
-  // console.log('prevStartBalance: ', invoiceData.prevStartBalance)
-  // invoiceData.interestCharges = ((invoiceData.prevStartBalance-invoiceData.prevInterest)*interestRate).toFixed(2)
-  // invoiceData.balance = (invoiceData.prevBalance - invoiceData.totalPayments + +invoiceData.interestCharges + invoiceData.totalServices + invoiceData.totalExpenses).toFixed(2)
-  // invoiceData.totalCharges = (invoiceData.totalServices + invoiceData.totalExpenses).toFixed(2)
-
    //  **** GENERATE INVOICE / SUBMIT INVOICE DATA ****
   const onSubmitInvoice = async (data) => {
     let invoices = client.invoices || {}
@@ -222,13 +182,15 @@ export const ClientPage = () => {
       let paymentId = item.id
       payments[paymentId].invoiced = true
     })
+    orderedCredits.map(item => {
+      let creditId = item.id
+      payments[creditId].invoiced = true
+    })
+
     data.charges = [...charges]
     data.payments = [...payments]
     dispatch(addInvoice(data))
     navigate(ROUTES.INVOICE, {state: {clientId: clientId, invoiceDate: invoiceDate, invoiceData: invoiceData}})
-    
-    //  check invoice generation and interest calculations
-    //  mark payments and charges on this invoiced as invoiced
     
   }
     

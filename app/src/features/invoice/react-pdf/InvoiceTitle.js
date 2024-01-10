@@ -4,7 +4,7 @@ import { Text, View, StyleSheet } from '@react-pdf/renderer';
 const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'column',
-    marginTop: 24,
+    marginTop: 10,
   },
 });
 

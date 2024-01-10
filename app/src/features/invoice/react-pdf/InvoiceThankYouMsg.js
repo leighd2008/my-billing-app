@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         </View>
         <View style={styles.container}>
           <Text style={styles.description2}>Total Payments and Adjustments</Text>
-          <Text style={styles.amount}>{invoiceData.totalPayments.toFixed(2)}</Text>
+          <Text style={styles.amount}>{invoiceData.totalAdjustments.toFixed(2)}</Text>
         </View>
         <View style={styles.container}>
           <Text style={styles.description2}>Interest Charges on Past Due Balance</Text>

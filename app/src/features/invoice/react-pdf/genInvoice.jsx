@@ -34,6 +34,7 @@ const GenInvoice = ({invoiceData}) => {
             <InvoiceItemsTable className='services' items={invoiceData.services} />
             <InvoiceItemsTable className='expenses' items={invoiceData.expenses} />
             <InvoiceItemsTable className='payments' items={invoiceData.payments} />
+            <InvoiceItemsTable className='payments' items={invoiceData.credits} />
             <InvoiceThankYouMsg className='stuff' invoiceData={invoiceData} />
           </Page>
         </Document>

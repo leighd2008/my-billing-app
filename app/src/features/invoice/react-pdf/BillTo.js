@@ -3,10 +3,10 @@ import { Text, View, StyleSheet } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
   headerContainer: {
-    marginTop: 20
+    marginTop: 10
   },
   billTo: {
-    marginTop: 10,
+    marginTop: 0,
     paddingBottom: 3,
     fontFamily: 'Helvetica-Oblique'
   },

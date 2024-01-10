@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        height: 24,
+        height: 20,
         textAlign: 'center',
         fontStyle: 'bold',
         flexGrow: 1,
@@ -50,11 +50,19 @@ const styles = StyleSheet.create({
           <Text style={styles.amount}></Text>
         </View>
       )
-    }else if(!items[0].chargeType) {
+    }else if(!items[0].chargeType && items[0].creditType === 'payment') {
       tableContent = tableContent = (
         <View style={styles.container}>
           <Text style={styles.date}></Text>
           <Text style={styles.description2}>Payments</Text>
+          <Text style={styles.amount}></Text>
+        </View>
+      )
+    }else if(!items[0].chargeType && items[0].creditType === 'credit') {
+      tableContent = tableContent = (
+        <View style={styles.container}>
+          <Text style={styles.date}></Text>
+          <Text style={styles.description2}>Credits</Text>
           <Text style={styles.amount}></Text>
         </View>
       )

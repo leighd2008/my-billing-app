@@ -76,7 +76,6 @@ const Billing = () => {
   }, [chargeTypesStatus, dispatch])
   
   if (chargeTypesStatus === 'loading') {
-    console.log('hold on')
   } else if (chargeTypesStatus === 'succeeded') {
     tasks = chargeTypes[1].tasks
     expenses = chargeTypes[0].expenses
