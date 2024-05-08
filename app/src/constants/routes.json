@@ -8,5 +8,6 @@
   "BILLING": "/billing",
   "PAYMENTS": "/payments",
   "LOGIN": "/login",
-  "SIGNUP": "/signup"
+  "SIGNUP": "/signup",
+  "PAYMENTREG": "/paymentReg"
 }

@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
 
 
 const SummaryTableRow = ({items}) => {
+  console.log(items)
   let rows = ''
     rows = Object.keys(items).map( (keyName, i) => (
       <View key={i}>
