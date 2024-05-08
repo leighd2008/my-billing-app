@@ -22,6 +22,9 @@ const Invoice = loadable(() =>
 const Summary = loadable(() =>
   import(/* webpackChunkName: "ContextMenuChunk" */ "Features/summary/summary")
 );
+const PaymentReg = loadable(() =>
+  import(/* webpackChunkName: "ContextMenuChunk" */ "Features/paymentRegister/paymentRegister")
+);
 const AddNewClient = loadable(() =>
   import(/* webpackChunkName: "ContextMenuChunk" */ "Features/clients/addNewClient")
 );
@@ -48,6 +51,7 @@ class AppRoutes extends React.Component {
           <Route path={ROUTES.PAYMENTS} element={<Payments />}></Route>
           <Route path={ROUTES.INVOICE} element={<Invoice />}></Route>
           <Route path={ROUTES.SUMMARY} element={<Summary />}></Route>
+          <Route path={ROUTES.PAYMENTREG} element={<PaymentReg />}></Route>
           <Route path={ROUTES.ADD_NEW_CLIENT} element={<AddNewClient />}></Route>
           <Route path={ROUTES.LOGIN} element={<LogIn />}></Route>
           <Route path={ROUTES.SIGNUP} element={<SignUp />}></Route>

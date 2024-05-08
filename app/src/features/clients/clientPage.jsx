@@ -195,6 +195,40 @@ export const ClientPage = () => {
   }
     
   //  **** GENERATE INVOICE / SUBMIT INVOICE DATA ****
+
+    //  **** GENERATE PAYMENT REGISTER ****  
+
+    let allPayments = client.payments.filter((payment) => {
+      return payment.creditType === 'payment'
+    })
+    let orderedAllPayments = allPayments.slice().sort((a, b) => a.date.localeCompare(b.date))
+    
+    const onSubmitPaymentReg = async (data) => {
+      let paymentReg = {}
+      // data.id = clientId
+      paymentReg.id = clientId
+      paymentReg.name = invoiceData.name
+      // paymentReg.lastBill = lastInvoice ? lastInvoice.trans_date : ""
+      // paymentReg.lastCharge = lastChargeDate ? lastChargeDate : ""
+      // paymentReg.fees = invoiceData.totalServices
+      // paymentReg.costs = invoiceData.totalExpenses
+      // paymentReg.hours = invoiceData.totalHours
+      // paymentReg.interest = invoiceData.interestCharges
+      paymentReg.payments = orderedAllPayments
+      paymentReg.totalPayments = orderedAllPayments.map(item => item.amount * 1).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+      // paymentReg.credits = invoiceData.totalCredits
+      // paymentReg.priorBalance = invoiceData.prevBalance
+      // paymentReg.newCharges = invoiceData.totalCharges
+      // paymentReg.newAR = invoiceData.totalPayments + invoiceData.totalCredits
+      // paymentReg.newBalance = invoiceData.balance
+      data = [paymentReg]
+     
+      navigate(ROUTES.PAYMENTREG, {state: {paymentRegData: data}})
+      // dispatch(addPaymentReg(data))
+      
+    }
+    //  **** GENERATE PAYMENT REGISTER ****  
+      
   
   const handleDeleteCharge =  (chargeId) => {
     let charges = client.charges.filter((charge) => {
@@ -419,6 +453,9 @@ export const ClientPage = () => {
               </form>
               <form onSubmit={handleSubmit(onSubmitInvoice)} >
                 <button type='submit' className='btn'>Generate Invoice</button>
+              </form>
+              <form onSubmit={handleSubmit(onSubmitPaymentReg)} >
+                <button type='submit' className='btn'>Generate Payment Register</button>
               </form>
             </div>
             <div className="form-group">
