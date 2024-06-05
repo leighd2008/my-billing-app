@@ -22,8 +22,7 @@ const styles = StyleSheet.create({
 });
 
 
-const SummaryTableRow = ({items}) => {
-  console.log(items)
+const PaymentRegTableRow = ({items}) => {
   let rows = ''
     rows = Object.keys(items[0].payments).map( (keyName, i) => (
       <View key={i}>
@@ -35,7 +34,7 @@ const SummaryTableRow = ({items}) => {
         </View>
         <View style={styles.container} key={i}>
           <Text style={styles.column1}>{items[0].payments[i].date}</Text>
-          <Text style={styles.column1}>{'invoice no'}</Text>
+          <Text style={styles.column1}>{items[0].payments[i].invoice_no || 'na'}</Text>
           <Text style={styles.column2}>{'Check no'}</Text>
           <Text style={styles.column1}>({items[0].payments[i].amount})</Text>
         </View>
@@ -46,7 +45,7 @@ const SummaryTableRow = ({items}) => {
           <Text style={styles.column1}></Text>
         </View>
         <View style={styles.container} key={i}>
-          <Text style={styles.column1}>    </Text>
+          <Text style={styles.column1}></Text>
           <Text style={styles.column1}></Text>
           <Text style={styles.column2}></Text>
           <Text style={styles.column1}></Text>
@@ -57,4 +56,4 @@ const SummaryTableRow = ({items}) => {
     return (<Fragment>{rows}</Fragment> )
 };
   
-export default SummaryTableRow
+export default PaymentRegTableRow

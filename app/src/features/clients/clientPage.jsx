@@ -173,18 +173,22 @@ export const ClientPage = () => {
     orderedServices.map(item => {
       let chargeId = item.id
       charges[chargeId].invoiced = true
+      charges[chargeId].invoice_no = invoiceData.invoice_no
     })
     orderedExpenses.map(item => {
       let chargeId = item.id
       charges[chargeId].invoiced = true
+      charges[chargeId].invoice_no = invoiceData.invoice_no
     })
     orderedPayments.map(item => {
       let paymentId = item.id
       payments[paymentId].invoiced = true
+      payments[paymentId].invoice_no = invoiceData.invoice_no
     })
     orderedCredits.map(item => {
       let creditId = item.id
       payments[creditId].invoiced = true
+      payments[creditId].invoice_no = invoiceData.invoice_no
     })
 
     data.charges = [...charges]
