@@ -25,6 +25,9 @@ const Summary = loadable(() =>
 const PaymentReg = loadable(() =>
   import(/* webpackChunkName: "ContextMenuChunk" */ "Features/paymentRegister/paymentRegister")
 );
+const HistoryBill = loadable(() =>
+  import(/* webpackChunkName: "ContextMenuChunk" */ "Features/historyBill/historyBill")
+);
 const AddNewClient = loadable(() =>
   import(/* webpackChunkName: "ContextMenuChunk" */ "Features/clients/addNewClient")
 );
@@ -52,6 +55,7 @@ class AppRoutes extends React.Component {
           <Route path={ROUTES.INVOICE} element={<Invoice />}></Route>
           <Route path={ROUTES.SUMMARY} element={<Summary />}></Route>
           <Route path={ROUTES.PAYMENTREG} element={<PaymentReg />}></Route>
+          <Route path={ROUTES.HISTORYBILL} element={<HistoryBill />}></Route>
           <Route path={ROUTES.ADD_NEW_CLIENT} element={<AddNewClient />}></Route>
           <Route path={ROUTES.LOGIN} element={<LogIn />}></Route>
           <Route path={ROUTES.SIGNUP} element={<SignUp />}></Route>
