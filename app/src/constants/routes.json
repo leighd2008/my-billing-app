@@ -9,5 +9,6 @@
   "PAYMENTS": "/payments",
   "LOGIN": "/login",
   "SIGNUP": "/signup",
-  "PAYMENTREG": "/paymentReg"
+  "PAYMENTREG": "/paymentReg",
+  "HISTORYBILL": "/historybill"
 }

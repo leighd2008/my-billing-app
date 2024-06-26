@@ -70,7 +70,10 @@ export const ClientPage = () => {
   // **** SELECT INVOICE DATE ****
   let curr = new Date()
   curr.setDate(curr.getDate())
-  const [invoiceDate, setInvoiceDate] = useState(curr.toISOString().substring(0,10))
+
+  // const [invoiceDate, setInvoiceDate] = useState(curr.toISOString().substring(0,10))
+  const [invoiceDate, setInvoiceDate] = useState(curr.toLocaleDateString())
+  
   
   const onInvoiceDateChanged = e => {
     setInvoiceDate(e.target.value)
@@ -200,40 +203,54 @@ export const ClientPage = () => {
     
   //  **** GENERATE INVOICE / SUBMIT INVOICE DATA ****
 
-    //  **** GENERATE PAYMENT REGISTER ****  
+  //  **** GENERATE PAYMENT REGISTER ****  
 
-    let allPayments = client.payments.filter((payment) => {
-      return payment.creditType === 'payment'
-    })
-    let orderedAllPayments = allPayments.slice().sort((a, b) => a.date.localeCompare(b.date))
-    
-    const onSubmitPaymentReg = async (data) => {
-      let paymentReg = {}
-      // data.id = clientId
-      paymentReg.id = clientId
-      paymentReg.name = invoiceData.name
-      // paymentReg.lastBill = lastInvoice ? lastInvoice.trans_date : ""
-      // paymentReg.lastCharge = lastChargeDate ? lastChargeDate : ""
-      // paymentReg.fees = invoiceData.totalServices
-      // paymentReg.costs = invoiceData.totalExpenses
-      // paymentReg.hours = invoiceData.totalHours
-      // paymentReg.interest = invoiceData.interestCharges
-      paymentReg.payments = orderedAllPayments
-      paymentReg.totalPayments = orderedAllPayments.map(item => item.amount * 1).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
-      // paymentReg.credits = invoiceData.totalCredits
-      // paymentReg.priorBalance = invoiceData.prevBalance
-      // paymentReg.newCharges = invoiceData.totalCharges
-      // paymentReg.newAR = invoiceData.totalPayments + invoiceData.totalCredits
-      // paymentReg.newBalance = invoiceData.balance
-      data = [paymentReg]
-     
-      navigate(ROUTES.PAYMENTREG, {state: {paymentRegData: data}})
-      // dispatch(addPaymentReg(data))
-      
-    }
-    //  **** GENERATE PAYMENT REGISTER ****  
-      
+  let allPayments = client.payments.filter((payment) => {
+    return payment.creditType === 'payment'
+  })
+  let orderedAllPayments = allPayments.slice().sort((a, b) => a.date.localeCompare(b.date))
   
+  const onSubmitPaymentReg = async (data) => {
+    let paymentReg = {}
+    paymentReg.id = clientId
+    paymentReg.name = invoiceData.name
+    paymentReg.payments = orderedAllPayments
+    paymentReg.totalPayments = orderedAllPayments.map(item => item.amount * 1).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+    data = [paymentReg]
+    
+    navigate(ROUTES.PAYMENTREG, {state: {paymentRegData: data}})
+  }
+  //  **** GENERATE PAYMENT REGISTER ****  
+    
+   //  **** GENERATE HISTORY BILL****  
+
+  let allServices = client.charges.filter((charge) => {
+    return charge.chargeType === 'task'
+  })
+  let orderedAllServices = allServices.slice().sort((a, b) => a.date.localeCompare(b.date))
+  
+  let allExpenses = client.charges.filter((charge) => {
+    return charge.chargeType === 'expense'
+  })
+  let orderedAllExpenses = allExpenses.slice().sort((a, b) => a.date.localeCompare(b.date))
+
+  
+  const onSubmitHistoryBill = async (data) => {
+    let historyBill = {}
+    historyBill.id = clientId
+    historyBill.name = `${client.firstName} ${client.lastName}`
+    historyBill.address1 = client.address
+    historyBill.address2 = `${client.city}, ${client.usState}, ${client.zip},`
+    historyBill.services = orderedAllServices
+    historyBill.totalServices = orderedAllServices.map(item => item.hours * item.rate).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+    historyBill.expenses = orderedAllExpenses
+    historyBill.totalExpenses = orderedAllExpenses.map(item => item.fee * 1).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+    data = [historyBill]
+
+    navigate(ROUTES.HISTORYBILL, {state: {historyBillData: data}})
+  }
+  //  **** GENERATE HISTORY BILL ****  
+    
   const handleDeleteCharge =  (chargeId) => {
     let charges = client.charges.filter((charge) => {
       return charge.id !== chargeId
@@ -460,6 +477,9 @@ export const ClientPage = () => {
               </form>
               <form onSubmit={handleSubmit(onSubmitPaymentReg)} >
                 <button type='submit' className='btn'>Generate Payment Register</button>
+              </form>
+              <form onSubmit={handleSubmit(onSubmitHistoryBill)} >
+                <button type='submit' className='btn'>Generate History Bill</button>
               </form>
             </div>
             <div className="form-group">
