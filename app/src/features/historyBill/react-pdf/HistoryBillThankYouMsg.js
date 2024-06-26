@@ -12,13 +12,14 @@ const styles = StyleSheet.create({
         // flexGrow: 1,
     },
     description2: {
-        width: '90%',
+        width: '85%',
         textAlign: 'left',
         paddingRight: 8,
     },
     amount: {
-      width: '13%',
-      textAlign: 'left',
+      width: '15%',
+      textAlign: 'right',
+      paddingRight: 8,
     },
     titleContainer:{
         flexDirection: 'row',
@@ -49,8 +50,8 @@ const styles = StyleSheet.create({
               }} />
           </View>
           <View style={styles.container}>
-            <Text style={styles.description2}>Grand Total Services</Text>
-            <Text style={styles.amount}>({items[0].totalServices.toFixed(2)})</Text>
+            <Text style={styles.description2}>Total Charges </Text>
+            <Text style={styles.amount}>{(items[0].totalServices + items[0].totalExpenses).toFixed(2)}</Text>
           </View>
         </View>
       </Fragment>

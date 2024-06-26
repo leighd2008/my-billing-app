@@ -40,22 +40,19 @@ let curr = new Date()
 
 const InvoiceTitle = ({title}) => (
   <View style={styles.titleContainer}>
-    <View style={styles.titleRow}>
+    {/* <View style={styles.titleRow}>
       <Text style={styles.dateTime}>{currDate}</Text>
-      <Text style={styles.title}>Scott L. Patterson, P.L.L.C</Text>
-      <Text style={styles.page}></Text>
-    </View>
-    <View style={styles.titleRow}>
-      <Text style={styles.dateTime}>{currTime}</Text>
       <Text style={styles.title}>History Bill</Text>
       <Text style={styles.page} render={({ pageNumber }) => (`Page ${pageNumber}`)}/>
     </View>
-    <View style={{
-      borderBottomColor: 'black',
-      borderBottomWidth: 1,
-      marginLeft: 0,
-      marginRight: 4
-    }} />
+    <View style={styles.titleRow}>
+      <text></text>
+    </View> */}
+    <View style={styles.titleContainer}>
+      <Text>Scott L. Patterson, P.L.L.C</Text>
+      <Text>5420 S. Lakeshore Dr., Ste. 101</Text>
+      <Text>Tempe, AZ 85283</Text>
+    </View>
   </View>
 );
 

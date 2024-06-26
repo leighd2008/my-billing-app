@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { PDFViewer } from '@react-pdf/renderer';
 import { Page, Document, StyleSheet } from '@react-pdf/renderer';
-import Header from './HistoryBill';
+import HistoryBillHeader from './HistoryBillHeader';
 import HistoryBillTitle from './HistoryBillTitle';
 import BillTo from './BillTo';
 import HistoryBillNo from './HistoryBillNo';
@@ -22,17 +22,18 @@ const styles = StyleSheet.create({
 });
 
 const GenHistoryBill = ({historyBillData}) => {
+  console.log('history bill data', historyBillData)
   return (
     <Fragment>
       <PDFViewer width="850" height="600" className="app">
         <Document>
           <Page size="A4" style={styles.page}>
-            {/* <Header name={invoiceData.name}/> */}
+            <HistoryBillHeader name={historyBillData[0].name}/>
             <HistoryBillTitle />
-            {/* <BillTo invoiceData={invoiceData} /> */}
-            {/* <HistoryBillNo invoiceData={invoiceData} /> */}
-            <HistoryBillItemsTable className='services' items={historyBillData}></HistoryBillItemsTable>
-            {/* <HistoryBillItemsTable className='expenses' items={invoiceData.expenses} /> */}
+            <BillTo historyBillData={historyBillData} />
+            {/* <HistoryBillNo historyBillData={historyBillData} /> */}
+            <HistoryBillItemsTable className='services' items={historyBillData[0].services}></HistoryBillItemsTable>
+            <HistoryBillItemsTable className='expenses' items={historyBillData[0].expenses} />
             {/* <HistoryBillItemsTable className='payments' items={invoiceData.payments} /> */}
             <HistoryBillThankYouMsg className='stuff' items={historyBillData} />
           </Page>

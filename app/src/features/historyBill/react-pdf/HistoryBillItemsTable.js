@@ -17,9 +17,9 @@ const HistoryBillItemsTable = ({items}) => {
   // if (items.length > 0) {
   return (
   <View style={styles.tableContainer} widows orphans >
-    <HistoryBillTableHeader />
+    <HistoryBillTableHeader items={items} />
     <HistoryBillTableRow items={items} />
-    {/* <HistoryBillTableFooter items={items} /> */}
+    <HistoryBillTableFooter items={items} />
   </View>
 );
 // } else {

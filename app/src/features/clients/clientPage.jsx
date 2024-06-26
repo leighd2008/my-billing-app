@@ -70,7 +70,10 @@ export const ClientPage = () => {
   // **** SELECT INVOICE DATE ****
   let curr = new Date()
   curr.setDate(curr.getDate())
-  const [invoiceDate, setInvoiceDate] = useState(curr.toISOString().substring(0,10))
+
+  // const [invoiceDate, setInvoiceDate] = useState(curr.toISOString().substring(0,10))
+  const [invoiceDate, setInvoiceDate] = useState(curr.toLocaleDateString())
+  
   
   const onInvoiceDateChanged = e => {
     setInvoiceDate(e.target.value)
@@ -235,7 +238,9 @@ export const ClientPage = () => {
   const onSubmitHistoryBill = async (data) => {
     let historyBill = {}
     historyBill.id = clientId
-    historyBill.name = invoiceData.name
+    historyBill.name = `${client.firstName} ${client.lastName}`
+    historyBill.address1 = client.address
+    historyBill.address2 = `${client.city}, ${client.usState}, ${client.zip},`
     historyBill.services = orderedAllServices
     historyBill.totalServices = orderedAllServices.map(item => item.hours * item.rate).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     historyBill.expenses = orderedAllExpenses
